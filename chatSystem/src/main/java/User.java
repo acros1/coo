@@ -9,5 +9,7 @@
  * @author al_cros
  */
 public class User {
-    
+    public User() {
+        
+    }
 }

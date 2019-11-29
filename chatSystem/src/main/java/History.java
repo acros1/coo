@@ -9,5 +9,6 @@
  * @author al_cros
  */
 public class History {
-    
+    public int ID;
+    public User user1 = New User();
 }
