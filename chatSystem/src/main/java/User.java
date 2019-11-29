@@ -9,7 +9,22 @@
  * @author al_cros
  */
 public class User {
+    
+    public String pseudo;
+    public String login;
+    public String passwd;
+    public int ID;
+    
     public User() {
         
     }
+    
+    public int changePseudo(String newPseudo) {
+        return 0;
+    }
+    
+    public int choosePseudo(String newPseudo) {
+        return 0;
+    }
+    
 }

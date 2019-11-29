@@ -10,5 +10,6 @@
  */
 public class History {
     public int ID;
-    public User user1 = New User();
+    public User user1;
+    public User user2;
 }
