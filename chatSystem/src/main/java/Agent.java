@@ -35,4 +35,18 @@ public class Agent {
     public ArrayList<Message> getHistory(User usr1, User usr2) {
         return null;
     }
+    
+    public int connection(String login, String passwd) {
+        int ret = 0;
+        
+        return ret;
+    }
+    
+    public void connect_alert(InetAddress broadcastIP) {
+        
+    }
+    
+    public InetAddress userToIP(User user) {
+        return null;
+    }
 }
