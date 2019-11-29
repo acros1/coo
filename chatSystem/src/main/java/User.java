@@ -14,9 +14,10 @@ public class User {
     public String login;
     public String passwd;
     public int ID;
+    public Agent agent;
     
-    public User() {
-        
+    public User(Agent agent) {
+        this.agent = agent;  
     }
     
     public int changePseudo(String newPseudo) {
@@ -25,6 +26,10 @@ public class User {
     
     public int choosePseudo(String newPseudo) {
         return 0;
+    }
+    
+    public Agent getAgent(){
+        return this.agent;
     }
     
 }
