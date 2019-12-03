@@ -9,16 +9,20 @@
  * @author al_cros
  */
 import java.net.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.lang.Object;
+import java.text.*;
 import java.io.*;
+import java.nio.file.*;
 
-public class Agent implements Runnable{
+public class Agent {
     
     public InetAddress systemAddr;
     public static int systemPort;
+    private List<String> pseudoList = new ArrayList <String>();
     
     public Agent()  {
-        try {
+        /*try {
             this.systemAddr = InetAddress.getLocalHost(); // get the local agent address
         } catch (UnknownHostException err_getting_lhost_addr) {
             System.out.println("Err while getting lhost address");
@@ -50,13 +54,13 @@ public class Agent implements Runnable{
         } catch(IOException err_buffer){
                 System.out.println("err_buffer");
                 System.exit(1);
-        }
+        }*/
             
     }
     
     public Socket startSession(InetAddress ipDest, int portDest)  throws IOException{
         
-        Socket link = null;
+       /* Socket link = null;
         try {
             link = new Socket (ipDest, portDest);
         }catch(Exception err_socketCreate) {
@@ -79,35 +83,56 @@ public class Agent implements Runnable{
         // out.println("awaiting data...");
         String input = in.readLine();
         System.out.println(input);
-        return link;
+        return link;*/
+       return null;
         
     }
     
-    public void run() {
-        try {
-            InputStream input  = clientSocket.getInputStream();
-            OutputStream output = clientSocket.getOutputStream();
-            long time = System.currentTimeMillis();
-            output.close();
-            input.close();
-            System.out.println("Request processed: " + time);
-        } catch (IOException e) {
-            //report exception somewhere.
-            e.printStackTrace();
-        }
-    }
-    
-    public void closeSession(Socket link) {
-        try {
-            link.close();
-        }catch(Exception err_close) {
-            System.out.println("err_close");
-            System.exit(1);
-        } 
-    }
     
     public ArrayList<Message> getHistory(User usr1, User usr2) {
+        int Id1 = usr1.getId();
+        int Id2 = usr2.getId();
+        
         return null;
+    }
+    public int setInHistory(Message msg) throws IOException{
+        int ret = -1;
+        String pattern = "dd/MM/yyyy HH:mm:ss";
+
+        // Create an instance of SimpleDateFormat used for formatting 
+        // the string representation of date according to the chosen pattern
+        DateFormat df = new SimpleDateFormat(pattern);
+        String DateString= df.format(msg.date);
+        
+        
+        List<User> ListUsers = msg.getUsers();
+       
+        User usr1 = ListUsers.get(0);
+        User usr2 = ListUsers.get(1);
+        
+        int idUsr1 = usr1.getId();
+        int idUsr2 = usr2.getId();
+        
+        String content = "Date :" + DateString + " " + usr1 + " : "+msg.getContent();
+        String path1 = idUsr1+"-"+idUsr2;
+        File file1 = new File("/document/History/"+path1); 
+         // if file doesnt exists, then create it
+        if (!file1.exists()) {
+            file1.createNewFile();   
+        }
+        try{
+            FileWriter fw = new FileWriter(file1, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+            
+        
+ 
+        return ret;
     }
     
     public int connection(String login, String passwd) {
@@ -130,5 +155,34 @@ public class Agent implements Runnable{
     
     public int getSystemPort(){
         return this.systemPort;
+    }
+    
+    public void setPseudoList(List<String> pseudoList){
+        this.pseudoList = pseudoList;
+    }
+    
+    
+    public boolean isConnected(InetAddress ipDest) throws IOException{
+        boolean ret = false;
+        int timeout = 100;
+        try {
+            if(ipDest.isReachable(timeout)){
+                ret = true;
+            }          
+        }   
+        catch(IOException e){
+            System.out.println(e);
+        }
+        return ret;
+    }
+    public boolean isPseudoValid(String pseudo){
+        boolean ret = true;
+        Iterator<String> itr = pseudoList.iterator();
+        while ( itr.hasNext() ) {
+          if(  itr.next().equals(pseudo)  ){
+              ret = false;
+          }
+        }
+        return ret;
     }
 }

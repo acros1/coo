@@ -13,7 +13,7 @@ public class User {
     public String pseudo;
     public String login;
     public String passwd;
-    public int ID;
+    public int Id;
     public Agent agent;
     
     public User(Agent agent) {
@@ -21,7 +21,13 @@ public class User {
     }
     
     public int changePseudo(String newPseudo) {
-        return 0;
+        int ret = -1;
+        if(agent.isPseudoValid(newPseudo)){
+            this.pseudo = newPseudo;
+            ret = 0;
+        }
+        
+        return ret;
     }
     
     public int choosePseudo(String newPseudo) {
@@ -30,6 +36,10 @@ public class User {
     
     public Agent getAgent(){
         return this.agent;
+    }
+    
+    public int getId(){
+        return this.Id;
     }
     
 }
