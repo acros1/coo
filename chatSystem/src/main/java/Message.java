@@ -16,7 +16,11 @@ public class Message {
     User usr2;
     String content;
     
-    
+    public Message(User usr1, User usr2, String content){
+        this.usr1 = usr1;
+        this.usr2 = usr2;
+        this.content = content;
+    }
     public List<User> getUsers(){
         List<User> userList = new ArrayList<User>();
         userList.add(usr1);
