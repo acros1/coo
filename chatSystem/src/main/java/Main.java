@@ -13,13 +13,11 @@ public class Main {
          Agent agent1 = new Agent();
          Agent.createUser("Maelnedlc","abcd");
          Agent.createUser("nedellec","1234");
-         Agent.createUser("Mael325478","password");
-         Agent.createUser("Mael1","motdepasse");
+         User.user_Login(agent1);
          
-         Agent.connection("nedellec","test");
          Agent agent2 = new Agent();
-         User user1 = new User(agent1);
-         User user2 = new User(agent2);
+         User user1 = new User(agent1,0);
+         User user2 = new User(agent2,1);
          Message msg1 = new Message(user1,user2,"premier test usr1 -> usr2");
          Message msg2 = new Message(user2,user1,"premier test usr2 -> usr1");
          Message msg3 = new Message(user1,user2,"deuxième test usr1 -> usr2");

@@ -98,7 +98,7 @@ public class Agent {
     Function to create a User with a specific login and password, and these login/passwd are put in the login_passwd file located in Server directory
     */
     public static void createUser(String login, String passwd) throws IOException{
-         File file1 = new File("C:\\Users\\Maeln\\Documents\\Server\\login_passwd");
+        File file1 = new File("C:\\Users\\Maeln\\Documents\\Server\\login_passwd");
         if(!file1.exists()){     
             file1.createNewFile();
         }
@@ -118,7 +118,7 @@ public class Agent {
     This function allows a user to connect to his/her account with his/her login-passwd
     */
     public static int connection(String login, String passwd) {
-        isLoginPasswdValid(login,passwd);
+
         return -1;
     }
     
@@ -180,43 +180,57 @@ public class Agent {
         return ret;
     }
     
-    public static int isLoginPasswdValid(String login, String passwd){
-        int ret = -1;
+    public static int isLoginValid(String login){
+        int ret = 0;
    
         
-        File file1 = new File("C:\\Users\\Maeln\\Documents\\server\\login_passwd");
-        if(!file1.exists()){
+        File file = new File("C:\\Users\\Maeln\\Documents\\server\\Users");
+        if(!file.exists()){
             System.out.println("No Users created yet");    
         }
         
-        try (BufferedReader br = new BufferedReader(new FileReader(file1))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            int i = 1;
-            while ((line = br.readLine()) != null) {
-                System.out.println(i);
-                if((i%3) == 1){
-                    System.out.println("Login");
+            int i = 0;
+            while ((line = br.readLine()) != null) {                 
+                if((i%4) == 0){                    
                     if(line.equals(login)){
-                        System.out.println("Login Correct");
-                    }
-                    line = br.readLine();
+                        System.out.println("Login : " + login +" = line : "+ line);
+                        ret=i;
+                    }        
                 }
-                if((i%2) == 1){
-                    System.out.println("Passwd");
-                    if(line.equals(passwd)){
-                        System.out.println("Password Correct");
-                        System.out.println("Connected ...");
-                    }
-                    line = br.readLine();
-                }
-                i++;
-                      
+                i++;         
             }
         }
         catch(IOException e){
-            
+             System.out.println(e);
         }
      
+        return ret;
+    }
+    
+    public static boolean isPasswdValid(String passwd, int pos){
+        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        if(!file.exists()){     
+            System.err.println("No Users cretaed yet");
+        }
+        boolean ret = false;
+        int tmp = 0;
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            while(tmp != pos){
+                line = br.readLine();
+                System.out.println(line);
+                tmp++;
+            }
+            if(br.readLine().equals(passwd)){
+               
+                ret = true;
+            }
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
         return ret;
     }
 }
