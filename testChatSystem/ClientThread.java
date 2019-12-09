@@ -39,7 +39,7 @@ public class ClientThread implements Runnable {
 				System.out.println("Command (list or send) :");
 				input = scan.nextLine();
 				command(input);
-		}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}            

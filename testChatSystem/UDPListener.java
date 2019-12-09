@@ -24,9 +24,13 @@ public class UDPListener implements Runnable {
 				sendUser(clientName, clientAddr);
 				
 				// Answering the new connection alert
+				System.out.println("BEFORE");
+				System.out.flush();
 				String response = clientThread.getMainUserName();
 				DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, clientPort);
 				dgramSocket.send(outPacket);
+				System.out.println("AFTER");
+				System.out.flush();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
