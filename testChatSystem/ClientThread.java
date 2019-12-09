@@ -30,7 +30,9 @@ public class ClientThread implements Runnable {
 			DatagramSocket dgramSocket = new DatagramSocket();
 
 			String alert = name;
-			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), 
+											alert.length(), 
+											InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
 			while(true) {

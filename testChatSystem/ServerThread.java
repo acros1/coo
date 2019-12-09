@@ -35,6 +35,7 @@ public class ServerThread implements Runnable {
 
 	public synchronized void writeMessage(String msg) {
 		pwrite.println(msg);
+		pwrite.flush();
 	} 
 
 	public User getUser() {
