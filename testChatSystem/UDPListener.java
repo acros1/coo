@@ -21,14 +21,14 @@ public class UDPListener implements Runnable {
 				String clientName = new String(inPacket.getData(), 0, inPacket.getLength());
 				InetAddress clientAddr = inPacket.getAddress();
 				int clientPort = inPacket.getPort();
-				sendUser(clientName, clientAddr);
-				
-				// Answering the new connection alert
-				System.out.flush();
-				String response = clientThread.getMainUserName();
-				DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, clientPort);
-				dgramSocket.send(outPacket);
-				System.out.flush();
+				if (isUserRegistered(clientName) == false) {
+					sendUser(clientName, clientAddr);
+					
+					// Answering the new connection alert
+					String response = clientThread.getMainUserName();
+					DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, clientPort);
+					dgramSocket.send(outPacket);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,6 +38,10 @@ public class UDPListener implements Runnable {
 
 	public void sendUser(String name, InetAddress addr) {
 		listenerThread.addNewConnectedUser(name, addr);
-	}	
+	}
+
+	public boolean isUserRegistered(String name) {
+		return listenerThread.isUserRegistered(name);
+	}
 
 }
