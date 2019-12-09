@@ -63,7 +63,7 @@ public class ClientThread implements Runnable {
 				// Asking for user to send msg
 				System.out.print("Which user : ");
 				for(User u : listenerThread.getClientList()) {
-					System.out.print(u.getName + " | ");
+					System.out.print(u.getName() + " | ");
 				}
 				System.out.println();
 				user = scan.nextLine();
