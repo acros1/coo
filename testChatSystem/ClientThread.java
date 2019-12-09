@@ -16,10 +16,10 @@ public class ClientThread implements Runnable {
 
 	public void run() {
 		try {
-			Thread t1 = new Thread(listenerThread);
-			t1.start();
 			Thread t2 = new Thread(udpListener);
 			t2.start();
+			Thread t1 = new Thread(listenerThread);
+			t1.start();
 			Scanner scan = new Scanner(System.in);
 			String input = null;
 			System.out.println("Your name :");
@@ -70,7 +70,7 @@ public class ClientThread implements Runnable {
 				for(User u : listenerThread.getClientList()) {
 					if(u.getName().equals(user)) {
 						ServerThread st = listenerThread.getServer(u);
-						System.out.println("Type you message :");
+						System.out.println("Type your message :");
 						user = scan.nextLine(); // ask for msg to send
 						st.writeMessage(user);
 					}
