@@ -7,15 +7,19 @@ public class ClientThread implements Runnable {
 	private User mainUser = null;
 
 	private ListenerThread listenerThread = null;
+	private UDPListener udpListener = null;
 
 	public ClientThread() {
-		listenerThread = new ListenerThread();;
+		listenerThread = new ListenerThread();
+		udpListener = new UDPListener(listenerThread, this);
 	}
 
 	public void run() {
 		try {
-			Thread t = new Thread(listenerThread);
-			t.start();
+			Thread t1 = new Thread(listenerThread);
+			t1.start();
+			Thread t2 = new Thread(udpListener);
+			t2.start();
 			Scanner scan = new Scanner(System.in);
 			String input = null;
 			System.out.println("Your name :");
@@ -26,7 +30,7 @@ public class ClientThread implements Runnable {
 			DatagramSocket dgramSocket = new DatagramSocket();
 
 			String alert = name;
-			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4001);
+			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
 			while(true) {

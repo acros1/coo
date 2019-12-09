@@ -14,21 +14,21 @@ public class ListenerThread implements Runnable {
 	public void run() {
 		InetAddress clientAddr = null;
 		try {
-		    ServerSocket sersock = new ServerSocket(3001);
+		    ServerSocket sersock = new ServerSocket(3000);
 		    System.out.println("Listener ready");
 
 		    while(true) {
 			Socket sock = sersock.accept();
 			clientAddr = sock.getInetAddress();
-			for (User u  : clientList) {
-				if (u.getAddr().equals(clientAddr)) {
-					ServerThread serverThread = new ServerThread(u, sock);
-					Thread server = new Thread(serverThread);
-					server.start();
-					startedServer.add(serverThread);
-					break;
+				for (User u  : clientList) {
+					if (u.getAddr().equals(clientAddr)) {
+						ServerThread serverThread = new ServerThread(u, sock);
+						Thread server = new Thread(serverThread);
+						server.start();
+						startedServer.add(serverThread);
+						break;
+					}
 				}
-			} // Handle error
 		    } 
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -42,7 +42,7 @@ public class ListenerThread implements Runnable {
 					return st;
 				}
 			}
-			Socket sock = new Socket(client.getAddr(), 3001);
+			Socket sock = new Socket(client.getAddr(), 3000);
 			ServerThread st = new ServerThread(client, sock);
 			Thread server = new Thread(st);
 			server.start();
