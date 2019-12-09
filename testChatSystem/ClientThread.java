@@ -5,6 +5,7 @@ import java.util.*;
 public class ClientThread implements Runnable {
 
 	private User mainUser = null;
+	private String mainUserName = null;
 
 	private ListenerThread listenerThread = null;
 	private UDPListener udpListener = null;
@@ -23,13 +24,13 @@ public class ClientThread implements Runnable {
 			Scanner scan = new Scanner(System.in);
 			String input = null;
 			System.out.println("Your name :");
-			String name = scan.nextLine();
-			mainUser = new User(name, null);
+			String mainUserName = scan.nextLine();
+			//mainUser = new User(name, null);
 		
 			// Sending new connection alert
 			DatagramSocket dgramSocket = new DatagramSocket();
 
-			String alert = name;
+			String alert = mainUserName;
 			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
@@ -83,7 +84,8 @@ public class ClientThread implements Runnable {
 	}
 
 	public String getMainUserName() {
-		return this.mainUser.getName();
+		//return this.mainUser.getName();
+		return this.mainUserName;
 	}
 
 	public static void main (String[] args) {
