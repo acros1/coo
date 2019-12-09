@@ -16,10 +16,10 @@ public class ClientThread implements Runnable {
 
 	public void run() {
 		try {
-			Thread t2 = new Thread(udpListener);
-			t2.start();
 			Thread t1 = new Thread(listenerThread);
 			t1.start();
+			Thread t2 = new Thread(udpListener);
+			t2.start();
 			Scanner scan = new Scanner(System.in);
 			String input = null;
 			System.out.println("Your name :");

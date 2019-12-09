@@ -19,7 +19,6 @@ public class UDPListener implements Runnable {
 				// New user is connected, datagram reception
 				dgramSocket.receive(inPacket);
 				String clientName = new String(inPacket.getData(), 0, inPacket.getLength());
-				System.out.println("New user connected : " + clientName);
 				InetAddress clientAddr = inPacket.getAddress();
 				int clientPort = inPacket.getPort();
 				sendUser(clientName, clientAddr);
