@@ -29,12 +29,19 @@ public class User {
     public User(Agent agent, int id) {
         this.agent = agent; 
         this.id = id; 
-        
+        System.out.println("Je suis un user créé avec l'id : " + id);        
     }
     
-    public int changePseudo(String newPseudo) {
+    public int changePseudo() throws IOException {
         int ret = -1;
-        if(agent.isPseudoValid(newPseudo)){
+        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please choose a pseudonym : ");
+        String newPseudo = sc.nextLine();
+        while((this.agent.isPseudoValid(newPseudo,file))== -1){
+            
+        }
+        if((this.agent.isPseudoValid(newPseudo,file))== -1){
             this.pseudo = newPseudo;
             ret = 0;
         }
@@ -42,22 +49,48 @@ public class User {
         return ret;
     }
     
-    public int choosePseudo(String newPseudo) {
+    public int choosePseudo() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please choose a pseudonym : ");
+        String pseudo = sc.nextLine();
+        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Pseudo");
+        if(!file.exists()){     
+            file.createNewFile();
+        }
+        
+        while((this.agent.isPseudoValid(pseudo,file)) != -1){
+            System.out.println("Pseudonym already taken");
+            System.out.println("Please choose another pseudonym : ");
+            pseudo = sc.nextLine();
+        }
+
+        try {
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(pseudo + "\n\n");
+            bw.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
         return 0;
     }
     
     public Agent getAgent(){
         return this.agent;
     }
-   
-    public static User user_Login(Agent agent){
+   /*
+    Function to login to a created user, it supposed to have an account (create_user)
+    */
+    public static User userLogin(Agent agent){
         int pos;
+        int id;
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your login : ");
         String login = sc.nextLine();
         System.out.println("Please enter your password : ");
         String passwd = sc.nextLine();
-        while(((pos = Agent.isLoginValid(login)) == 0) && !(Agent.isPasswdValid(passwd, pos+1)) ){
+        while( ((pos = Agent.isLoginValid(login)) == 0) && (Agent.isPasswdValid(passwd, pos+1) == -1) ){
             System.out.println("faux");
             System.out.println("Wrong combination login/password please retry..");
             System.out.println("Please enter your login : ");
@@ -65,13 +98,19 @@ public class User {
             System.out.println("Please enter your password : ");
             passwd = sc.nextLine();
         }
+        id = Agent.isPasswdValid(passwd, pos+1);
+        System.out.println(id);
         System.out.println("Good");
-        int id = 0;
         User user = new User(agent,id);
         return user;
     }
     
-    public static int Creation_utilisateur() throws IOException{
+    
+    /* 
+    It is the function to create a user, choosing a login and a password,
+    it is based on what is typed by the user himself.
+    */
+    public static int createUser() throws IOException{
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a login : ");
         String login = sc.nextLine();

@@ -96,7 +96,7 @@ public class Agent {
     }
     /*
     Function to create a User with a specific login and password, and these login/passwd are put in the login_passwd file located in Server directory
-    */
+   
     public static void createUser(String login, String passwd) throws IOException{
         File file1 = new File("C:\\Users\\Maeln\\Documents\\Server\\login_passwd");
         if(!file1.exists()){     
@@ -113,7 +113,7 @@ public class Agent {
             
         }
     }
-    
+    */
     /*
     This function allows a user to connect to his/her account with his/her login-passwd
     */
@@ -169,13 +169,24 @@ public class Agent {
         return 0;
     }
     
-     public boolean isPseudoValid(String pseudo){
-        boolean ret = true;
-        Iterator<String> itr = pseudoList.iterator();
-        while ( itr.hasNext() ) {
-          if(  itr.next().equals(pseudo)  ){
-              ret = false;
-          }
+     public int isPseudoValid(String pseudo,File file) throws IOException {
+        int ret = -1;
+        if(!file.exists()){
+            System.out.println("No Users created yet");    
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {                 
+                if(line.equals(pseudo)){                    
+                    ret=i;
+                }
+                i++;
+            }
+        }
+        catch(IOException e){
+            System.err.println(e);
         }
         return ret;
     }
@@ -209,12 +220,12 @@ public class Agent {
         return ret;
     }
     
-    public static boolean isPasswdValid(String passwd, int pos){
+    public static int isPasswdValid(String passwd, int pos){
         File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
         if(!file.exists()){     
             System.err.println("No Users cretaed yet");
         }
-        boolean ret = false;
+        int ret = -1;
         int tmp = 0;
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -225,8 +236,9 @@ public class Agent {
             }
             if(br.readLine().equals(passwd)){
                
-                ret = true;
+                ret = Integer.parseInt(br.readLine());
             }
+            
         }
         catch(IOException e){
             System.out.println(e);
