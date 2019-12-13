@@ -30,7 +30,7 @@ public class UDPListener implements Runnable {
 					String response = clientThread.getMainUserName();
 
 					DatagramPacket outPacket = new DatagramPacket(response.getBytes(), 
-												response.length(), clientAddr, clientPort);
+												response.length(), clientAddr, 4000);
 					dgramSocket.send(outPacket);
 				}
 			}
