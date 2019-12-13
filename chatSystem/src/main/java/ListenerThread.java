@@ -64,13 +64,13 @@ public class ListenerThread implements Runnable {
 		return null;
 	}    
 
-	public void addNewConnectedUser(String name, InetAddress addr) {
-		clientList.add(new User(name, addr));
+	public void addNewConnectedUser(String pseudo, InetAddress addr) {
+		clientList.add(new User(pseudo, addr));
 	}  
 
-	public boolean isUserRegistered(String name) {
+	public boolean isUserRegistered(String pseudo) {
 		for (User u : clientList) {
-			if (u.getName().equals(name)) {
+			if (u.getPseudo().equals(pseudo)) {
 				return true;
 			}
 		}

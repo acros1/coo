@@ -245,6 +245,14 @@ public class User {
         return ret;
     }
     
+    public String getPseudo() {
+        return this.pseudo;
+    }
+    
+    public InetAddress getAddr() {
+        return this.addr;
+    }
+    
 }
     
 
