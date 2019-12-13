@@ -8,8 +8,18 @@
  *
  * @author al_cros
  */
+import java.net.*;
+import java.util.*;
+import java.text.*;
+import java.io.*;
+
 public class History {
-    public int ID;
+    
     public User user1;
     public User user2;
+    
+    int id1 = user1.getId();
+    int id2 = user2.getId();
+    
+    
 }
