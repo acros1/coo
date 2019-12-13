@@ -81,8 +81,21 @@ public class Session {
         }
             
         
+        
  
         return ret;
+    }
+    
+    
+    public int sendMessage(Message msg) throws IOException{
+        try {
+            setInHistory(msg);
+        }
+        catch(IOException e){
+            System.out.println("error write");
+            System.out.println(e);
+        }
+        return 0;
     }
     
 }

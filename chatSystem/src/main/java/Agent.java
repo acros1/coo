@@ -77,91 +77,10 @@ public class Agent {
     }
     
     
-    public int sendMessage(Message msg) throws IOException{
-        try {
-            setInHistory(msg);
-        }
-        catch(IOException e){
-            System.out.println("error write");
-            System.out.println(e);
-        }
-        return 0;
-    }
     
-     public int isPseudoValid(String pseudo,File file) throws IOException {
-        int ret = -1;
-        if(!file.exists()){
-            System.out.println("No Users created yet");    
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int i = 0;
-            while ((line = br.readLine()) != null) {                 
-                if(line.equals(pseudo)){                    
-                    ret=i;
-                }
-                i++;
-            }
-        }
-        catch(IOException e){
-            System.err.println(e);
-        }
-        return ret;
-    }
     
-    public static int isLoginValid(String login){
-        int ret = 0;
-   
-        
-        File file = new File("C:\\Users\\Maeln\\Documents\\server\\Users");
-        if(!file.exists()){
-            System.out.println("No Users created yet");    
-        }
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            int i = 0;
-            while ((line = br.readLine()) != null) {                 
-                if((i%4) == 0){                    
-                    if(line.equals(login)){
-                        System.out.println("Login : " + login +" = line : "+ line);
-                        ret=i;
-                    }        
-                }
-                i++;         
-            }
-        }
-        catch(IOException e){
-             System.out.println(e);
-        }
      
-        return ret;
-    }
     
-    public static int isPasswdValid(String passwd, int pos){
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
-        if(!file.exists()){     
-            System.err.println("No Users cretaed yet");
-        }
-        int ret = -1;
-        int tmp = 0;
-        String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            while(tmp != pos){
-                line = br.readLine();
-                System.out.println(line);
-                tmp++;
-            }
-            if(br.readLine().equals(passwd)){
-               
-                ret = Integer.parseInt(br.readLine());
-            }
-            
-        }
-        catch(IOException e){
-            System.out.println(e);
-        }
-        return ret;
-    }
+    
+    
 }

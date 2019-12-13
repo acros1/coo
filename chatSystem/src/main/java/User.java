@@ -38,10 +38,10 @@ public class User {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a pseudonym : ");
         String newPseudo = sc.nextLine();
-        while((this.agent.isPseudoValid(newPseudo,file))== -1){
+        while((this.isPseudoValid(newPseudo,file))== -1){
             
         }
-        if((this.agent.isPseudoValid(newPseudo,file))== -1){
+        if((this.isPseudoValid(newPseudo,file))== -1){
             this.pseudo = newPseudo;
             ret = 0;
         }
@@ -58,7 +58,7 @@ public class User {
             file.createNewFile();
         }
         
-        while((this.agent.isPseudoValid(pseudo,file)) != -1){
+        while((this.isPseudoValid(pseudo,file)) != -1){
             System.out.println("Pseudonym already taken");
             System.out.println("Please choose another pseudonym : ");
             pseudo = sc.nextLine();
@@ -82,7 +82,7 @@ public class User {
    /*
     Function to login to a created user, it supposed to have an account (create_user)
     */
-    public static User userLogin(Agent agent){
+    public static User userLogin(){
         int pos;
         int id;
         Scanner sc = new Scanner(System.in);
@@ -90,7 +90,7 @@ public class User {
         String login = sc.nextLine();
         System.out.println("Please enter your password : ");
         String passwd = sc.nextLine();
-        while( ((pos = Agent.isLoginValid(login)) == 0) && (Agent.isPasswdValid(passwd, pos+1) == -1) ){
+        while( ((pos = User.isLoginValid(login)) == 0) && (User.isPasswdValid(passwd, pos+1) == -1) ){
             System.out.println("faux");
             System.out.println("Wrong combination login/password please retry..");
             System.out.println("Please enter your login : ");
@@ -98,10 +98,10 @@ public class User {
             System.out.println("Please enter your password : ");
             passwd = sc.nextLine();
         }
-        id = Agent.isPasswdValid(passwd, pos+1);
+        id = User.isPasswdValid(passwd, pos+1);
         System.out.println(id);
         System.out.println("Good");
-        User user = new User(agent,id);
+        User user = new User(null,id); // remplacer null par agent
         return user;
     }
     
@@ -114,7 +114,7 @@ public class User {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a login : ");
         String login = sc.nextLine();
-        while(Agent.isLoginValid(login) != 0){
+        while(User.isLoginValid(login) != 0){
            System.out.println("Login already use...\nPlease choose another one :");
            login = sc.nextLine();
         }
@@ -157,6 +157,85 @@ public class User {
         }
         int tmp = i/4;
         return tmp;
+    }
+    
+    
+    
+    public static int isLoginValid(String login){
+        int ret = 0;
+   
+        
+        File file = new File("C:\\Users\\Maeln\\Documents\\server\\Users");
+        if(!file.exists()){
+            System.out.println("No Users created yet");    
+        }
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {                 
+                if((i%4) == 0){                    
+                    if(line.equals(login)){
+                        System.out.println("Login : " + login +" = line : "+ line);
+                        ret=i;
+                    }        
+                }
+                i++;         
+            }
+        }
+        catch(IOException e){
+             System.out.println(e);
+        }
+     
+        return ret;
+    }
+    
+    public static int isPasswdValid(String passwd, int pos){
+        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        if(!file.exists()){     
+            System.err.println("No Users cretaed yet");
+        }
+        int ret = -1;
+        int tmp = 0;
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            while(tmp != pos){
+                line = br.readLine();
+                System.out.println(line);
+                tmp++;
+            }
+            if(br.readLine().equals(passwd)){
+               
+                ret = Integer.parseInt(br.readLine());
+            }
+            
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+        return ret;
+    }
+    
+    public int isPseudoValid(String pseudo,File file) throws IOException {
+        int ret = -1;
+        if(!file.exists()){
+            System.out.println("No Users created yet");    
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int i = 0;
+            while ((line = br.readLine()) != null) {                 
+                if(line.equals(pseudo)){                    
+                    ret=i;
+                }
+                i++;
+            }
+        }
+        catch(IOException e){
+            System.err.println(e);
+        }
+        return ret;
     }
     
 }
