@@ -32,7 +32,7 @@ public class ClientThread implements Runnable {
 			String alert = name;
 			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), 
 											alert.length(), 
-											InetAddress.getByName("192.168.43.255"), 4000);
+											InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
 			while(true) {
