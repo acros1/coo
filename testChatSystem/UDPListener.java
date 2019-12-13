@@ -19,14 +19,18 @@ public class UDPListener implements Runnable {
 				// New user is connected, datagram reception
 				dgramSocket.receive(inPacket);
 				String clientName = new String(inPacket.getData(), 0, inPacket.getLength());
+				System.out.println("New broadcast alert receive, new user : " + clientName);
 				InetAddress clientAddr = inPacket.getAddress();
 				int clientPort = inPacket.getPort();
 				if (isUserRegistered(clientName) == false) {
 					sendUser(clientName, clientAddr);
-					
+					System.out.println(clientName + " is not in the list yet," + 
+									" answering with : " + clientThread.getMainUserName());
 					// Answering the new connection alert
 					String response = clientThread.getMainUserName();
-					DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, clientPort);
+
+					DatagramPacket outPacket = new DatagramPacket(response.getBytes(), 
+												response.length(), clientAddr, clientPort);
 					dgramSocket.send(outPacket);
 				}
 			}
