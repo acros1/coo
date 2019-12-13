@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.*;
 
 
@@ -25,11 +26,17 @@ public class User {
     public String passwd;
     public int id;
     public Agent agent;
+    private InetAddress addr;
     
     public User(Agent agent, int id) {
         this.agent = agent; 
         this.id = id; 
         System.out.println("Je suis un user créé avec l'id : " + id);        
+    }
+    
+    public User(String pseudo, InetAddress addr) {
+        this.pseudo = pseudo;
+        this.addr = addr;
     }
     
     public int changePseudo() throws IOException {
