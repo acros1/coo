@@ -12,8 +12,8 @@ public class Main {
      public static void main(String arg[]) throws IOException  {
         Agent agent1 = new Agent();
         Agent agent2 = new Agent();
-        User user1 = User.userLogin(agent1);
-        User user2 = User.userLogin(agent2);
+        User user1 = User.userLogin();
+        User user2 = User.userLogin();
         Session ses1 = new Session(user1,user2);
         user1.choosePseudo();
         user2.choosePseudo();
