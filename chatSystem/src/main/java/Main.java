@@ -18,7 +18,7 @@ public class Main {
         user1.choosePseudo();
         user2.choosePseudo();
         ses1.getHistory();
-         
+       
      }
      
 }

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Interface;
 
 /**
  *
- * @author al_cros
+ * @author Maeln
  */
-import javax.swing.*;
-public class Interface {
+public class Panel {
     
 }
