@@ -8,6 +8,7 @@
  *
  * @author al_cros
  */
+package chatsystemproject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,76 +17,78 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.*;
 
 
 public class User {
     
-    public String pseudo;
-    public String login;
-    public String passwd;
-    public int id;
-    public Agent agent;
+    private String pseudo;
+    private String login;
+    private String passwd;
+    private int id;
     private InetAddress addr;
-    
-    public User(Agent agent, int id) {
-        this.agent = agent; 
-        this.id = id; 
-        System.out.println("Je suis un user créé avec l'id : " + id);        
-    }
     
     public User(String pseudo, InetAddress addr) {
         this.pseudo = pseudo;
         this.addr = addr;
     }
     
-    public int changePseudo() throws IOException {
+    public User(String pseudo, InetAddress addr, int id) {
+        this.pseudo = pseudo;
+        this.addr = addr;
+        this.id = id;
+    }
+    
+    public int changePseudo() {
         int ret = -1;
         File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a pseudonym : ");
         String newPseudo = sc.nextLine();
-        while((this.isPseudoValid(newPseudo,file))== -1){
-            
-        }
-        if((this.isPseudoValid(newPseudo,file))== -1){
-            this.pseudo = newPseudo;
-            ret = 0;
+        try {
+            while((this.isPseudoValid(newPseudo, file)) == -1){
+                System.out.println("Pseudonym already taken");
+                System.out.println("Please choose another pseudonym : ");
+                pseudo = sc.nextLine();
+            }
+            if((this.isPseudoValid(newPseudo, file))== -1){
+                this.pseudo = newPseudo;
+                ret = 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         
         return ret;
     }
     
-    public int choosePseudo() throws IOException {
+    public int choosePseudo() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a pseudonym : ");
         String pseudo = sc.nextLine();
         File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Pseudo");
-        if(!file.exists()){     
-            file.createNewFile();
-        }
-        
-        while((this.isPseudoValid(pseudo,file)) != -1){
-            System.out.println("Pseudonym already taken");
-            System.out.println("Please choose another pseudonym : ");
-            pseudo = sc.nextLine();
-        }
-
         try {
+            if(!file.exists()){     
+                file.createNewFile();
+            }
+
+            while((this.isPseudoValid(pseudo,file)) != -1){
+                System.out.println("Pseudonym already taken");
+                System.out.println("Please choose another pseudonym : ");
+                pseudo = sc.nextLine();
+            }
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(pseudo + "\n\n");
             bw.close();
         }
         catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return 0;
     }
-    
-    public Agent getAgent(){
-        return this.agent;
-    }
+ 
    /*
     Function to login to a created user, it supposed to have an account (create_user)
     */
@@ -108,8 +111,13 @@ public class User {
         id = User.isPasswdValid(passwd, pos+1);
         System.out.println(id);
         System.out.println("Good");
-        User user = new User(null,id); // remplacer null par agent
+        try {
+        User user = new User(null, InetAddress.getLocalHost(),id); // remplacer null par agent
         return user;
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     
@@ -117,7 +125,7 @@ public class User {
     It is the function to create a user, choosing a login and a password,
     it is based on what is typed by the user himself.
     */
-    public static int createUser() throws IOException{
+    public static int createUser() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a login : ");
         String login = sc.nextLine();
@@ -130,8 +138,13 @@ public class User {
         String passwd = sc.nextLine();
         
         File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
-        if(!file.exists()){     
-            file.createNewFile();
+        
+        try {
+            if(!file.exists()){     
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         
         try {
@@ -244,7 +257,7 @@ public class User {
         }
         return ret;
     }
-    
+        
     public String getPseudo() {
         return this.pseudo;
     }

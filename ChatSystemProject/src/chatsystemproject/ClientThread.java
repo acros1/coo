@@ -8,6 +8,8 @@
  *
  * @author Alex
  */
+package chatsystemproject;
+        
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -30,27 +32,30 @@ public class ClientThread implements Runnable {
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
 			tUdp.start();
-			Scanner scan = new Scanner(System.in);
-			String input = null;
-			System.out.println("Your name :");
-			String pseudo = scan.nextLine();
-			mainUser = new User(pseudo, null);
-		
-			// Sending new connection alert
-			DatagramSocket dgramSocket = new DatagramSocket();
-
-			String alert = pseudo;
-			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), 
-											alert.length(), 
-											InetAddress.getByName("255.255.255.255"), 4000);
+			// Creating dgram socket
+                        DatagramSocket dgramSocket = new DatagramSocket();
+                        // Asking for user to identify himself
+			mainUser = User.userLogin();
+                        // Sending alert to get connected users list
+                        String alert = "alert";
+                        DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
-
+                        // Asking for user to choose a pseudo                        
+                        mainUser.choosePseudo();
+			// Sending pseudo to other users
+			alert = mainUser.getPseudo();
+			outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			dgramSocket.send(outPacket);
+                        
+                        // Asking for command to define what user want to do
+                        Scanner scan = new Scanner(System.in);
+			String input = null;
 			while(true) {
 				System.out.println("Command (list or send) :");
 				input = scan.nextLine();
 				command(input);
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}            
    	}
@@ -68,7 +73,7 @@ public class ClientThread implements Runnable {
 
 		else if(input.equals("send")) {
 			// Printing users list
-			if (listenerThread.getClientList().size() == 0) {
+			if (listenerThread.getClientList().isEmpty()) {
 				System.out.println("<No user connected>");
 			}
 			else {
@@ -98,8 +103,6 @@ public class ClientThread implements Runnable {
 		return this.mainUser.getPseudo();
 	}
 
-	public static void main (String[] args) {
-		new Thread(new ClientThread()).start();
-	}              
+	//public static void main (String[] args) {}              
 } 
 

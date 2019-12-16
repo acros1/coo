@@ -8,10 +8,7 @@
  *
  * @author al_cros
  */
-import java.net.*;
-import java.util.*;
-import java.text.*;
-import java.io.*;
+package chatsystemproject;
 
 public class History {
     
@@ -20,6 +17,5 @@ public class History {
     
     int id1 = user1.getId();
     int id2 = user2.getId();
-    
-    
+
 }

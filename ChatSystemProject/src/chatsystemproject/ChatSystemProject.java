@@ -16,6 +16,7 @@ public class ChatSystemProject {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new Thread(new ClientThread()).start();
     }
     
 }

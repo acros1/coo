@@ -8,6 +8,8 @@
  *
  * @author al_cros
  */
+package chatsystemproject;
+
 import java.util.*;
 
 public class Message {

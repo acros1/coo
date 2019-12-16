@@ -8,6 +8,7 @@ import java.io.*;
  *
  * @author al_cros
  */
+/*
 public class Main {
      public static void main(String arg[]) throws IOException  {
         Agent agent1 = new Agent();
@@ -17,8 +18,8 @@ public class Main {
         Session ses1 = new Session(user1,user2);
         user1.choosePseudo();
         user2.choosePseudo();
-        ses1.getHistory();
-         
+        ses1.getHistory();  
      }
      
 }
+*/
