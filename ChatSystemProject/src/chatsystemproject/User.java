@@ -30,7 +30,8 @@ public class User {
     
     public User(Agent agent, int id) {
         this.agent = agent; 
-        this.id = id;    
+        this.id = id; 
+        System.out.println("Je suis un user créé avec l'id : " + id);        
     }
     
     public User(String pseudo, InetAddress addr) {
