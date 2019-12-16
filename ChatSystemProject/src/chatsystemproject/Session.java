@@ -8,6 +8,7 @@
  *
  * @author al_cros
  */
+package chatsystemproject;
 
 import java.net.*;
 import java.util.*;

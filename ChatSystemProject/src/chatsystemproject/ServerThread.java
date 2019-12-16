@@ -8,6 +8,8 @@
  *
  * @author Alex
  */
+package chatsystemproject;
+
 import java.io.*;
 import java.net.*;
 
