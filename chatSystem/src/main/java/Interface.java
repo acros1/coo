@@ -8,6 +8,7 @@
  *
  * @author al_cros
  */
+import javax.swing.*;
 public class Interface {
     
 }

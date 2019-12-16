@@ -28,8 +28,7 @@ public class User {
     
     public User(Agent agent, int id) {
         this.agent = agent; 
-        this.id = id; 
-        System.out.println("Je suis un user créé avec l'id : " + id);        
+        this.id = id;    
     }
     
     public int changePseudo() throws IOException {
