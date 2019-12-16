@@ -23,6 +23,11 @@ import java.util.*;
 
 public class User {
     
+    private String hostUsername = System.getProperty("user.name");
+    private String usersPath = ;
+    private String pseudoPath =;
+    
+    
     private String pseudo;
     private String login;
     private String passwd;
