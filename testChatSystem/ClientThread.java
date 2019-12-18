@@ -20,19 +20,44 @@ public class ClientThread implements Runnable {
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
 			tUdp.start();
+
+			// Instanciating class Connection
+			Connection con = new Connection();
+			// Asking for password
 			Scanner scan = new Scanner(System.in);
-			String input = null;
-			System.out.println("Your name :");
-			String name = scan.nextLine();
-			mainUser = new User(name, null);
-		
-			// Sending new connection alert
+			System.out.println("Enter your password :");
+			String input = scan.nextLine();
+			// Checking psswd
+			while ( con.isPasswdGood(input) == -1 )  {
+				System.out.println("! Wrong password !");
+				System.out.println("Enter your password :");
+				input = scan.nextLine();
+			}
+			
+			// Creating datagram socket to send UDP messages
 			DatagramSocket dgramSocket = new DatagramSocket();
 
-			String alert = name;
-			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), 
-											alert.length(), 
-											InetAddress.getByName("255.255.255.255"), 4000);
+			// Sending alert to get connected users list
+			String msg = "alert";
+			DatagramPacket outPacket = new DatagramPacket(msg.getBytes(), msg.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			dgramSocket.send(outPacket);
+			
+			// Asking user for pseudo 
+			System.out.println("Enter your pseudo :");
+			input = scan.nextLine();
+			// While pseudo is already taken, ask for pseudo
+			while ( listenerThread.isUserExist(input) == true ) {
+				System.out.println("! Pseudo already taken !");
+				System.out.println("Enter your pseudo :");
+				input = scan.nextLine();
+			}
+
+			// Create user
+			mainUser = new User(input, null);
+		
+			// Sending name to others users
+			msg = input;
+			outPacket = new DatagramPacket(msg.getBytes(), msg.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
 			while(true) {
