@@ -21,7 +21,6 @@ public class UDPListener implements Runnable {
 				String clientName = new String(inPacket.getData(), 0, inPacket.getLength());
 				System.out.println("New broadcast alert receive, new user : " + clientName);
 				InetAddress clientAddr = inPacket.getAddress();
-				int clientPort = inPacket.getPort();
 				if (isUserRegistered(clientName) == false) {
 					sendUser(clientName, clientAddr);
 					System.out.println(clientName + " is not in the list yet," + 
@@ -30,7 +29,7 @@ public class UDPListener implements Runnable {
 					String response = clientThread.getMainUserName();
 
 					DatagramPacket outPacket = new DatagramPacket(response.getBytes(), 
-												response.length(), clientAddr, clientPort);
+												response.length(), clientAddr, 4000);
 					dgramSocket.send(outPacket);
 				}
 			}
