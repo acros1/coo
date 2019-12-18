@@ -23,9 +23,9 @@ import java.util.*;
 
 public class User {
     
-    private String hostUsername = System.getProperty("user.name");
-    private String usersPath = ;
-    private String pseudoPath =;
+    private static String hostUsername = System.getProperty("user.name");
+    private static String userPath = "C:\\Users\\" + hostUsername +"\\Documents\\Server\\Users";
+    private static String pseudoPath = "C:\\Users\\" + hostUsername + "\\Documents\\Server\\Pseudo";
     
     
     private String pseudo;
@@ -47,7 +47,7 @@ public class User {
     
     public int changePseudo() {
         int ret = -1;
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        File file = new File(userPath);
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a pseudonym : ");
         String newPseudo = sc.nextLine();
@@ -72,7 +72,7 @@ public class User {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please choose a pseudonym : ");
         String pseudo = sc.nextLine();
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Pseudo");
+        File file = new File(pseudoPath);
         try {
             if(!file.exists()){     
                 file.createNewFile();
@@ -142,7 +142,7 @@ public class User {
         System.out.println("Valid Login \nPlease choose a password :");
         String passwd = sc.nextLine();
         
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        File file = new File(userPath);
         
         try {
             if(!file.exists()){     
@@ -170,7 +170,7 @@ public class User {
     }
     
     public static int getMaxId(){
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        File file = new File(userPath);
         int i = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while ((br.readLine()) != null) {
@@ -190,7 +190,7 @@ public class User {
         int ret = 0;
    
         
-        File file = new File("C:\\Users\\Maeln\\Documents\\server\\Users");
+        File file = new File(userPath);
         if(!file.exists()){
             System.out.println("No Users created yet");    
         }
@@ -216,7 +216,7 @@ public class User {
     }
     
     public static int isPasswdValid(String passwd, int pos){
-        File file = new File("C:\\Users\\Maeln\\Documents\\Server\\Users");
+        File file = new File(userPath);
         if(!file.exists()){     
             System.err.println("No Users cretaed yet");
         }
