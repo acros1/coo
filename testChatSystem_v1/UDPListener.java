@@ -24,16 +24,27 @@ public class UDPListener implements Runnable {
 			while(true) {
 				// New user is connected, datagram reception
 				dgramSocket.receive(inPacket);
-				String clientName = new String(inPacket.getData(), 0, inPacket.getLength());
-				System.out.println("New broadcast alert receive, new user : " + clientName);
+				String data = new String(inPacket.getData(), 0, inPacket.getLength());
+				System.out.println("New broadcast alert receive, new user : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
 
+					// If data = "number" answer with the number of users in the list
+					if ( data.equals("number") ) {
+						// Getting size of the user list = number of users connected
+						String response = Integer.toString( listenerThread.getClientList().size() );
+						System.out.println("Receiving \"number\", answering with : " + response);
+						// Creating packet
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
+						dgramSocket.send(outPacket);
+					}
+
 					// If received pseudo is already is the list, don't add it in the list
-					if (isUserRegistered(clientName) == false) {
-						sendUser(clientName, clientAddr);
-						System.out.println(clientName + " is not in the list yet, answering with : " + clientThread.getMainUserName());
+					if (isUserRegistered(data) == false) {
+						sendUser(data, clientAddr);
+						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserName());
 
 						// Answering the new connection alert
 						String response = clientThread.getMainUserName();

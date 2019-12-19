@@ -22,15 +22,23 @@ public class ClientThread implements Runnable {
 			tUdp.start();
 			Scanner scan = new Scanner(System.in);
 			String input = null;
+			String data = null;
+			
+			// Creating datagram socket to send UDP messages
+			DatagramSocket dgramSocket = new DatagramSocket();
+
+			// Sending broadcast message with data "number" to get the number of users connected
+			data = "number";
+			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
+
 			System.out.println("Your name :");
 			String name = scan.nextLine();
 			mainUser = new User(name, null);
 		
-			// Sending new connection alert
-			DatagramSocket dgramSocket = new DatagramSocket();
+			
 
-			String alert = name;
-			DatagramPacket outPacket = new DatagramPacket(alert.getBytes(), alert.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			data = name;
+			outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
 			while(true) {
