@@ -1,6 +1,9 @@
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.DatagramSocket;
+import java.net.DatagramPacket;
 import java.util.Enumeration;
+import java.net.NetworkInterface;
 
 public class UDPListener implements Runnable {
 
@@ -14,55 +17,93 @@ public class UDPListener implements Runnable {
 
 	public void run() {
 		try {
-			// Creating datagram socket
+			// Counter to process only one time the message with number of users connected
+			int oneTimeCounter = 0;
+
+			// Creating datagram socket to send UDP messages
 			DatagramSocket dgramSocket = new DatagramSocket(4000);
+			// Creating buffer and packet to receive UDP messages
 			byte[] buffer = new byte[256];
 			DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
+
 			while(true) {
-				String number = null;
 				// Datagram reception
 				dgramSocket.receive(inPacket);
 				String data = new String(inPacket.getData(), 0, inPacket.getLength());
+				System.out.println("New broadcast received, data : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
-				// If host receive his own broadcast packet, nothing to do
+				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
-					// If message is "alert", send number of user and own pseudo
-					if (data.equals("alert")) {
-						String response = Integer.toString( listenerThread.getClientList().size() ) + "," + clientThread.getMainUserName();
+
+					// If data = "number" answer with the number of users in the list
+					if ( data.equals("number") ) {
+						// Getting size of the user list = number of users connected
+						String response = Integer.toString( listenerThread.getClientList().size() );
+						System.out.println("Receiving \"number\", answering with : " + response);
+						// Creating packet
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
 						dgramSocket.send(outPacket);
 					}
+					// Else if data is an integer, then ask for every connected users' pseudo
+					else if ( (isDataInteger(data) == true) && (oneTimeCounter <= 1) ) {
+						oneTimeCounter++;
+						int nUser = Integer.parseInt(data);
+						String response = "getName";
+						System.out.println("Receiving number of connected users, answering with : " + response);
+						// Creating packet
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
+						dgramSocket.send(outPacket);
 
-					// If the message is number and pseudo, register user until number = 0
-					else if ( data.indexOf(",") != (-1) ) {
-						int separator = data.indexOf(",");
-						String pseudo = null;
-						// Only for the first message
-						if (number == null) {
-						// Finding number of users
-							for (int i = 0 ; i < separator ; i++) {
-								number += data.charAt(i);
+						// Receiving every pseudo of connected user
+						while ( nUser > 0 ) {
+							// Receive message
+							dgramSocket.receive(inPacket);
+							data = new String(inPacket.getData(), 0, inPacket.getLength());
+							System.out.println("New pseudo received, data : " + data);
+							clientAddr = inPacket.getAddress();
+							// If user is not in the list yet
+							if (isUserRegistered(data) == false) {
+								// Add user to the list
+								sendUser(data, clientAddr);
 							}
+							nUser--;
 						}
-						// Finding pseudo
-						for (int i = (separator + 1) ; i <= data.length() ; i++ ) {
-							pseudo += data.charAt(i);
+					}
+					// Else if data = "getName", answer with main user pseudo
+					else if ( data.equals("getName") ) {
+						String response = clientThread.getMainUserName();
+						System.out.println("Receiving \"getName\", answering with : " + response);
+						// Creating packet
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
+						dgramSocket.send(outPacket);
+					}
+					// Else data is user name
+					else {
+						// If user is not in the list yet
+						if (isUserRegistered(data) == false) {
+							// Add it to the list
+							sendUser(data, clientAddr);
+							System.out.println(data + " is not in the list yet, adding him");
 						}
-						// Add the user to the list
-						sendUser(pseudo, clientAddr);
 					}
 
-					// Else message is a pseudo, if it's a not registered pseudo, add it to the users list
-					else if (isUserExist(data) == false) {
-							sendUser(data, clientAddr);
-							// Answering the new connection alert
-							String response = clientThread.getMainUserName();
-							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-							dgramSocket.send(outPacket);
-					}
+					/* If received pseudo is already is the list, don't add it in the list
+					if (isUserRegistered(data) == false) {
+						sendUser(data, clientAddr);
+						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserName());
+
+						// Answering the new connection alert
+						String response = clientThread.getMainUserName();
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						dgramSocket.send(outPacket);
+					}*/
+
 				}
-			}	
-		} catch (Exception e) {
+			}
+		} catch (IOException e) {
 			e.printStackTrace();
 		}  	
 
@@ -72,20 +113,24 @@ public class UDPListener implements Runnable {
 		listenerThread.addNewConnectedUser(name, addr);
 	}
 
-	public boolean isUserExist(String name) {
-		return listenerThread.isUserExist(name);
+	public boolean isUserRegistered(String name) {
+		return listenerThread.isUserRegistered(name);
 	}
 
+	// Function to test if clientAddr is equal to localhost
 	public boolean isItOwnIP(InetAddress clientAddr) {
 		try {
+			// Getting every interface of the computer
 			Enumeration e = NetworkInterface.getNetworkInterfaces();
 			
 			while(e.hasMoreElements()) {
 				NetworkInterface n = (NetworkInterface) e.nextElement();
+				// Getting address of every interfaces
 				Enumeration ee = n.getInetAddresses();
 				while (ee.hasMoreElements()) {
 					InetAddress i = (InetAddress) ee.nextElement();
 					// clientAddr is formated like "/X.X.X.X"
+					// If interface address is equal to clientAddr, return true
 					if ( clientAddr.toString().equals("/" + i.getHostAddress()) ) {
 						return true;
 					}
@@ -95,6 +140,16 @@ public class UDPListener implements Runnable {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	// Function to test if data is an Integer
+	public boolean isDataInteger(String data) {
+		try {
+			Integer.parseInt(data);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
 
 }

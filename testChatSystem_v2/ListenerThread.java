@@ -58,7 +58,7 @@ public class ListenerThread implements Runnable {
 		clientList.add(new User(name, addr));
 	}  
 
-	public boolean isUserExist(String name) {
+	public boolean isUserRegistered(String name) {
 		for (User u : clientList) {
 			if (u.getName().equals(name)) {
 				return true;

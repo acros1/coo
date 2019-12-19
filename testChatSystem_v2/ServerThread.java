@@ -22,7 +22,7 @@ public class ServerThread implements Runnable {
 		    InputStream istream = sock.getInputStream();
 		    BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
-		    String receiveMessage;               
+		    String receiveMessage, sendMessage;               
 		    while(true) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
 					System.out.println(client.getName() + " > " + receiveMessage);         
