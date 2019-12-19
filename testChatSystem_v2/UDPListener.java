@@ -49,7 +49,7 @@ public class UDPListener implements Runnable {
 					else if ( (isDataInteger(data) == true) && (oneTimeCounter <= 1) ) {
 						oneTimeCounter++;
 						int nUser = Integer.parseInt(data);
-						String response = "getName";
+						String response = "getPseudo";
 						System.out.println("Receiving number of connected users, answering with : " + response);
 						// Creating packet
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
@@ -64,39 +64,39 @@ public class UDPListener implements Runnable {
 							System.out.println("New pseudo received, data : " + data);
 							clientAddr = inPacket.getAddress();
 							// If user is not in the list yet
-							if (isUserRegistered(data) == false) {
+							if (listenerThread.isUserExist(data) == false) {
 								// Add user to the list
-								sendUser(data, clientAddr);
+								listenerThread.addUser(data, clientAddr);
 							}
 							nUser--;
 						}
 					}
-					// Else if data = "getName", answer with main user pseudo
-					else if ( data.equals("getName") ) {
-						String response = clientThread.getMainUserName();
-						System.out.println("Receiving \"getName\", answering with : " + response);
+					// Else if data = "getPseudo", answer with main user pseudo
+					else if ( data.equals("getPseudo") ) {
+						String response = clientThread.getMainUserPseudo();
+						System.out.println("Receiving \"getPseudo\", answering with : " + response);
 						// Creating packet
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 						// Sending packet
 						dgramSocket.send(outPacket);
 					}
-					// Else data is user name
+					// Else data is user pseudo
 					else {
 						// If user is not in the list yet
-						if (isUserRegistered(data) == false) {
+						if ( listenerThread.isUserExist(data) == false ) {
 							// Add it to the list
-							sendUser(data, clientAddr);
+							listenerThread.addUser(data, clientAddr);
 							System.out.println(data + " is not in the list yet, adding him");
 						}
 					}
 
 					/* If received pseudo is already is the list, don't add it in the list
 					if (isUserRegistered(data) == false) {
-						sendUser(data, clientAddr);
-						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserName());
+						listenerThread.addUser(data, clientAddr);
+						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserPseudo());
 
 						// Answering the new connection alert
-						String response = clientThread.getMainUserName();
+						String response = clientThread.getMainUserPseudo();
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 						dgramSocket.send(outPacket);
 					}*/
@@ -107,14 +107,6 @@ public class UDPListener implements Runnable {
 			e.printStackTrace();
 		}  	
 
-	}
-
-	public void sendUser(String name, InetAddress addr) {
-		listenerThread.addNewConnectedUser(name, addr);
-	}
-
-	public boolean isUserRegistered(String name) {
-		return listenerThread.isUserRegistered(name);
 	}
 
 	// Function to test if clientAddr is equal to localhost

@@ -32,13 +32,13 @@ public class ClientThread implements Runnable {
 			data = "number";
 			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
 
-			System.out.println("Your name :");
-			String name = scan.nextLine();
-			mainUser = new User(name, null);
+			System.out.println("Your pseudo :");
+			String pseudo = scan.nextLine();
+			mainUser = new User(pseudo, null);
 		
 			
 
-			data = name;
+			data = pseudo;
 			outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			dgramSocket.send(outPacket);
 
@@ -59,7 +59,7 @@ public class ClientThread implements Runnable {
 		// Display users list
 		if(input.equals("list")) {
 			for(User u : listenerThread.getClientList()) {
-				System.out.println(u.getName());
+				System.out.println(u.getPseudo());
 			}
 		}
 
@@ -72,12 +72,12 @@ public class ClientThread implements Runnable {
 				// Asking for user to send msg
 				System.out.print("Which user : ");
 				for(User u : listenerThread.getClientList()) {
-					System.out.print(u.getName() + " | ");
+					System.out.print(u.getPseudo() + " | ");
 				}
 				System.out.println();
 				user = scan.nextLine();
 				for(User u : listenerThread.getClientList()) {
-					if(u.getName().equals(user)) {
+					if(u.getPseudo().equals(user)) {
 						ServerThread st = listenerThread.getServer(u);
 						System.out.println("Type your message :");
 						user = scan.nextLine(); // ask for msg to send
@@ -91,8 +91,8 @@ public class ClientThread implements Runnable {
 		}
 	}
 
-	public String getMainUserName() {
-		return this.mainUser.getName();
+	public String getMainUserPseudo() {
+		return this.mainUser.getPseudo();
 	}
 
 	public static void main (String[] args) {

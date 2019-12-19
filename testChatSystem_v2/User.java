@@ -2,16 +2,16 @@ import java.net.*;
 
 public class User {
 
-	private String name = null;
+	private String pseudo = null;
 	private InetAddress addr = null;
 
-	public User(String name, InetAddress addr) {
-		this.name = name;
+	public User(String pseudo, InetAddress addr) {
+		this.pseudo = pseudo;
 		this.addr = addr;
 	}
 
-	public String getName() {
-		return this.name;
+	public String getPseudo() {
+		return this.pseudo;
 	}
 
 	public InetAddress getAddr() {

@@ -25,7 +25,7 @@ public class ServerThread implements Runnable {
 		    String receiveMessage, sendMessage;               
 		    while(true) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
-					System.out.println(client.getName() + " > " + receiveMessage);         
+					System.out.println(client.getPseudo() + " > " + receiveMessage);         
 				}
 		    }  
 		} catch (Exception e) {
