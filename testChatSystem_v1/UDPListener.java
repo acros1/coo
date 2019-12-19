@@ -45,7 +45,7 @@ public class UDPListener implements Runnable {
 						// Sending packet
 						dgramSocket.send(outPacket);
 					}
-					// Else if data is an integer, then ask for every users' pseudo connected
+					// Else if data is an integer, then ask for every connected users' pseudo
 					else if ( (isDataInteger(data) == true) && (oneTimeCounter <= 1) ) {
 						oneTimeCounter++;
 						int nUser = Integer.parseInt(data);
@@ -71,8 +71,26 @@ public class UDPListener implements Runnable {
 							nUser--;
 						}
 					}
+					// Else if data = "getName", answer with main user pseudo
+					else if ( data.equals("getName") ) {
+						String response = clientThread.getMainUserName();
+						System.out.println("Receiving \"getName\", answering with : " + response);
+						// Creating packet
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
+						dgramSocket.send(outPacket);
+					}
+					// Else data is user name
+					else {
+						// If user is not in the list yet
+						if (isUserRegistered(data) == false) {
+							// Add it to the list
+							sendUser(data, clientAddr);
+							System.out.println(data + " is not in the list yet, adding him");
+						}
+					}
 
-					// If received pseudo is already is the list, don't add it in the list
+					/* If received pseudo is already is the list, don't add it in the list
 					if (isUserRegistered(data) == false) {
 						sendUser(data, clientAddr);
 						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserName());
@@ -81,7 +99,7 @@ public class UDPListener implements Runnable {
 						String response = clientThread.getMainUserName();
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 						dgramSocket.send(outPacket);
-					}
+					}*/
 
 				}
 			}

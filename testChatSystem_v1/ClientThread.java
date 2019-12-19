@@ -1,4 +1,4 @@
-import java.io.*;
+import java.io.IOException;
 import java.net.*;
 import java.util.*;
 
@@ -47,7 +47,7 @@ public class ClientThread implements Runnable {
 				input = scan.nextLine();
 				command(input);
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}            
    	}
