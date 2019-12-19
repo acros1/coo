@@ -17,15 +17,20 @@ public class UDPListener implements Runnable {
 
 	public void run() {
 		try {
+			// Counter to process only one time the message with number of users connected
+			int oneTimeCounter = 0;
+
+			// Creating datagram socket to send UDP messages
 			DatagramSocket dgramSocket = new DatagramSocket(4000);
+			// Creating buffer and packet to receive UDP messages
 			byte[] buffer = new byte[256];
 			DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
 
 			while(true) {
-				// New user is connected, datagram reception
+				// Datagram reception
 				dgramSocket.receive(inPacket);
 				String data = new String(inPacket.getData(), 0, inPacket.getLength());
-				System.out.println("New broadcast alert receive, new user : " + data);
+				System.out.println("New broadcast received, data : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
@@ -39,6 +44,32 @@ public class UDPListener implements Runnable {
 						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 						// Sending packet
 						dgramSocket.send(outPacket);
+					}
+					// Else if data is an integer, then ask for every users' pseudo connected
+					else if ( (isDataInteger(data) == true) && (oneTimeCounter <= 1) ) {
+						oneTimeCounter++;
+						int nUser = Integer.parseInt(data);
+						String response = "getName";
+						System.out.println("Receiving number of connected users, answering with : " + response);
+						// Creating packet
+						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+						// Sending packet
+						dgramSocket.send(outPacket);
+
+						// Receiving every pseudo of connected user
+						while ( nUser > 0 ) {
+							// Receive message
+							dgramSocket.receive(inPacket);
+							data = new String(inPacket.getData(), 0, inPacket.getLength());
+							System.out.println("New pseudo received, data : " + data);
+							clientAddr = inPacket.getAddress();
+							// If user is not in the list yet
+							if (isUserRegistered(data) == false) {
+								// Add user to the list
+								sendUser(data, clientAddr);
+							}
+							nUser--;
+						}
 					}
 
 					// If received pseudo is already is the list, don't add it in the list
@@ -91,6 +122,16 @@ public class UDPListener implements Runnable {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	// Function to test if data is an Integer
+	public boolean isDataInteger(String data) {
+		try {
+			Integer.parseInt(data);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
 
 }
