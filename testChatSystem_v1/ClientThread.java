@@ -28,6 +28,7 @@ public class ClientThread implements Runnable {
 			DatagramSocket dgramSocket = new DatagramSocket();
 
 			// Sending broadcast message with data "number" to get the number of users connected
+			System.out.println("Sending broadcast \"number\"");
 			data = "number";
 			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
 
