@@ -33,7 +33,7 @@ public class UDPListener implements Runnable {
 				System.out.println("New broadcast received, data : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
-				//if ( isItOwnIP(clientAddr) == false ) {
+				if ( isItOwnIP(clientAddr) == false ) {
 
 					// If data = "number" answer with the number of users in the list
 					if ( data.equals("number") ) {
@@ -101,7 +101,7 @@ public class UDPListener implements Runnable {
 						dgramSocket.send(outPacket);
 					}*/
 
-				//}
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
