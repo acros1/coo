@@ -1,1 +1,18 @@
-First commit
+Pour tester la v1, commande : "java ClientThread"
+
+ClientThread contient le main.
+Le main instancie ClientThread
+ClientThread gère le reste.
+
+ClientThread instancie client ListenerThread.
+ListenerThread créé un thread server ServerThread associé à un user et un socket.
+
+ClientThread instancie UDPListener.
+UDPListener recoit les messages de nouvelles connexions.
+Si l'utilisateur n'est pas déjà présent dans la liste, il l'ajoute, puis répond en envoyant son nom.
+
+Reste à faire :
+- Gestion de l'unicité du pseudo
+- Gestion d'un historique
+- Gestion de la deconnexion
+- Gestion du changement de pseudo
