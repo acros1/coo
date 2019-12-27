@@ -28,7 +28,7 @@ public class ClientThread implements Runnable {
 			// Asking for pseudo
 			System.out.println("Your pseudo :");
 			this.pseudo = scan.nextLine();
-			
+
 			Thread tListener = new Thread(listenerThread);
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
@@ -51,7 +51,11 @@ public class ClientThread implements Runnable {
 
 			//mainUser = new User(pseudo, null);
 		
-			
+			try {
+				Thread.sleep(5000);	
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
 			while(true) {
 				System.out.println("Command (list or send) :");
