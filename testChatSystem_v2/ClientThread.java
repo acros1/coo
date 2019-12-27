@@ -52,11 +52,11 @@ public class ClientThread implements Runnable {
 			}*/
 
 			while( true ) {
-				while ( this.isPseusoOk == true) {
+				while ( this.isPseusoOk == false) { }
 					System.out.println("Command (list or send) :");
 					this.input = this.scan.nextLine();
 					command(this.input);
-				}
+				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
