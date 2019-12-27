@@ -76,10 +76,15 @@ public class UDPListener implements Runnable {
 						// else pseudo is not the same
 						else {
 							// Answering with true boolean
-							System.out.println("Pseudo is already mine, sending true");
+							System.out.println("Pseudo is different of mine, sending true");
 							String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo();
 							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 							dgramSocket.send(outPacket);
+							// Add user to the list
+							if ( listenerThread.isUserExist(data) == false ) {
+								System.out.println("Client is not in the list, adding him");
+								listenerThread.addUser(data, clientAddr);
+							}
 						}
 					}
 
