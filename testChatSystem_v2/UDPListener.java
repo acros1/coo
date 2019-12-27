@@ -38,7 +38,7 @@ public class UDPListener implements Runnable {
 						System.out.println("Received an answer to pseudo broadcast");
 						String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
 						// dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo
-
+						System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]);
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
