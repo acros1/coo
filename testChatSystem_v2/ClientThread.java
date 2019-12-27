@@ -106,7 +106,7 @@ public class ClientThread implements Runnable {
 		return this.pseudo;
 	}
 
-	public void chansePseudoState(boolean state) {
+	public void changePseudoState(boolean state) {
 		this.isPseusoOk = state;
 	}
 

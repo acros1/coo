@@ -43,7 +43,7 @@ public class UDPListener implements Runnable {
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
 							if ( dataSplit[2].equals("false") ) {
-								clientThread.chansePseudoState(false);
+								clientThread.changePseudoState(false);
 								System.out.println("Pseudo is already used by another client");
 								clientThread.changePseudo();
 								// !!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
@@ -55,7 +55,7 @@ public class UDPListener implements Runnable {
 							}
 							// boolean = true, then pseudo is not used by this client so just add client to the users list
 							else {
-								clientThread.chansePseudoState(true);
+								clientThread.changePseudoState(true);
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
@@ -89,7 +89,7 @@ public class UDPListener implements Runnable {
 							}
 						}
 					}
-
+					clientThread.changePseudoState(true);
 				}
 			}
 		} catch (IOException e) {
