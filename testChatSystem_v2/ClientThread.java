@@ -52,7 +52,7 @@ public class ClientThread implements Runnable {
 			}*/
 
 			while( true ) {
-				while ( this.isPseusoOk ) {
+				while ( this.isPseusoOk == true) {
 					System.out.println("Command (list or send) :");
 					this.input = this.scan.nextLine();
 					command(this.input);
