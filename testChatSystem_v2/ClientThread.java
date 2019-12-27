@@ -16,7 +16,7 @@ public class ClientThread implements Runnable {
 	private Scanner scan = new Scanner(System.in);
 	private String input = null;
 
-	private boolean isPseusoOk = false;
+	private boolean isPseusoOk = true;
 
 	public ClientThread() {
 		listenerThread = new ListenerThread();
@@ -51,10 +51,12 @@ public class ClientThread implements Runnable {
 				e.printStackTrace();
 			}*/
 
-			while( true && (this.isPseusoOk == true) ) {
-				System.out.println("Command (list or send) :");
-				this.input = this.scan.nextLine();
-				command(this.input);
+			while( true ) {
+				while ( this.isPseusoOk ) {
+					System.out.println("Command (list or send) :");
+					this.input = this.scan.nextLine();
+					command(this.input);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
