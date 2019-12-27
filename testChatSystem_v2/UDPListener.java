@@ -55,7 +55,7 @@ public class UDPListener implements Runnable {
 							}
 							// boolean = true, then pseudo is not used by this client so just add client to the users list
 							else {
-								clientThread.chansePseudoState(false);
+								clientThread.chansePseudoState(true);
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
