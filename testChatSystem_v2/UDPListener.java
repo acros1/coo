@@ -17,9 +17,6 @@ public class UDPListener implements Runnable {
 
 	public void run() {
 		try {
-			// Counter to process only one time the message with number of users connected
-			int oneTimeCounter = 0;
-
 			// Creating datagram socket to send UDP messages
 			DatagramSocket dgramSocket = new DatagramSocket(4000);
 			// Creating buffer and packet to receive UDP messages
@@ -35,71 +32,56 @@ public class UDPListener implements Runnable {
 				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
 
-					// If data = "number" answer with the number of users in the list
-					if ( data.equals("number") ) {
-						// Getting size of the user list = number of users connected
-						String response = Integer.toString( listenerThread.getClientList().size() );
-						System.out.println("Receiving \"number\", answering with : " + response);
-						// Creating packet
-						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-						// Sending packet
-						dgramSocket.send(outPacket);
-					}
-					// Else if data is an integer, then ask for every connected users' pseudo
-					else if ( (isDataInteger(data) == true) && (oneTimeCounter <= 1) ) {
-						oneTimeCounter++;
-						int nUser = Integer.parseInt(data);
-						String response = "getPseudo";
-						System.out.println("Receiving number of connected users, answering with : " + response);
-						// Creating packet
-						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-						// Sending packet
-						dgramSocket.send(outPacket);
+					// If first char is "|", then message is an answer of pseudo broadcast
+					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
+					if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
+						System.out.println("Received an answer to pseudo broadcast");
+						String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
+						// dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo
 
-						// Receiving every pseudo of connected user
-						while ( nUser > 0 ) {
-							// Receive message
-							dgramSocket.receive(inPacket);
-							data = new String(inPacket.getData(), 0, inPacket.getLength());
-							System.out.println("New pseudo received, data : " + data);
-							clientAddr = inPacket.getAddress();
-							// If user is not in the list yet
-							if (listenerThread.isUserExist(data) == false) {
-								// Add user to the list
-								listenerThread.addUser(data, clientAddr);
+						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
+						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
+							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
+							if ( dataSplit[2].equals("false") ) {
+								System.out.println("Pseudo is already used by another client");
+								clientThread.changePseudo();
+								// !!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
+								// if clientUser is not in the list yet, add him
+								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
+									System.out.println("Client is not in the list, adding him");
+									listenerThread.addUser(dataSplit[3], clientAddr);
+								}
 							}
-							nUser--;
+							// boolean = true, then pseudo is not used by this client so just add client to the users list
+							else {
+								// if clientUser is not in the list yet, add him
+								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
+									System.out.println("Client is not in the list, adding him");
+									listenerThread.addUser(dataSplit[3], clientAddr);
+								}
+							}
 						}
+
 					}
-					// Else if data = "getPseudo", answer with main user pseudo
-					else if ( data.equals("getPseudo") ) {
-						String response = clientThread.getMainUserPseudo();
-						System.out.println("Receiving \"getPseudo\", answering with : " + response);
-						// Creating packet
-						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-						// Sending packet
-						dgramSocket.send(outPacket);
-					}
-					// Else data is user pseudo
+					// Else it's a pseudo broadcast, then check if pseudo is not equal as main user pseudo
 					else {
-						// If user is not in the list yet
-						if ( listenerThread.isUserExist(data) == false ) {
-							// Add it to the list
-							listenerThread.addUser(data, clientAddr);
-							System.out.println(data + " is not in the list yet, adding him");
+						// if pseudo is the same as main user pseudo
+						if ( data.equals(clientThread.getMainUserPseudo()) ) {
+							// Answering wiith false boolean
+							System.out.println("Pseudo is already mine, sending false");
+							String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
+							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+							dgramSocket.send(outPacket);
+						}
+						// else pseudo is not the same
+						else {
+							// Answering with true boolean
+							System.out.println("Pseudo is already mine, sending true");
+							String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo();
+							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+							dgramSocket.send(outPacket);
 						}
 					}
-
-					/* If received pseudo is already is the list, don't add it in the list
-					if (isUserRegistered(data) == false) {
-						listenerThread.addUser(data, clientAddr);
-						System.out.println(data + " is not in the list yet, answering with : " + clientThread.getMainUserPseudo());
-
-						// Answering the new connection alert
-						String response = clientThread.getMainUserPseudo();
-						DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-						dgramSocket.send(outPacket);
-					}*/
 
 				}
 			}

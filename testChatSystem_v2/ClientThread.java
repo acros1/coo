@@ -5,9 +5,17 @@ import java.util.*;
 public class ClientThread implements Runnable {
 
 	private User mainUser = null;
+	private String pseudo = null;
 
 	private ListenerThread listenerThread = null;
 	private UDPListener udpListener = null;
+
+	private DatagramPacket outPacket = null;
+	private DatagramSocket dgramSocket = null;
+
+	private Scanner scan = new Scanner(System.in);
+	private String input = null;
+	//private String data = null;
 
 	public ClientThread() {
 		listenerThread = new ListenerThread();
@@ -20,32 +28,32 @@ public class ClientThread implements Runnable {
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
 			tUdp.start();
-			Scanner scan = new Scanner(System.in);
-			String input = null;
-			String data = null;
-			
+						
 			// Creating datagram socket to send UDP messages
-			DatagramSocket dgramSocket = new DatagramSocket();
-
+			this.dgramSocket = new DatagramSocket();
+			
+			/*
 			// Sending broadcast message with data "number" to get the number of users connected
 			System.out.println("Sending broadcast \"number\"");
 			data = "number";
 			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			*/
 
+			// Asking for pseudo
 			System.out.println("Your pseudo :");
-			String pseudo = scan.nextLine();
-			mainUser = new User(pseudo, null);
+			this.pseudo = scan.nextLine();
+			// Broadcasting pseudo
+			this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			this.dgramSocket.send(this.outPacket);
+
+			//mainUser = new User(pseudo, null);
 		
 			
 
-			data = pseudo;
-			outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
-			dgramSocket.send(outPacket);
-
 			while(true) {
 				System.out.println("Command (list or send) :");
-				input = scan.nextLine();
-				command(input);
+				this.input = this.scan.nextLine();
+				command(this.input);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -92,7 +100,20 @@ public class ClientThread implements Runnable {
 	}
 
 	public String getMainUserPseudo() {
-		return this.mainUser.getPseudo();
+		return this.pseudo;
+	}
+
+	public void changePseudo() {
+		try {
+			// Asking for pseudo
+			System.out.println("Your new pseudo :");
+			this.pseudo = scan.nextLine();
+			// Broadcasting pseudo
+			this.outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+			this.dgramSocket.send(this.outPacket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main (String[] args) {
