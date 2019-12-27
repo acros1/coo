@@ -15,7 +15,8 @@ public class ClientThread implements Runnable {
 
 	private Scanner scan = new Scanner(System.in);
 	private String input = null;
-	//private String data = null;
+
+	private boolean isPseusoOk = false;
 
 	public ClientThread() {
 		listenerThread = new ListenerThread();
@@ -29,6 +30,7 @@ public class ClientThread implements Runnable {
 			System.out.println("Your pseudo :");
 			this.pseudo = scan.nextLine();
 
+			// Starting threads
 			Thread tListener = new Thread(listenerThread);
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
@@ -37,27 +39,19 @@ public class ClientThread implements Runnable {
 			// Creating datagram socket to send UDP messages
 			this.dgramSocket = new DatagramSocket();
 			
-			/*
-			// Sending broadcast message with data "number" to get the number of users connected
-			System.out.println("Sending broadcast \"number\"");
-			data = "number";
-			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
-			*/
-
-			
 			// Broadcasting pseudo
 			this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			this.dgramSocket.send(this.outPacket);
 
 			//mainUser = new User(pseudo, null);
 		
-			try {
+			/*try {
 				Thread.sleep(5000);	
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 
-			while(true) {
+			while( true && (this.isPseusoOk == true) ) {
 				System.out.println("Command (list or send) :");
 				this.input = this.scan.nextLine();
 				command(this.input);
@@ -108,6 +102,10 @@ public class ClientThread implements Runnable {
 
 	public String getMainUserPseudo() {
 		return this.pseudo;
+	}
+
+	public void chansePseudoState(boolean state) {
+		this.isPseusoOk = state;
 	}
 
 	public void changePseudo() {

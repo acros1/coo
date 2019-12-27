@@ -43,6 +43,7 @@ public class UDPListener implements Runnable {
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
 							if ( dataSplit[2].equals("false") ) {
+								clientThread.chansePseudoState(false);
 								System.out.println("Pseudo is already used by another client");
 								clientThread.changePseudo();
 								// !!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
@@ -54,6 +55,7 @@ public class UDPListener implements Runnable {
 							}
 							// boolean = true, then pseudo is not used by this client so just add client to the users list
 							else {
+								clientThread.chansePseudoState(false);
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
@@ -67,7 +69,7 @@ public class UDPListener implements Runnable {
 					else {
 						// if pseudo is the same as main user pseudo
 						if ( data.equals(clientThread.getMainUserPseudo()) ) {
-							// Answering wiith false boolean
+							// Answering with false boolean
 							System.out.println("Pseudo is already mine, sending false");
 							String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
 							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
