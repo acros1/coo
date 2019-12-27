@@ -24,6 +24,11 @@ public class ClientThread implements Runnable {
 
 	public void run() {
 		try {
+			
+			// Asking for pseudo
+			System.out.println("Your pseudo :");
+			this.pseudo = scan.nextLine();
+			
 			Thread tListener = new Thread(listenerThread);
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
@@ -39,9 +44,7 @@ public class ClientThread implements Runnable {
 			DatagramPacket outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			*/
 
-			// Asking for pseudo
-			System.out.println("Your pseudo :");
-			this.pseudo = scan.nextLine();
+			
 			// Broadcasting pseudo
 			this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			this.dgramSocket.send(this.outPacket);
