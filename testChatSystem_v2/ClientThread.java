@@ -16,7 +16,7 @@ public class ClientThread implements Runnable {
 	private Scanner scan = new Scanner(System.in);
 	private String input = null;
 
-	private boolean isPseusoOk = true;
+	private boolean isPseusoOk = false;
 
 	public ClientThread() {
 		listenerThread = new ListenerThread();
@@ -25,16 +25,16 @@ public class ClientThread implements Runnable {
 
 	public void run() {
 		try {
-			
-			// Asking for pseudo
-			System.out.println("Your pseudo :");
-			this.pseudo = scan.nextLine();
-
 			// Starting threads
 			Thread tListener = new Thread(listenerThread);
 			tListener.start();
 			Thread tUdp = new Thread(udpListener);
 			tUdp.start();
+			// Asking for pseudo
+			System.out.println("Your pseudo :");
+			this.pseudo = scan.nextLine();
+
+			
 						
 			// Creating datagram socket to send UDP messages
 			this.dgramSocket = new DatagramSocket();
