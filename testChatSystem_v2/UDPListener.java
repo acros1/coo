@@ -42,7 +42,12 @@ public class UDPListener implements Runnable {
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
-							if ( dataSplit[2].equals("false") ) {
+							// if packet is comming from localhost, validate pseudo
+							if ( isItOwnIP(clientAddr) == false ) {
+								clientThread.changePseudoState(false);
+								System.out.println("Packet comming from me ; isPseudoOk = " + clientThread.getIsPseudoOk());
+							}
+							else if ( dataSplit[2].equals("false") ) {
 								clientThread.changePseudoState(false);
 								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
 								System.out.println("Pseudo is already used by another client");
