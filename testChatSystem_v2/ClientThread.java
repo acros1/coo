@@ -121,6 +121,13 @@ public class ClientThread implements Runnable {
 			// Broadcasting pseudo
 			this.outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
 			this.dgramSocket.send(this.outPacket);
+
+			try {
+				Thread.sleep(5000);	
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
