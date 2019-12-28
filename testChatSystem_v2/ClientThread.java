@@ -115,17 +115,17 @@ public class ClientThread implements Runnable {
 	*/
 
 	public void changePseudo() {
-		try {
+		//try {
 			// Asking for pseudo
 			System.out.println("Your new pseudo :");
 			this.pseudo = scan.nextLine();
 			// Broadcasting pseudo
 			this.broadcastPseudo();
 			// Asking user which action realise
-			this.command();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			//this.command();
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+		//}
 	}
 
 	public static void main (String[] args) {
