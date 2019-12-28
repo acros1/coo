@@ -42,12 +42,7 @@ public class UDPListener implements Runnable {
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
-							// if packet is comming from localhost, validate pseudo
-							if ( isItOwnIP(clientAddr) == false ) {
-								clientThread.changePseudoState(false);
-								System.out.println("Packet comming from me ; isPseudoOk = " + clientThread.getIsPseudoOk());
-							}
-							else if ( dataSplit[2].equals("false") ) {
+							if ( dataSplit[2].equals("false") ) {
 								clientThread.changePseudoState(false);
 								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
 								System.out.println("Pseudo is already used by another client");
@@ -76,11 +71,18 @@ public class UDPListener implements Runnable {
 					else {
 						// if pseudo is the same as main user pseudo
 						if ( data.equals(clientThread.getMainUserPseudo()) ) {
-							// Answering with false boolean
-							System.out.println("Pseudo is already mine, sending false");
-							String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
-							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-							dgramSocket.send(outPacket);
+							// if packet is comming from localhost, validate pseudo and do not answer
+							if ( isItOwnIP(clientAddr) == false ) {
+								clientThread.changePseudoState(false);
+								System.out.println("Packet comming from me ; isPseudoOk = " + clientThread.getIsPseudoOk());
+							}
+							else {
+								// Answering with false boolean
+								System.out.println("Pseudo is already mine, sending false");
+								String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
+								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+								dgramSocket.send(outPacket);
+							}
 						}
 						// else pseudo is not the same
 						else {
