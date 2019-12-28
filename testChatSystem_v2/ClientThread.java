@@ -44,11 +44,11 @@ public class ClientThread implements Runnable {
 
 			//mainUser = new User(pseudo, null);
 		
-			/*try {
+			try {
 				Thread.sleep(5000);	
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}*/
+			}
 
 			while( true ) {
 				while ( this.isPseudoOk == true) {

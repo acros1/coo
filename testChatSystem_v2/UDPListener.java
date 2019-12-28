@@ -72,8 +72,8 @@ public class UDPListener implements Runnable {
 						// if pseudo is the same as main user pseudo
 						if ( data.equals(clientThread.getMainUserPseudo()) ) {
 							// if packet is comming from localhost, validate pseudo and do not answer
-							if ( isItOwnIP(clientAddr) == false ) {
-								clientThread.changePseudoState(false);
+							if ( isItOwnIP(clientAddr) == true ) {
+								clientThread.changePseudoState(true);
 								System.out.println("Packet comming from me ; isPseudoOk = " + clientThread.getIsPseudoOk());
 							}
 							else {
