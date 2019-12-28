@@ -32,9 +32,15 @@ public class UDPListener implements Runnable {
 				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
 
+					// If first char is "#" pseudo has to be deleted from the list (disconection or pseudo already used)
+					if ( Character.toString( data.charAt(0) ).compareTo("#") == 0 ) {
+						System.out.println("Received a pseudo to delete");
+						String pseudoToDelete = data.substring(1);
+						listenerThread.deleteUser(pseudoToDelete);
+					}
 					// If first char is "|", then message is an answer of pseudo broadcast
 					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
-					if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
+					else if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
 						System.out.println("Received an answer to pseudo broadcast");
 						String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
 						// dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo

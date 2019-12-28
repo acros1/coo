@@ -56,7 +56,15 @@ public class ListenerThread implements Runnable {
 
 	public void addUser(String pseudo, InetAddress addr) {
 		clientList.add(new User(pseudo, addr));
-	}  
+	}
+
+	public void deleteUser(String pseudo) {
+		for (int i = 0 ; i < clientList.size() ; i++) {
+			if ( clientList.get(i).getPseudo().equals(pseudo) ) {
+				clientList.remove(i);
+			}
+		}
+	}
 
 	public boolean isUserExist(String pseudo) {
 		for (User u : clientList) {

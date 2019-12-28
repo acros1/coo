@@ -116,11 +116,19 @@ public class ClientThread implements Runnable {
 
 	public void changePseudo() {
 		//try {
+			String oldPseudo = "#" + this.pseudo;
 			// Asking for pseudo
 			System.out.println("Your new pseudo :");
 			this.pseudo = scan.nextLine();
 			// Broadcasting pseudo
 			this.broadcastPseudo();
+			// Broadcast message to delete old pseudo in other users list
+			try {
+				this.outPacket = new DatagramPacket(oldPseudo.getBytes(), oldPseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+				this.dgramSocket.send(this.outPacket);
+			} catch ( IOException e ) {
+				e.printStackTrace();
+			}
 			// Asking user which action realise
 			//this.command();
 		//} catch (Exception e) {
