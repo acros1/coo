@@ -30,7 +30,7 @@ public class UDPListener implements Runnable {
 				System.out.println("New broadcast received, data : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
-				if ( isItOwnIP(clientAddr) == false ) {
+				//if ( isItOwnIP(clientAddr) == false ) {
 
 					// If first char is "|", then message is an answer of pseudo broadcast
 					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
@@ -91,9 +91,9 @@ public class UDPListener implements Runnable {
 							}
 						}
 					}
-					clientThread.changePseudoState(true);
-					System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
-				}
+					//clientThread.changePseudoState(true);
+					//System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
+				//}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
