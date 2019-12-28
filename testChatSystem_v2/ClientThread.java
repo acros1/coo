@@ -16,7 +16,7 @@ public class ClientThread implements Runnable {
 	private Scanner scan = new Scanner(System.in);
 	private String input = null;
 
-	private boolean isPseudoOk = false;
+	//private boolean isPseudoOk = false;
 
 	public ClientThread() {
 		listenerThread = new ListenerThread();
@@ -35,76 +35,76 @@ public class ClientThread implements Runnable {
 			Thread tUdp = new Thread(udpListener);
 			tUdp.start();	
 
-			// Creating datagram socket to send UDP messages
+			// Initializing datagram socket to send UDP messages
 			this.dgramSocket = new DatagramSocket();
 			
 			// Broadcasting pseudo
-			this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
-			this.dgramSocket.send(this.outPacket);
+			this.broadcastPseudo();
+			
+			// Asking user which action realise
+			this.command();
 
-			//mainUser = new User(pseudo, null);
-		
-			try {
-				Thread.sleep(5000);	
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			while( true ) {
-				while ( this.isPseudoOk == true) {
-					System.out.println("Command (list or send) :");
-					this.input = this.scan.nextLine();
-					command(this.input);
-				}
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}            
    	}
 
-	public void command(String input) {
-		Scanner scan = new Scanner(System.in);
+	public void broadcastPseudo() {
+		try {
+		this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+		this.dgramSocket.send(this.outPacket);
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+	}
+
+	public void command() {
 		String user = null;
 
-		// Display users list
-		if(input.equals("list")) {
-			for(User u : listenerThread.getClientList()) {
-				System.out.println(u.getPseudo());
-			}
-		}
+		while ( true ) {
+			System.out.println("Command (list or send) :");
+			this.input = this.scan.nextLine();
 
-		else if(input.equals("send")) {
-			// Printing users list
-			if (listenerThread.getClientList().size() == 0) {
-				System.out.println("<No user connected>");
-			}
-			else {
-				// Asking for user to send msg
-				System.out.print("Which user : ");
+			// Display users list
+			if(this.input.equals("list")) {
 				for(User u : listenerThread.getClientList()) {
-					System.out.print(u.getPseudo() + " | ");
-				}
-				System.out.println();
-				user = scan.nextLine();
-				for(User u : listenerThread.getClientList()) {
-					if(u.getPseudo().equals(user)) {
-						ServerThread st = listenerThread.getServer(u);
-						System.out.println("Type your message :");
-						user = scan.nextLine(); // ask for msg to send
-						st.writeMessage(user);
-					}
-					else {
-						System.out.println("User not find");
-					}
+					System.out.println(u.getPseudo());
 				}
 			}
-		}
+
+			else if(this.input.equals("send")) {
+				// Printing users list
+				if (listenerThread.getClientList().size() == 0) {
+					System.out.println("<No user connected>");
+				}
+				else {
+					// Asking for user to send msg
+					System.out.print("Which user : ");
+					for(User u : listenerThread.getClientList()) {
+						System.out.print(u.getPseudo() + " | ");
+					}
+					System.out.println();
+					user = this.scan.nextLine();
+					for(User u : listenerThread.getClientList()) {
+						if(u.getPseudo().equals(user)) {
+							ServerThread st = listenerThread.getServer(u);
+							System.out.println("Type your message :");
+							user = this.scan.nextLine(); // ask for msg to send
+							st.writeMessage(user);
+						}
+						else {
+							System.out.println("User not find");
+						}
+					}
+				}
+			}
+		}	
 	}
 
 	public String getMainUserPseudo() {
 		return this.pseudo;
 	}
-
+	/*
 	public void changePseudoState(boolean state) {
 		this.isPseudoOk = state;
 	}
@@ -112,6 +112,7 @@ public class ClientThread implements Runnable {
 	public boolean getIsPseudoOk() {
 		return this.isPseudoOk;
 	}
+	*/
 
 	public void changePseudo() {
 		try {
@@ -119,15 +120,9 @@ public class ClientThread implements Runnable {
 			System.out.println("Your new pseudo :");
 			this.pseudo = scan.nextLine();
 			// Broadcasting pseudo
-			this.outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
-			this.dgramSocket.send(this.outPacket);
-
-			try {
-				Thread.sleep(5000);	
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
+			this.broadcastPseudo();
+			// Asking user which action realise
+			this.command();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

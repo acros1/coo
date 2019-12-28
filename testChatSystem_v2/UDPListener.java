@@ -30,7 +30,7 @@ public class UDPListener implements Runnable {
 				System.out.println("New broadcast received, data : " + data);
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
-				//if ( isItOwnIP(clientAddr) == false ) {
+				if ( isItOwnIP(clientAddr) == false ) {
 
 					// If first char is "|", then message is an answer of pseudo broadcast
 					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
@@ -38,16 +38,16 @@ public class UDPListener implements Runnable {
 						System.out.println("Received an answer to pseudo broadcast");
 						String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
 						// dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo
-						System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]);
+						System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\"");
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
 							if ( dataSplit[2].equals("false") ) {
-								clientThread.changePseudoState(false);
-								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
+								/*clientThread.changePseudoState(false);
+								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
 								System.out.println("Pseudo is already used by another client");
 								clientThread.changePseudo();
-								// !!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
+								// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
@@ -56,8 +56,8 @@ public class UDPListener implements Runnable {
 							}
 							// boolean = true, then pseudo is not used by this client so just add client to the users list
 							else {
-								clientThread.changePseudoState(true);
-								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
+								/*clientThread.changePseudoState(true);
+								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
@@ -71,18 +71,11 @@ public class UDPListener implements Runnable {
 					else {
 						// if pseudo is the same as main user pseudo
 						if ( data.equals(clientThread.getMainUserPseudo()) ) {
-							// if packet is comming from localhost, validate pseudo and do not answer
-							if ( isItOwnIP(clientAddr) == true ) {
-								clientThread.changePseudoState(true);
-								System.out.println("Packet comming from me ; isPseudoOk = " + clientThread.getIsPseudoOk());
-							}
-							else {
-								// Answering with false boolean
-								System.out.println("Pseudo is already mine, sending false");
-								String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
-								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-								dgramSocket.send(outPacket);
-							}
+							// Answering with false boolean
+							System.out.println("Pseudo is already mine, sending false");
+							String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
+							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+							dgramSocket.send(outPacket);
 						}
 						// else pseudo is not the same
 						else {
@@ -98,9 +91,7 @@ public class UDPListener implements Runnable {
 							}
 						}
 					}
-					//clientThread.changePseudoState(true);
-					//System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());
-				//}
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
