@@ -3,12 +3,15 @@ import java.net.InetAddress;
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.util.Enumeration;
+import java.util.Scanner;
 import java.net.NetworkInterface;
 
 public class UDPListener implements Runnable {
 
 	private ListenerThread listenerThread = null;
 	private ClientThread clientThread = null; 
+
+	private Scanner scan = new Scanner(System.in);
 
 	public UDPListener(ListenerThread listenerThread, ClientThread clientThread) {
 		this.listenerThread = listenerThread;
@@ -59,7 +62,10 @@ public class UDPListener implements Runnable {
 								String response = "#" + clientThread.getMainUserPseudo();
 								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 								dgramSocket.send(outPacket);
-								clientThread.changePseudo();
+								// Asking for new pseudo
+								System.out.println("Your new pseudo :");
+								String newPseudo = scan.nextLine();
+								clientThread.changePseudo(newPseudo);
 
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
@@ -79,7 +85,7 @@ public class UDPListener implements Runnable {
 									listenerThread.addUser(dataSplit[3], clientAddr);
 								}
 							}
-							
+
 						}
 
 					}
