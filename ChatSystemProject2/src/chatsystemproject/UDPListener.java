@@ -1,16 +1,20 @@
-package chatsystemproject;
-
+import chatsystemproject.ClientThread;
+import chatsystemproject.mainSystem;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.util.Enumeration;
+import java.util.Scanner;
 import java.net.NetworkInterface;
+import javax.swing.JOptionPane;
 
 public class UDPListener implements Runnable {
 
 	private mainSystem listenerThread = null;
 	private ClientThread clientThread = null; 
+
+	private Scanner scan = new Scanner(System.in);
 
 	public UDPListener(mainSystem listenerThread, ClientThread clientThread) {
 		this.listenerThread = listenerThread;
@@ -33,13 +37,14 @@ public class UDPListener implements Runnable {
 				InetAddress clientAddr = inPacket.getAddress();
 				// If received broadcast is coming from localhost, don't process it
 				if ( isItOwnIP(clientAddr) == false ) {
-                                        
+
 					// If first char is "#" pseudo has to be deleted from the list (disconection or pseudo already used)
 					if ( Character.toString( data.charAt(0) ).compareTo("#") == 0 ) {
 						System.out.println("Received a pseudo to delete");
 						String pseudoToDelete = data.substring(1);
 						listenerThread.deleteUser(pseudoToDelete);
 					}
+
 					// If first char is "|", then message is an answer of pseudo broadcast
 					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
 					else if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
@@ -49,57 +54,72 @@ public class UDPListener implements Runnable {
 						System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\"");
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
-                                                    System.out.println("pseudo not used yet");
+
+							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
+							if ( dataSplit[2].equals("false") ) {
+
+								/*clientThread.changePseudoState(false);
+								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
+								System.out.println("Pseudo is already used by another client");
+								System.out.println("Sending alert to others users, they have to delete my pseudo from their list");
+								String response = "#" + clientThread.getMainUserPseudo();
+								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+								dgramSocket.send(outPacket);
+								// Asking for new pseudo
+								String newPseudo = JOptionPane.showInputDialog("Please enter your new pseudo");
+								//System.out.println("Your new pseudo :");
+								//String newPseudo = scan.nextLine();
+								clientThread.changePseudo(newPseudo);
+
+								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
 									listenerThread.addUser(dataSplit[3], clientAddr);
 								}
-							
+
+							}
+
+							// boolean = true, then pseudo is not used by this client so just add client to the users list
+							else {
+								/*clientThread.changePseudoState(true);
+								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
+								// if clientUser is not in the list yet, add him
+								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
+									System.out.println("Client is not in the list, adding him");
+									listenerThread.addUser(dataSplit[3], clientAddr);
+								}
+							}
+
 						}
 
 					}
 					// Else it's a pseudo broadcast, then check if pseudo is not equal as main user pseudo
 					else {
-                                                // send a response with my pseudo
-                                                String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo();
-                                                DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
-                                                dgramSocket.send(outPacket);
-                                                // test if the user is already in the clientList and test if it is the a discover broadcast "!0!"
-                                                if(listenerThread.isUserExist(data) == false && !(data.equals("!0!"))){
-                                                    listenerThread.addUser(data, clientAddr);
-                                                }
 						// if pseudo is the same as main user pseudo
-                                                /*
 						if ( data.equals(clientThread.getMainUserPseudo()) ) {
 							// Answering with false boolean
 							System.out.println("Pseudo is already mine, sending false");
-							response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
-							outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+							String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo();
+							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 							dgramSocket.send(outPacket);
 						}
 						// else pseudo is not the same
 						else {
 							// Answering with true boolean
 							System.out.println("Pseudo is different of mine, sending true");
-							response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo();
-							outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+							String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo();
+							DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 							dgramSocket.send(outPacket);
-                                                        System.out.println("bug");
 							// Add user to the list
-							if ( listenerThread.isUserExist(data) == false && !(data.equals("!0!")) ) {
+							if ( listenerThread.isUserExist(data) == false ) {
 								System.out.println("Client is not in the list, adding him");
 								listenerThread.addUser(data, clientAddr);
 							}
-                                                        //we don't add the user because it is not created yet.
-                                                        else{
-                                                            System.out.println("this is a new connection he just wants to know me");
-                                                        }
-						}*/
+						}
 					}
 				}
 			}
 		} catch (IOException e) {
-                        System.err.println(e);
 			e.printStackTrace();
 		}  	
 

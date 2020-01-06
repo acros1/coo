@@ -44,7 +44,7 @@ public class ClientThread implements Runnable {
 			this.dgramSocket = new DatagramSocket();
 			
 			// Broadcasting pseudo
-			this.broadcastPseudo(0);//firstly we get the other users pseudo !
+			this.broadcastPseudo();//firstly we get the other users pseudo !
 			
 			// Asking user which action realise
 			
@@ -53,22 +53,13 @@ public class ClientThread implements Runnable {
 			e.printStackTrace();
 		}            
    	}
+        
+       
 
-	public void broadcastPseudo(int code) {
+	public void broadcastPseudo() {
 		try {
-                //the code is used to know what kind of broadcast it is, in fact the code : 0 means that the user just log in and want to get all the users' pseudo in order to choose his
-                String sendMesg = null;    
-                if(code == 0){
-                    sendMesg = "!0!";
-                    this.outPacket = new DatagramPacket(sendMesg.getBytes(), sendMesg.length(), InetAddress.getByName("255.255.255.255"), 4000);
-                    this.dgramSocket.send(this.outPacket);
-                    }
-                else{
-                    sendMesg = mainUser.getPseudo();
-                    this.outPacket = new DatagramPacket(sendMesg.getBytes(), sendMesg.length(), InetAddress.getByName("255.255.255.255"), 4000);
-                    this.dgramSocket.send(this.outPacket);  
-                }
-                
+		this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+		this.dgramSocket.send(this.outPacket);
 		} catch ( IOException e ) {
 			e.printStackTrace();
 		}
@@ -127,7 +118,7 @@ public class ClientThread implements Runnable {
         
         public void setMainUserPseudo(String pseudo){
             this.mainUser.setPseudo(pseudo);
-            this.broadcastPseudo(1);
+            this.broadcastPseudo();
         }
         
         public mainSystem getMainSystem(){
@@ -145,11 +136,9 @@ public class ClientThread implements Runnable {
 	public void changePseudo(String newPseudo) {
 		//try {
 			String oldPseudo = "#" + this.mainUser.getPseudo();
-			// Asking for pseudo
-			System.out.println("Your new pseudo :");
 			this.mainUser.setPseudo(newPseudo);
 			// Broadcasting pseudo
-			this.broadcastPseudo(1);
+			this.broadcastPseudo();
 			// Broadcast message to delete old pseudo in other users list
 			try {
 				this.outPacket = new DatagramPacket(oldPseudo.getBytes(), oldPseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
@@ -162,5 +151,5 @@ public class ClientThread implements Runnable {
 		//} catch (Exception e) {
 		//	e.printStackTrace();
 		//}
-	}            
+	}       
 } 
