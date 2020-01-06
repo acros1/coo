@@ -1,3 +1,5 @@
+package chatsystemproject;
+
 import chatsystemproject.ClientThread;
 import chatsystemproject.mainSystem;
 import java.io.IOException;
