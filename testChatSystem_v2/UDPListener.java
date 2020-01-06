@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.net.NetworkInterface;
+import javax.swing.JOptionPane;
 
 public class UDPListener implements Runnable {
 
@@ -63,8 +64,9 @@ public class UDPListener implements Runnable {
 								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
 								dgramSocket.send(outPacket);
 								// Asking for new pseudo
-								System.out.println("Your new pseudo :");
-								String newPseudo = scan.nextLine();
+								String newPseudo = JOptionPane.showInputDialog("Please enter your new pseudo");
+								//System.out.println("Your new pseudo :");
+								//String newPseudo = scan.nextLine();
 								clientThread.changePseudo(newPseudo);
 
 								// if clientUser is not in the list yet, add him
