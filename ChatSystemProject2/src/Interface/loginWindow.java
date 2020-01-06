@@ -24,7 +24,7 @@ public class loginWindow extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.ClThread = new ClientThread();
-        new Thread(ClThread).start();
+        new Thread(this.ClThread).start();
     }
 
     /**
