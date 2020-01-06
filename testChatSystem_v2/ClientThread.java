@@ -6,6 +6,7 @@ public class ClientThread implements Runnable {
 
 	private User mainUser = null;
 	private String pseudo = null;
+	private String pseudo2 = null;
 
 	private ListenerThread listenerThread = null;
 	private UDPListener udpListener = null;
@@ -14,7 +15,6 @@ public class ClientThread implements Runnable {
 	private DatagramSocket dgramSocket = null;
 
 	private Scanner scan = new Scanner(System.in);
-	private Scanner scan2 = new Scanner(System.in);
 	private String input = null;
 
 	//private boolean isPseudoOk = false;
@@ -120,7 +120,7 @@ public class ClientThread implements Runnable {
 			String oldPseudo = "#" + this.pseudo;
 			// Asking for pseudo
 			System.out.println("Your new pseudo :");
-			this.pseudo = scan2.nextLine();
+			this.pseudo2 = scan.nextLine();
 			// Broadcasting pseudo
 			this.broadcastPseudo();
 			// Broadcast message to delete old pseudo in other users list
