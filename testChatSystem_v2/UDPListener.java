@@ -38,6 +38,7 @@ public class UDPListener implements Runnable {
 						String pseudoToDelete = data.substring(1);
 						listenerThread.deleteUser(pseudoToDelete);
 					}
+
 					// If first char is "|", then message is an answer of pseudo broadcast
 					// Answer is format like "|mainUserPseudo|boolean|clientPseudo"
 					else if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
@@ -47,19 +48,27 @@ public class UDPListener implements Runnable {
 						System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\"");
 						// if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
 						if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
+
 							// if boolean = false, client already has main user pseudo, then ask for a new pseudo
 							if ( dataSplit[2].equals("false") ) {
+
 								/*clientThread.changePseudoState(false);
 								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
 								System.out.println("Pseudo is already used by another client");
+								System.out.println("Sending alert to others users, they have to delete my pseudo from their list");
+								String response = "#" + clientThread.getMainUserPseudo();
+								DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
+								dgramSocket.send(outPacket);
 								clientThread.changePseudo();
-								// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Need to send broadcast message to delete this pseudo of others users list
+
 								// if clientUser is not in the list yet, add him
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
 									listenerThread.addUser(dataSplit[3], clientAddr);
 								}
+
 							}
+
 							// boolean = true, then pseudo is not used by this client so just add client to the users list
 							else {
 								/*clientThread.changePseudoState(true);
@@ -70,6 +79,7 @@ public class UDPListener implements Runnable {
 									listenerThread.addUser(dataSplit[3], clientAddr);
 								}
 							}
+							
 						}
 
 					}
