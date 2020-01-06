@@ -58,7 +58,8 @@ public class ClientThread implements Runnable {
 
 	public void broadcastPseudo() {
 		try {
-		this.outPacket = new DatagramPacket(this.pseudo.getBytes(), this.pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
+                String pseudo = this.mainUser.getPseudo();
+		this.outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
 		this.dgramSocket.send(this.outPacket);
 		} catch ( IOException e ) {
 			e.printStackTrace();

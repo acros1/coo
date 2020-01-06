@@ -124,9 +124,14 @@ public class pseudoWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ValidButtonActionPerformed
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
+        this.ClThread.setMainUserPseudo(pseudo.getText());
+        this.ClThread.broadcastPseudo();
+        if(true){
+            
+        }
         if(checkIndication.getText().equals("Good")){
             // Here we should create the user with the pseudo entered
-            this.ClThread.setMainUserPseudo(pseudo.getText());
+            
             applicationWindow aW = new applicationWindow(this.ClThread);
             aW.setVisible(true);
             aW.pack();
