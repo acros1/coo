@@ -42,6 +42,7 @@ public class applicationWindow extends javax.swing.JFrame {
     
     //add to the list
     public void updateUsersList(){
+        System.out.println("UPDATE LIST");
         dlm.clear();
         
         ArrayList<User> users = this.ClThread.getMainSystem().getClientList();
@@ -51,12 +52,14 @@ public class applicationWindow extends javax.swing.JFrame {
         Iterator<User> itr = users.iterator();
         
         while(itr.hasNext()) {
-         String element = itr.next().getPseudo();      
+         String element = itr.next().getPseudo();
+         System.out.println("pseudo : " + element);
          dlm.addElement(new ImgsNText(element,new ImageIcon("images/man-user.png")));
         }  
         
         UserList.setCellRenderer(new Renderer());
         UserList.setModel(dlm);
+        System.out.println("List Updated");
     }
     
     
@@ -159,7 +162,9 @@ public class applicationWindow extends javax.swing.JFrame {
             while(itr.hasNext()) {
                 User user= itr.next();
                 if(user.getPseudo().equals(user_selected)){
-                    sessionStarted.add(new Session(this.ClThread.getMainUser(),user,this.ClThread));
+                    System.out.println("on start session");
+                    Session session = new Session(this.ClThread.getMainUser(),user,this.ClThread);
+                    this.sessionStarted.add(session);
                 }
                 
             }

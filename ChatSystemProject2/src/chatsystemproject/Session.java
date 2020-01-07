@@ -18,16 +18,21 @@ import javax.swing.JFrame;
 
 public class Session {
     
-    User usr1;
-    User usr2;
-    ClientThread ClThread;
-    SessionWindow sW;
+    private User usr1;
+    private User usr2;
+    private ClientThread ClThread = null;
+    private SessionWindow sW = null;
     
-    public Session(User usr1, User usr2,ClientThread clientThread){
-        this.usr1 = usr1;
-        this.usr2 = usr2;
-        this.ClThread = clientThread;
-        this.sW = new SessionWindow();
+    public Session(User user1, User user2,ClientThread clThread){
+        this.usr1 = user1;
+        this.usr2 = user2;
+        this.ClThread = clThread;
+        System.out.println("Session créée");
+        
+        
+        System.out.println("création fenetre : ");
+        this.sW = new SessionWindow(usr2,this.ClThread);
+        System.out.println("Session créée normalement...");
         this.sW.setVisible(true);
         this.sW.setLocationRelativeTo(null);
         this.sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

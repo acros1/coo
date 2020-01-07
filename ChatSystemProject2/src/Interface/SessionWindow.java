@@ -27,6 +27,7 @@ public class SessionWindow extends javax.swing.JFrame {
     private ClientThread ClThread = null;
     private ServerThread st = null;
     private Scanner scan = new Scanner(System.in);
+    private User user2;
     public SessionWindow() {
         initComponents();
     }
@@ -34,7 +35,9 @@ public class SessionWindow extends javax.swing.JFrame {
         //Start the session with the person you want to chat with (user)
         //
         // Session session = new Session(You,user);
+        System.out.println("On commence tout");
         initComponents();
+        this.user2 = u;
         String user = u.getPseudo();
         this.ClThread = clientThread;
         User.setText(user);
