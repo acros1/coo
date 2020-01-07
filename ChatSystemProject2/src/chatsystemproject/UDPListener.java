@@ -14,6 +14,7 @@ public class UDPListener implements Runnable {
 
 	private mainSystem listenerThread = null;
 	private ClientThread clientThread = null; 
+        private boolean pseudoGood = false;
 
 	
 
@@ -85,6 +86,7 @@ public class UDPListener implements Runnable {
 								/*clientThread.changePseudoState(true);
 								System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
 								// if clientUser is not in the list yet, add him
+                                                                this.pseudoGood = true;
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
 									listenerThread.addUser(dataSplit[3], clientAddr);
@@ -160,5 +162,9 @@ public class UDPListener implements Runnable {
 		}
 		return true;
 	}
+        
+        public boolean isPseudoGood(){
+            return pseudoGood;
+        }
 
 }

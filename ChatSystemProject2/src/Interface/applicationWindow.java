@@ -35,6 +35,7 @@ public class applicationWindow extends javax.swing.JFrame {
         userPseudo.setText(this.ClThread.getMainUserPseudo());
         this.ClThread.setApplicationWindow(this);
         updateUsersList();
+        
                
     }
     

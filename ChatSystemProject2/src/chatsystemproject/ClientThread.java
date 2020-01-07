@@ -125,6 +125,10 @@ public class ClientThread implements Runnable {
             return this.listenerThread;
         }
         
+        public boolean isPseudoGood(){
+            return this.udpListener.isPseudoGood();
+        }
+        
         public void setApplicationWindow(applicationWindow ApplicationWindow){
             this.aW = ApplicationWindow;
         }
