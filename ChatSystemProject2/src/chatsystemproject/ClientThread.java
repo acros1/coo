@@ -126,7 +126,13 @@ public class ClientThread implements Runnable {
         }
         
         public boolean isPseudoGood(){
-            return this.udpListener.isPseudoGood();
+            if(this.listenerThread.getClientList().isEmpty()){
+                return true;
+            }
+            else{
+                return this.udpListener.isPseudoGood();
+            }
+            
         }
         
         public void setApplicationWindow(applicationWindow ApplicationWindow){
