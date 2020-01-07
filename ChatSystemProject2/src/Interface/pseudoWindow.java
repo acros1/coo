@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -26,7 +28,6 @@ public class pseudoWindow extends javax.swing.JFrame {
     public ClientThread ClThread = null;
     public pseudoWindow(ClientThread ClThread) {
         initComponents();
-        this.ClThread = ClThread;
     }
 
     /**
@@ -41,8 +42,6 @@ public class pseudoWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pseudo = new javax.swing.JTextField();
         ValidButton = new javax.swing.JButton();
-        checkButton = new javax.swing.JButton();
-        checkIndication = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,18 +65,6 @@ public class pseudoWindow extends javax.swing.JFrame {
             }
         });
 
-        checkButton.setText("Check");
-        checkButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                checkButtonMouseClicked(evt);
-            }
-        });
-        checkButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,27 +74,20 @@ public class pseudoWindow extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkIndication)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(checkButton))
+                    .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(ValidButton)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(86, 86, 86)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkIndication)
-                .addGap(49, 49, 49)
+                    .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
                 .addComponent(ValidButton)
                 .addContainerGap(114, Short.MAX_VALUE))
         );
@@ -124,62 +104,22 @@ public class pseudoWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ValidButtonActionPerformed
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
+        this.ClThread = new ClientThread();
+        new Thread(this.ClThread).start();
         this.ClThread.setMainUserPseudo(pseudo.getText());
         this.ClThread.broadcastPseudo();
-        if(true){
-            
+        try {
+            wait(50);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(pseudoWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(checkIndication.getText().equals("Good")){
-            // Here we should create the user with the pseudo entered
-            
-            applicationWindow aW = new applicationWindow(this.ClThread);
-            aW.setVisible(true);
-            aW.pack();
-            aW.setLocationRelativeTo(null);
-            aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
-        }
-        else{
-            checkIndication.setText("Please enter a valid pseudo");
-            Font font = checkIndication.getFont();
-            // same font but bold
-            Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
-            checkIndication.setFont(boldFont);
-        }
+        applicationWindow aW = new applicationWindow(this.ClThread);
+        aW.setVisible(true);
+        aW.pack();
+        aW.setLocationRelativeTo(null);
+        aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_ValidButtonMouseClicked
-
-    private void checkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkButtonActionPerformed
-
-    private void checkButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkButtonMouseClicked
-        // TODO add your handling code here:
-        
-        // In a normal way it calls the method "checkPseudo" to check the unicity, here it is just a test.
-        // test if the pseud entered exists in the clientList pseudo (in which we can find the other users pseudo)
-        // after all we're using another way to check the unicity.
-        boolean check = false;
-        String pseud = pseudo.getText();
-        ArrayList<User> clientList = this.ClThread.getMainSystem().getClientList();
-        
-        Iterator<User> itr = clientList.iterator();
-        while (itr.hasNext()) {
-           String element = itr.next().getPseudo();
-           if(pseud.equals(element)){
-               check = true;
-           }
-        }
-        if (!check){
-            checkIndication.setText("Good");
-            checkIndication.setForeground(Color.green);
-            
-        }
-        else if(check) {
-            
-            checkIndication.setText("Pseudo invalid : "+ pseud);
-            checkIndication.setForeground(Color.red);
-        }
-    }//GEN-LAST:event_checkButtonMouseClicked
 
     /**
      * @param args the command line arguments/
@@ -218,8 +158,6 @@ public class pseudoWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ValidButton;
-    private javax.swing.JButton checkButton;
-    private javax.swing.JLabel checkIndication;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField pseudo;
     // End of variables declaration//GEN-END:variables

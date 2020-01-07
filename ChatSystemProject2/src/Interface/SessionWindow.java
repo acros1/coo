@@ -30,24 +30,19 @@ public class SessionWindow extends javax.swing.JFrame {
     public SessionWindow() {
         initComponents();
     }
-    public SessionWindow(String user,ClientThread clientThread) {
+    public SessionWindow(User u,ClientThread clientThread) {
         //Start the session with the person you want to chat with (user)
         //
         // Session session = new Session(You,user);
         initComponents();
+        String user = u.getPseudo();
         this.ClThread = clientThread;
         User.setText(user);
         mainSystem listenerThread = ClThread.getMainSystem(); 
-  
-        for(User u : listenerThread.getClientList()) {
-                if(u.getPseudo().equals(user)) {
-                        this.st = listenerThread.getServer(u,this);
-                        ChatArea.setText("Connexion established .. Session started...");
-                        System.out.println("Type your message :");
-                        
-                }
-        }
-        //ChatArea.setText("Connexion established .. Session started...");
+        this.st = listenerThread.getServer(u,this);
+        ChatArea.setText("Connexion established .. Session started...");
+        System.out.println("Type your message :");
+
     }
     
     public void addMessage(String Message){

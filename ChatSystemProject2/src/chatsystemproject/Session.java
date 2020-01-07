@@ -10,19 +10,27 @@
  */
 package chatsystemproject;
 
-import java.net.*;
+import Interface.SessionWindow;
 import java.util.*;
 import java.text.*;
 import java.io.*;
+import javax.swing.JFrame;
 
 public class Session {
     
     User usr1;
     User usr2;
+    ClientThread ClThread;
+    SessionWindow sW;
     
-    public Session(User usr1, User usr2){
+    public Session(User usr1, User usr2,ClientThread clientThread){
         this.usr1 = usr1;
         this.usr2 = usr2;
+        this.ClThread = clientThread;
+        this.sW = new SessionWindow();
+        this.sW.setVisible(true);
+        this.sW.setLocationRelativeTo(null);
+        this.sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         
     }
     
@@ -85,6 +93,10 @@ public class Session {
         
  
         return ret;
+    }
+    
+    public SessionWindow getSessionWindow(){
+        return this.sW;
     }
     
     

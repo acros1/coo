@@ -7,6 +7,7 @@ package Interface;
 
 
 import chatsystemproject.ClientThread;
+import chatsystemproject.Session;
 import chatsystemproject.User;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -24,6 +25,7 @@ public class applicationWindow extends javax.swing.JFrame {
      * Creates new form applicationWindow
      */
     DefaultListModel dlm = new DefaultListModel();
+    private ArrayList<Session> sessionStarted = new ArrayList<Session>();
     ClientThread ClThread = null;
     
 
@@ -146,18 +148,19 @@ public class applicationWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
-            int index = list.locationToIndex(evt.getPoint());
-            String user = ((ImgsNText)list.getSelectedValue()).getName();
+            String user_selected = ((ImgsNText)list.getSelectedValue()).getName();
             //String user = dlm.getElementAt(index).get
-            System.out.println("user : "+user);
+            System.out.println("user : "+user_selected);
             //Start session here and open the session frame
-      
-            SessionWindow sW = new SessionWindow(user,this.ClThread);
-            sW.setVisible(true);
-            //sW.pack();
-            sW.setLocationRelativeTo(null);
-            sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            //this.dispose();
+            ArrayList<User> users = this.ClThread.getMainSystem().getClientList();
+            Iterator<User> itr = users.iterator();
+            while(itr.hasNext()) {
+                User user= itr.next();
+                if(user.getPseudo().equals(user_selected)){
+                    sessionStarted.add(new Session(this.ClThread.getMainUser(),user,this.ClThread));
+                }
+                
+            }
         }
     }//GEN-LAST:event_UserListMouseClicked
 

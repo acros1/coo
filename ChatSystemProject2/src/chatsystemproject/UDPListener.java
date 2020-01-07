@@ -1,13 +1,12 @@
 package chatsystemproject;
 
-import chatsystemproject.ClientThread;
-import chatsystemproject.mainSystem;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.util.Enumeration;
-import java.util.Scanner;
+
 import java.net.NetworkInterface;
 import javax.swing.JOptionPane;
 
@@ -16,7 +15,7 @@ public class UDPListener implements Runnable {
 	private mainSystem listenerThread = null;
 	private ClientThread clientThread = null; 
 
-	private Scanner scan = new Scanner(System.in);
+	
 
 	public UDPListener(mainSystem listenerThread, ClientThread clientThread) {
 		this.listenerThread = listenerThread;

@@ -35,7 +35,7 @@ public class mainSystem implements Runnable{
 			clientAddr = sock.getInetAddress();
 				for (User u  : clientList) {
 					if (u.getAddr().equals(clientAddr)) {
-						ServerThread serverThread = new ServerThread(u, sock,new SessionWindow(u.getPseudo(),this.ClThread));
+						ServerThread serverThread = new ServerThread(u, sock,new Session(this.ClThread.getMainUser(),u,this.ClThread).getSessionWindow());
 						Thread server = new Thread(serverThread);
 						server.start();
 						startedServer.add(serverThread);
