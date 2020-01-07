@@ -109,9 +109,6 @@ public class pseudoWindow extends javax.swing.JFrame {
         this.ClThread.setMainUserPseudo(pseudo.getText());
         System.out.println(this.ClThread.getMainUserPseudo());
         new Thread(this.ClThread).start();
-        while(this.ClThread.isPseudoGood() == false){
-            
-        }
         applicationWindow aW = new applicationWindow(this.ClThread);
         aW.setVisible(true);
         aW.pack();

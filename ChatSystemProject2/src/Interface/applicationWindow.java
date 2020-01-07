@@ -32,15 +32,16 @@ public class applicationWindow extends javax.swing.JFrame {
     public applicationWindow(ClientThread clientThread) {
         initComponents();
         this.ClThread = clientThread;
+        this.ClThread.setApplicationWindow(this);
         userPseudo.setText(this.ClThread.getMainUserPseudo());
         this.ClThread.setApplicationWindow(this);
-        updateUsersList();
+       
         
                
     }
     
     //add to the list
-    private void updateUsersList(){
+    public void updateUsersList(){
         dlm.clear();
         
         ArrayList<User> users = this.ClThread.getMainSystem().getClientList();
