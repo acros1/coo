@@ -105,14 +105,10 @@ public class pseudoWindow extends javax.swing.JFrame {
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
         this.ClThread = new ClientThread();
-        new Thread(this.ClThread).start();
+        System.out.println(pseudo.getText());
         this.ClThread.setMainUserPseudo(pseudo.getText());
-        this.ClThread.broadcastPseudo();
-        try {
-            wait(50);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(pseudoWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println(this.ClThread.getMainUserPseudo());
+        new Thread(this.ClThread).start();
         applicationWindow aW = new applicationWindow(this.ClThread);
         aW.setVisible(true);
         aW.pack();

@@ -119,7 +119,6 @@ public class ClientThread implements Runnable {
         
         public void setMainUserPseudo(String pseudo){
             this.mainUser.setPseudo(pseudo);
-            this.broadcastPseudo();
         }
         
         public mainSystem getMainSystem(){
