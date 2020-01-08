@@ -5,7 +5,7 @@
  */
 package chatsystemproject;
 
-import Interface.loginWindow;
+import Interface.pseudoWindow;
 
 /**
  *
@@ -18,7 +18,7 @@ public class ChatSystemProject {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new loginWindow().setVisible(true);
+        new pseudoWindow(null).setVisible(true);
     }
     
 }

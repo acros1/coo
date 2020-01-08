@@ -18,7 +18,7 @@ public class Main {
     
     
      public static void main(String arg[]) throws IOException  {
-        loginWindow lW = new loginWindow();
+        new pseudoWindow(null);
         
      }
      
