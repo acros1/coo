@@ -148,6 +148,7 @@ public class ClientThread implements Runnable {
 		//try {
 			String oldPseudo = "#" + this.mainUser.getPseudo();
 			this.mainUser.setPseudo(newPseudo);
+                        this.aW.updateUsersList();
 			// Broadcasting pseudo
 			this.broadcastPseudo();
 			// Broadcast message to delete old pseudo in other users list
