@@ -11,6 +11,8 @@
 package chatsystemproject;
 
 import Interface.SessionWindow;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import java.text.*;
 import java.io.*;
@@ -103,6 +105,10 @@ public class Session {
     
     public SessionWindow getSessionWindow(){
         return this.sW;
+    }
+    
+    public void endSession(){
+        
     }
     
     

@@ -35,6 +35,7 @@ public class ServerThread implements Runnable {
 		    String receiveMessage;              
 		    while(true) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
+                                    
                                         WindowSession.addMessage(receiveMessage);
                                         WindowSession.setVisible(true);
 					System.out.println(client.getPseudo() + " > " + receiveMessage);         
