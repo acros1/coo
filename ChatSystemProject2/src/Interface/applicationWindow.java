@@ -40,6 +40,10 @@ public class applicationWindow extends javax.swing.JFrame {
     }
     
     //add to the list
+    
+    public void updatePseudo(){
+        userPseudo.setText(this.ClThread.getMainUserPseudo());
+    }
     public void updateUsersList(){
         System.out.println("UPDATE LIST");
         dlm.clear();
