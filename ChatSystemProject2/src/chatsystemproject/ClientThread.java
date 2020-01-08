@@ -140,7 +140,7 @@ public class ClientThread implements Runnable {
         }
         
         public applicationWindow getApplicationWindow(){
-            System.out.println("je retourne l'aW");
+            System.out.println("je retourne l'aW"); 
             return this.aW;
         }
 
