@@ -44,7 +44,7 @@ public class ClientThread implements Runnable {
 			this.dgramSocket = new DatagramSocket();
 			
 			// Broadcasting pseudo
-			this.broadcastPseudo();//firstly we get the other users pseudo !
+			//this.broadcastPseudo();//firstly we get the other users pseudo !
 			
 			// Asking user which action realise
 			

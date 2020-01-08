@@ -110,6 +110,9 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(this.ClThread.getMainUserPseudo());
         new Thread(this.ClThread).start();
         applicationWindow aW = new applicationWindow(this.ClThread);
+        this.ClThread.setApplicationWindow(aW);
+        System.out.println("aW added");
+        this.ClThread.broadcastPseudo();
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);

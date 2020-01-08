@@ -32,9 +32,8 @@ public class applicationWindow extends javax.swing.JFrame {
     public applicationWindow(ClientThread clientThread) {
         initComponents();
         this.ClThread = clientThread;
-        this.ClThread.setApplicationWindow(this);
         userPseudo.setText(this.ClThread.getMainUserPseudo());
-        this.ClThread.setApplicationWindow(this);
+        System.out.println("Application set");
        
         
                

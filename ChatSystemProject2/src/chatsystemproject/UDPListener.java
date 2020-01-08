@@ -45,7 +45,7 @@ public class UDPListener implements Runnable {
 						System.out.println("Received a pseudo to delete");
 						String pseudoToDelete = data.substring(1);
 						listenerThread.deleteUser(pseudoToDelete);
-                                                this.clientThread.getApplicationWindow().updateUsersList();
+                                                //this.clientThread.getApplicationWindow().updateUsersList();
 					}
 
 					// If first char is "|", then message is an answer of pseudo broadcast
@@ -78,7 +78,7 @@ public class UDPListener implements Runnable {
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
 									listenerThread.addUser(dataSplit[3], clientAddr);
-                                                                        this.clientThread.getApplicationWindow().updateUsersList();
+                                                                        //this.clientThread.getApplicationWindow().updateUsersList();
 								}
 
 							}
@@ -92,7 +92,7 @@ public class UDPListener implements Runnable {
 								if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
 									System.out.println("Client is not in the list, adding him");
 									listenerThread.addUser(dataSplit[3], clientAddr);
-                                                                        this.clientThread.getApplicationWindow().updateUsersList();
+                                                                        //this.clientThread.getApplicationWindow().updateUsersList();
 								}
 							}
 
@@ -120,11 +120,12 @@ public class UDPListener implements Runnable {
 							if ( listenerThread.isUserExist(data) == false ) {
 								System.out.println("Client is not in the list, adding him");
 								listenerThread.addUser(data, clientAddr);
-                                                                this.clientThread.getApplicationWindow().updateUsersList();
+                                                                
 							}
 						}
 					}
 				}
+                                this.clientThread.getApplicationWindow().updateUsersList();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
