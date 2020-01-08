@@ -39,6 +39,7 @@ public class Session {
         
     }
     
+    
     public ArrayList<Message> getHistory() {
         int idUsr1 = this.usr1.getId();
         int idUsr2 = this.usr2.getId();
