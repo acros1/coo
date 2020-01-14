@@ -19,10 +19,10 @@ public class Database {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Connect connetion = new Connect("C:\\Users\\Alex\\Desktop\\database\\myDataBase.db");
+        Connect connetion = new Connect("..\\..\\myDataBase.db");
         connetion.connect();
         
-        ResultSet resultSet = connetion.query("SELECT * FROM BOOK");
+        ResultSet resultSet = connetion.query("SELECT * FROM Users");
         try {
             while (resultSet.next()) {
                 System.out.println("Titre : " + resultSet.getString("Title"));
