@@ -9,7 +9,7 @@ import chatsystemproject.ServerThread;
 import chatsystemproject.User;
 import chatsystemproject.ClientThread;
 import chatsystemproject.Session;
-import chatsystemproject.mainSystem;
+import chatsystemproject.ListenerThread;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,7 +47,7 @@ public class SessionWindow extends javax.swing.JFrame {
         String user = u.getPseudo();
         this.ClThread = clientThread;
         User.setText(user);
-        mainSystem listenerThread = ClThread.getMainSystem(); 
+        ListenerThread listenerThread = ClThread.getMainSystem(); 
         this.st = listenerThread.getServer(u,this);
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");

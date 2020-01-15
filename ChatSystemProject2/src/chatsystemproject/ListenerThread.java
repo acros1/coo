@@ -15,12 +15,12 @@ import java.util.ArrayList;
  *
  * @author Maeln
  */
-public class mainSystem implements Runnable{
+public class ListenerThread implements Runnable{
     private ArrayList<User> clientList = new ArrayList<User>();
     private ArrayList<ServerThread> startedServer = new ArrayList<ServerThread>();
     private ClientThread ClThread = null;
     
-    public mainSystem(ClientThread clientThread) {
+    public ListenerThread(ClientThread clientThread) {
             this.ClThread = clientThread;
 	}	
 

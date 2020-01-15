@@ -25,7 +25,7 @@ public class Session {
     private ClientThread ClThread = null;
     private SessionWindow sW = null;
     
-    public Session(User user1, User user2,ClientThread clThread){
+    public Session(User user1, User user2, ClientThread clThread){
         this.mainusr = user1;
         this.usr2 = user2;
         this.ClThread = clThread;

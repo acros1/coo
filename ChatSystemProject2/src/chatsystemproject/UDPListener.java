@@ -12,13 +12,13 @@ import javax.swing.JOptionPane;
 
 public class UDPListener implements Runnable {
 
-	private mainSystem listenerThread = null;
+	private ListenerThread listenerThread = null;
 	private ClientThread clientThread = null; 
         private boolean pseudoGood = false;
 
 	
 
-	public UDPListener(mainSystem listenerThread, ClientThread clientThread) {
+	public UDPListener(ListenerThread listenerThread, ClientThread clientThread) {
 		this.listenerThread = listenerThread;
 		this.clientThread = clientThread;
 	}
