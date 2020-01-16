@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Database {
     
@@ -24,25 +25,26 @@ public class Database {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        File myDataBase = new File(RelativePath);
-        Connect connetion = null;
-        try {
-            connetion = new Connect(myDataBase.getParentFile().getCanonicalPath() + pathToAdd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        connetion.connect();
+        Connect myDataBase = new Connect();
         
-        ResultSet resultSet = connetion.query("SELECT * FROM Users");
+        myDataBase.printLogin();
+        
+        System.out.println(myDataBase.isLogCorrect("alex", "alex"));
+        System.out.println(myDataBase.isLogCorrect("alex", "mael"));
+        
+        ResultSet history = myDataBase.getHistory(1, 2);
+        
         try {
-            while (resultSet.next()) {
-                System.out.println("Login : " + resultSet.getString("login"));
+            while (history.next()) {
+                System.out.println("Message : " + history.getString("message"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        myDataBase.addToHistory(1, 2, "mes couilles en tréno");
  
-        connetion.close();
+        myDataBase.close();
     }
     
 }

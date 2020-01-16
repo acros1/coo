@@ -10,19 +10,32 @@ package database;
  * @author Alex
  */
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Connect {
+    private static String RelativePath = "..\\..\\myDataBase.db";
+    private static String pathToAdd = "\\coo\\database\\myDataBase.db";
+    
     private String DBPath = null;
     private Connection connection = null;
     private Statement statement = null;
  
-    public Connect(String dBPath) {
-        DBPath = dBPath;
+    public Connect() {
+        File chatSystemDB = new File(RelativePath);
+        try {
+            DBPath = chatSystemDB.getParentFile().getCanonicalPath() + pathToAdd;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        connect();
     }
  
     public void connect() {
@@ -58,6 +71,50 @@ public class Connect {
            System.out.println("Resquest error : " + request);
        }
        return resultat;
- 
-   }
+    }
+    
+    public void printLogin() {
+         ResultSet resultSet = query("SELECT * FROM Users");
+        try {
+            while (resultSet.next()) {
+                System.out.println("Login : " + resultSet.getString("login"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean isLogCorrect(String login, String password) {
+        ResultSet resultSet = query("SELECT * FROM Users WHERE login = '" + login + "' AND password = '" + password + "';");
+        try {
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public ResultSet getHistory(int idUserSrc, int idUserDest) {
+        ResultSet history = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + " AND idUserDest = " + idUserDest + " OR idUserSrc = " + idUserDest + " AND idUserDest = " + idUserSrc + ";");
+        
+        return history;
+    }
+    
+    public void addToHistory(int idUserSrc, int idUserDest, String message) {
+        //String query = "INSERT INTO Messages (idUserSrc, idUserDest, message) VALUES (" + idUserSrc + ", " + idUserDest + ", \"" + message + "\");";
+        String query = "INSERT INTO Messages (idUserSrc, idUserDest, message) VALUES (?, ?, ?);";
+        try {
+           PreparedStatement pStatement = connection.prepareStatement(query);
+           pStatement.setInt(1, idUserSrc);
+           pStatement.setInt(2, idUserDest);
+           pStatement.setString(3, message);
+           pStatement.executeUpdate();
+       } catch (SQLException e) {
+           e.printStackTrace();
+           System.out.println("Insert message error : " + query);
+       }
+    }
+    
 }
