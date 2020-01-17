@@ -32,22 +32,18 @@ public class Database {
         System.out.println(myDataBase.isLogCorrect("alex", "alex"));
         System.out.println(myDataBase.isLogCorrect("alex", "mael"));
         
-        ArrayList<String[]> history = myDataBase.getHistory(1, 2);
-        String[] message = null;
-        System.out.println("----------------History-----------------");
+        myDataBase.addToHistory(1, 2, "le père Noël en tréno");
 
-        message = history.get(0);
-        System.out.println("User src : " + message[0] + ", User dest : " + message[1] + ", Message : '" + message[2] + "'");
-        message = history.get(1);
-        System.out.println("User src : " + message[0] + ", User dest : " + message[1] + ", Message : '" + message[2] + "'");
-        /*
-        for (int i = 0 ; i < history.size() ; i++) {
-            message = history.get(i);
-            System.out.println("User src : " + message[0] + ", User dest : " + message[1] + ", Message : '" + message[2] + "'");
-        }*/
+        ArrayList<ArrayList<String>> history = myDataBase.getHistory(1, 2);
+        System.out.println("----------------History-----------------");
+        for (int iHistory = 0 ; iHistory < history.size() ; iHistory++) {
+            String idUserSrc = history.get(iHistory).get(0);
+            String idUserDest = history.get(iHistory).get(1);
+            String message = history.get(iHistory).get(2);
+            System.out.println("User src : " + idUserSrc + ", User dest : " + idUserDest + ", Message : '" + message + "'");
+        }
         System.out.println("----------------------------------------");
         
-        //myDataBase.addToHistory(1, 2, "le père Noël en tréno");
         
         System.out.println("Alex id is : " + myDataBase.getUserIdByLogin("alex"));
  

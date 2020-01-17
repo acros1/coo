@@ -97,10 +97,9 @@ public class Connect {
         return false;
     }
     
-    public ArrayList<String[]> getHistory(int idUserSrc, int idUserDest) {
+    public ArrayList<ArrayList<String>> getHistory(int idUserSrc, int idUserDest) {
         
-        ArrayList<String[]> history = new ArrayList<String[]>();
-        String[] message = new String[3];
+        ArrayList<ArrayList<String>> history = new ArrayList<ArrayList<String>>();
         
         ResultSet resultSet = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + 
                                     " AND idUserDest = " + idUserDest + 
@@ -109,9 +108,10 @@ public class Connect {
         
         try {
             while (resultSet.next()) {
-                message[0] = resultSet.getString("idUserSrc");
-                message[1] = resultSet.getString("idUserDest");
-                message[2] = resultSet.getString("message");
+                ArrayList<String> message = new ArrayList<String>();
+                message.add(resultSet.getString("idUserSrc"));
+                message.add(resultSet.getString("idUserDest"));
+                message.add(resultSet.getString("message"));
                 history.add(message);
             }
         } catch (SQLException e) {
