@@ -74,7 +74,7 @@ public class Connect {
     }
     
     public void printLogin() {
-         ResultSet resultSet = query("SELECT * FROM Users");
+        ResultSet resultSet = query("SELECT * FROM Users");
         try {
             while (resultSet.next()) {
                 System.out.println("Login : " + resultSet.getString("login"));
@@ -85,7 +85,8 @@ public class Connect {
     }
     
     public boolean isLogCorrect(String login, String password) {
-        ResultSet resultSet = query("SELECT * FROM Users WHERE login = '" + login + "' AND password = '" + password + "';");
+        ResultSet resultSet = query("SELECT * FROM Users WHERE login = '" + login + 
+                                    "' AND password = '" + password + "';");
         try {
             while (resultSet.next()) {
                 return true;
@@ -96,8 +97,26 @@ public class Connect {
         return false;
     }
     
-    public ResultSet getHistory(int idUserSrc, int idUserDest) {
-        ResultSet history = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + " AND idUserDest = " + idUserDest + " OR idUserSrc = " + idUserDest + " AND idUserDest = " + idUserSrc + ";");
+    public ArrayList<String[]> getHistory(int idUserSrc, int idUserDest) {
+        
+        ArrayList<String[]> history = new ArrayList<String[]>();
+        String[] message = new String[3];
+        
+        ResultSet resultSet = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + 
+                                    " AND idUserDest = " + idUserDest + 
+                                    " OR idUserSrc = " + idUserDest + 
+                                    " AND idUserDest = " + idUserSrc + ";");
+        
+        try {
+            while (resultSet.next()) {
+                message[0] = resultSet.getString("idUserSrc");
+                message[1] = resultSet.getString("idUserDest");
+                message[2] = resultSet.getString("message");
+                history.add(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
         return history;
     }
@@ -115,6 +134,21 @@ public class Connect {
            e.printStackTrace();
            System.out.println("Insert message error : " + query);
        }
+    }
+    
+    public int getUserIdByLogin(String login) {
+        int userId = -1;
+        
+        ResultSet resultSet = query("SELECT id FROM Users WHERE login = '" + login + "';");
+        try {
+            while (resultSet.next()) {
+                userId = resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return userId;
     }
     
 }
