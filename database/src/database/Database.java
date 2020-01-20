@@ -32,7 +32,7 @@ public class Database {
         System.out.println(myDataBase.isLogCorrect("alex", "alex"));
         System.out.println(myDataBase.isLogCorrect("alex", "mael"));
         
-        myDataBase.addToHistory(1, 2, "le père Noël en tréno");
+        myDataBase.addToHistory(1, 2, "le père Noël en tréno", "2020-01-20 09:10:45");
 
         ArrayList<ArrayList<String>> history = myDataBase.getHistory(1, 2);
         System.out.println("----------------History-----------------");
