@@ -8,8 +8,9 @@ import java.util.*;
 
 public class ClientThread implements Runnable {
     
-    private User mainUser = null;
+    //private User mainUser = null;
     private String pseudo = null;
+    private String login = null;
 
     private ListenerThread listenerThread = null;
     private UDPListener udpListener = null;
@@ -24,7 +25,7 @@ public class ClientThread implements Runnable {
 
 
     public ClientThread() {
-        this.mainUser = new User(null,null);
+        //this.mainUser = new User(null, null, null);
 
         this.listenerThread = new ListenerThread(this);
         this.udpListener = new UDPListener(listenerThread, this);
@@ -54,9 +55,10 @@ public class ClientThread implements Runnable {
 
     public void broadcastPseudo() {
             try {
-            String pseudo = this.mainUser.getPseudo();
-            this.outPacket = new DatagramPacket(pseudo.getBytes(), pseudo.length(), InetAddress.getByName("255.255.255.255"), 4000);
-            this.dgramSocket.send(this.outPacket);
+                // Need to send login, it's the only way to find history (because login is the same every connection) 
+                String data = this.getMainUserPseudo() + "|" + this.login;
+                this.outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
+                this.dgramSocket.send(this.outPacket);
             } catch ( IOException e ) {
                     e.printStackTrace();
             }
@@ -64,7 +66,7 @@ public class ClientThread implements Runnable {
 
     public void deletePseudo(){
         try {
-            String delete = "#"+this.mainUser.getPseudo();
+            String delete = "#" + this.getMainUserPseudo();
             this.outPacket = new DatagramPacket(delete.getBytes(), delete.length(), InetAddress.getByName("255.255.255.255"), 4000);
             this.dgramSocket.send(this.outPacket);
             } catch ( IOException e ) {
@@ -116,15 +118,11 @@ public class ClientThread implements Runnable {
     }
 
     public String getMainUserPseudo() {
-            return this.mainUser.getPseudo();
-    }
-
-    public User getMainUser(){
-        return this.mainUser;  
+            return this.pseudo;
     }
 
     public void setMainUserPseudo(String pseudo){
-        this.mainUser.setPseudo(pseudo);
+        this.pseudo = pseudo;
     }
 
     public ListenerThread getMainSystem(){
@@ -138,7 +136,6 @@ public class ClientThread implements Runnable {
         else{
             return this.udpListener.isPseudoGood();
         }
-
     }
 
     public void setApplicationWindow(applicationWindow ApplicationWindow){
@@ -152,8 +149,8 @@ public class ClientThread implements Runnable {
 
     public void changePseudo(String newPseudo) {
             //try {
-                    String oldPseudo = "#" + this.mainUser.getPseudo();
-                    this.mainUser.setPseudo(newPseudo);
+                    String oldPseudo = "#" + this.getMainUserPseudo();
+                    this.setMainUserPseudo(pseudo);
                     this.aW.updatePseudo();
                     // Broadcasting pseudo
                     this.broadcastPseudo();
@@ -169,6 +166,14 @@ public class ClientThread implements Runnable {
             //} catch (Exception e) {
             //	e.printStackTrace();
             //}
+    }
+    
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
+    public String getLogin() {
+        return this.login;
     }
     
 } 

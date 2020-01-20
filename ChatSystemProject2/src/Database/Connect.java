@@ -18,10 +18,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Connect {
-    private static String RelativePath = "..\\..\\chatSystem.db";
-    private static String pathToAdd = "\\coo\\ChatSystemProject2\\chatSystem.db";
+    private static String RelativePath = "..\\..\\myDataBase.db";
+    private static String pathToAdd = "\\coo\\database\\myDataBase.db";
     
     private String DBPath = null;
     private Connection connection = null;
@@ -84,7 +85,8 @@ public class Connect {
     }
     
     public boolean isLogCorrect(String login, String password) {
-        ResultSet resultSet = query("SELECT * FROM Users WHERE login = '" + login + "' AND password = '" + password + "';");
+        ResultSet resultSet = query("SELECT * FROM Users WHERE login = '" + login + 
+                                    "' AND password = '" + password + "';");
         try {
             while (resultSet.next()) {
                 return true;
@@ -95,8 +97,26 @@ public class Connect {
         return false;
     }
     
-    public ResultSet getHistory(int idUserSrc, int idUserDest) {
-        ResultSet history = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + " AND idUserDest = " + idUserDest + " OR idUserSrc = " + idUserDest + " AND idUserDest = " + idUserSrc + ";");
+    public ArrayList<ArrayList<String>> getHistory(int idUserSrc, int idUserDest) {
+        
+        ArrayList<ArrayList<String>> history = new ArrayList<ArrayList<String>>();
+        
+        ResultSet resultSet = query("SELECT * FROM Messages WHERE idUserSrc = " + idUserSrc + 
+                                    " AND idUserDest = " + idUserDest + 
+                                    " OR idUserSrc = " + idUserDest + 
+                                    " AND idUserDest = " + idUserSrc + ";");
+        
+        try {
+            while (resultSet.next()) {
+                ArrayList<String> message = new ArrayList<String>();
+                message.add(resultSet.getString("idUserSrc"));
+                message.add(resultSet.getString("idUserDest"));
+                message.add(resultSet.getString("message"));
+                history.add(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
         return history;
     }

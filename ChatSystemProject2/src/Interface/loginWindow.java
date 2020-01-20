@@ -7,6 +7,7 @@ package Interface;
 
 import javax.swing.JFrame;
 import chatsystemproject.ClientThread;
+import database.Connect;
 
 /**
  *
@@ -17,14 +18,18 @@ public class loginWindow extends javax.swing.JFrame {
     /**
      * Creates new form loginWindow
      */
-    private ClientThread ClThread = null;
+    private ClientThread clientThread = null;
+    private Connect chatSystemDB = null;
     
     
     public loginWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.ClThread = new ClientThread();
-        new Thread(this.ClThread).start();
+        this.clientThread = new ClientThread();
+        new Thread(this.clientThread).start();
+        
+        // Instanciating connection to data base to check login/passwd
+        this.chatSystemDB = new Connect();        
     }
 
     /**
@@ -96,14 +101,20 @@ public class loginWindow extends javax.swing.JFrame {
     private void connectedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectedButtonMouseClicked
         String log = login.getText();
         String passwd = String.valueOf(password.getPassword());
-        // TODO add Method to test login and so on
-        // supposing that the login is good 
-        pseudoWindow pW = new pseudoWindow(ClThread);
-        pW.setVisible(true);
-        pW.pack();
-        pW.setLocationRelativeTo(null);
-        pW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        // Method to test login and passwd
+        if ( chatSystemDB.isLogCorrect(log, passwd) ) {
+            // If both are ok 
+            this.clientThread.setLogin(log);
+            pseudoWindow pW = new pseudoWindow(clientThread);
+            pW.setVisible(true);
+            pW.pack();
+            pW.setLocationRelativeTo(null);
+            pW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+        }
+        else {
+            // TODO if combination is wrong
+        }
     }//GEN-LAST:event_connectedButtonMouseClicked
 
     /**

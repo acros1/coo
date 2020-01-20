@@ -176,7 +176,7 @@ public class applicationWindow extends javax.swing.JFrame {
                 User user= itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    Session session = new Session(this.ClThread.getMainUser(),user,this.ClThread);
+                    Session session = new Session(user,this.ClThread);
                     session.getSessionWindow().setVisible(true);
                     this.sessionStarted.add(session);
                 }
