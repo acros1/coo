@@ -101,13 +101,8 @@ public class loginWindow extends javax.swing.JFrame {
         // Method to test login and passwd
         if ( chatSystemDB.isLogCorrect(log, passwd) ) {
             // If both are ok 
-            // Starting clientThread
-            this.clientThread = new ClientThread();
-            new Thread(this.clientThread).start();
-            
-            this.clientThread.setLogin(log);
-            
-            pseudoWindow pW = new pseudoWindow(clientThread);
+            // Starting pseudo window
+            pseudoWindow pW = new pseudoWindow(log);
             pW.setVisible(true);
             pW.pack();
             pW.setLocationRelativeTo(null);

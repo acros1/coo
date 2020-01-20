@@ -21,8 +21,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class Connect {
-    private static String RelativePath = "..\\..\\myDataBase.db";
-    private static String pathToAdd = "\\coo\\database\\myDataBase.db";
+    private static String RelativePath = "..\\..\\chatSystem.db";
+    private static String pathToAdd = "\\coo\\ChatSystemProject2\\chatSystem.db";
     
     private String DBPath = null;
     private Connection connection = null;
@@ -32,6 +32,7 @@ public class Connect {
         File chatSystemDB = new File(RelativePath);
         try {
             DBPath = chatSystemDB.getParentFile().getCanonicalPath() + pathToAdd;
+            System.out.println(DBPath);
         } catch (IOException e) {
             e.printStackTrace();
         }

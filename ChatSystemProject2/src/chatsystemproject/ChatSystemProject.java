@@ -5,7 +5,7 @@
  */
 package chatsystemproject;
 
-import Interface.pseudoWindow;
+import Interface.loginWindow;
 
 /**
  *
@@ -17,7 +17,7 @@ public class ChatSystemProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new pseudoWindow(null).setVisible(true);
+        new loginWindow().setVisible(true);
     }
     
 }
