@@ -28,6 +28,7 @@ create table Messages (
     idUserSrc INTEGER NOT NULL,
     idUserDest INTEGER NOT NULL,
     message TEXT NOT NULL,
+    datetime TEXT NOT NULL, --YYYY-MM-DD HH:MM:SS
     FOREIGN KEY(idUserSrc) REFERENCES Users(id),
     FOREIGN KEY(idUserDest) REFERENCES Users(id)
 );
@@ -44,8 +45,8 @@ INSERT INTO Users (login, password) VALUES
 --
 -- Messages
 --
-INSERT INTO Messages (idUserSrc, idUserDest, message) VALUES
-    (1, 2, 'salut ça va ?'),
-    (2, 1, 'ça va et toi ?'),
-    (1, 3, 'jambono'),
-    (2, 3, 'dlhdjdvhdhdghj');
+INSERT INTO Messages (idUserSrc, idUserDest, message, datetime) VALUES
+    (1, 2, 'salut ça va ?', '2020-01-20 09:10:30'),
+    (2, 1, 'ça va et toi ?', '2020-01-20 09:10:35'),
+    (1, 3, 'jambono', '2020-01-20 09:10:30'),
+    (2, 3, 'dlhdjdvhdhdghj', '2020-01-20 09:10:30');

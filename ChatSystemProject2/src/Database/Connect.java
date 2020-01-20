@@ -112,6 +112,7 @@ public class Connect {
                 message.add(resultSet.getString("idUserSrc"));
                 message.add(resultSet.getString("idUserDest"));
                 message.add(resultSet.getString("message"));
+                message.add(resultSet.getString("datetime"));
                 history.add(message);
             }
         } catch (SQLException e) {
@@ -121,14 +122,15 @@ public class Connect {
         return history;
     }
     
-    public void addToHistory(int idUserSrc, int idUserDest, String message) {
+    public void addToHistory(int idUserSrc, int idUserDest, String message, String datetime) {
         //String query = "INSERT INTO Messages (idUserSrc, idUserDest, message) VALUES (" + idUserSrc + ", " + idUserDest + ", \"" + message + "\");";
-        String query = "INSERT INTO Messages (idUserSrc, idUserDest, message) VALUES (?, ?, ?);";
+        String query = "INSERT INTO Messages (idUserSrc, idUserDest, message, datetime) VALUES (?, ?, ?, ?);";
         try {
            PreparedStatement pStatement = connection.prepareStatement(query);
            pStatement.setInt(1, idUserSrc);
            pStatement.setInt(2, idUserDest);
            pStatement.setString(3, message);
+           pStatement.setString(4, datetime);
            pStatement.executeUpdate();
        } catch (SQLException e) {
            e.printStackTrace();

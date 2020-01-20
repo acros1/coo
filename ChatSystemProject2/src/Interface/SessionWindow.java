@@ -10,8 +10,10 @@ import chatsystemproject.User;
 import chatsystemproject.ClientThread;
 import chatsystemproject.Session;
 import chatsystemproject.ListenerThread;
+import database.Connect;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -28,14 +30,18 @@ public class SessionWindow extends javax.swing.JFrame {
     /**
      * Creates new form SessionWindow
      */
-    private ClientThread ClThread = null;
+    private ClientThread clientThread = null;
     private ServerThread st = null;
     private Scanner scan = new Scanner(System.in);
     private User user2;
     private Session session;
+    
+    private Connect chatSystemDB = new Connect();
+    
     public SessionWindow() {
         initComponents();
     }
+    
     public SessionWindow(User u,ClientThread clientThread,Session session) {
         //Start the session with the person you want to chat with (user)
         //
@@ -45,19 +51,34 @@ public class SessionWindow extends javax.swing.JFrame {
         this.session = session;
         this.user2 = u;
         String user = u.getPseudo();
-        this.ClThread = clientThread;
+        this.clientThread = clientThread;
         User.setText(user);
-        ListenerThread listenerThread = ClThread.getMainSystem(); 
+        ListenerThread listenerThread = clientThread.getMainSystem(); 
         this.st = listenerThread.getServer(u,this);
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");
 
     }
     
-    public void addMessage(String Message){
+    public void addMessage(String message){
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss\t").format(Calendar.getInstance().getTime());
+        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "  " + User.getText() + " : " + message);
+        // Adding the message to history in DB
+        int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
+        int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+        chatSystemDB.addToHistory(idMainUser, idUser2, message, timeStamp);
+    }
+    
+    public void getHistory() {
+        int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
+        int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+        ArrayList<ArrayList<String>> history = chatSystemDB.getHistory(idMainUser, idUser2);
         
-        String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss \t").format(Calendar.getInstance().getTime());
-        ChatArea.setText(ChatArea.getText() +"\n" + timeStamp + "  "+User.getText() + " : " + Message);
+        for (int iHistory = 0 ; iHistory < history.size() ; iHistory++) {
+            String message = history.get(iHistory).get(2);
+            String datetime = history.get(iHistory).get(3);
+            ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + User.getText() + " : " + message);
+        }
     }
     
     public javax.swing.JButton getSendButton(){
@@ -214,7 +235,7 @@ public class SessionWindow extends javax.swing.JFrame {
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         
         if(this.SendButton.isVisible()){//if the send button is still visible, the session is active so we need to send an exit message and close the socket
-            String exitMessage = "EXIT|"+this.ClThread.getMainUserPseudo();
+            String exitMessage = "EXIT|"+this.clientThread.getMainUserPseudo();
             st.writeMessage(exitMessage);
             this.session.endSession(this.st);
             

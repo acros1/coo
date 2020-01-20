@@ -27,13 +27,13 @@ public class applicationWindow extends javax.swing.JFrame {
      */
     DefaultListModel dlm = new DefaultListModel();
     private ArrayList<Session> sessionStarted = new ArrayList<Session>();
-    ClientThread ClThread = null;
+    ClientThread clientThread = null;
     
 
     public applicationWindow(ClientThread clientThread) {
         initComponents();
-        this.ClThread = clientThread;
-        userPseudo.setText(this.ClThread.getMainUserPseudo());
+        this.clientThread = clientThread;
+        userPseudo.setText(this.clientThread.getMainUserPseudo());
         System.out.println("Application set");
        
         
@@ -43,13 +43,13 @@ public class applicationWindow extends javax.swing.JFrame {
     //add to the list
     
     public void updatePseudo(){
-        userPseudo.setText(this.ClThread.getMainUserPseudo());
+        userPseudo.setText(this.clientThread.getMainUserPseudo());
     }
     public void updateUsersList(){
         System.out.println("UPDATE LIST");
         dlm.clear();
         
-        ArrayList<User> users = this.ClThread.getMainSystem().getClientList();
+        ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
         
         
         
@@ -68,7 +68,7 @@ public class applicationWindow extends javax.swing.JFrame {
     
     public void endSession(Session session,ServerThread st){
         this.sessionStarted.remove(session);
-        this.ClThread.getMainSystem().getServerStarted().remove(st);
+        this.clientThread.getMainSystem().getServerStarted().remove(st);
     }
     
     public ArrayList<Session> getSessionStarted(){
@@ -170,13 +170,14 @@ public class applicationWindow extends javax.swing.JFrame {
             //String user = dlm.getElementAt(index).get
             System.out.println("user : "+user_selected);
             //Start session here and open the session frame
-            ArrayList<User> users = this.ClThread.getMainSystem().getClientList();
+            ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
             Iterator<User> itr = users.iterator();
             while(itr.hasNext()) {
                 User user= itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    Session session = new Session(user,this.ClThread);
+                    Session session = new Session(user, this.clientThread);
+                    session.getSessionWindow().getHistory();
                     session.getSessionWindow().setVisible(true);
                     this.sessionStarted.add(session);
                 }
