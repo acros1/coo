@@ -25,9 +25,6 @@ public class loginWindow extends javax.swing.JFrame {
     public loginWindow() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.clientThread = new ClientThread();
-        new Thread(this.clientThread).start();
-        
         // Instanciating connection to data base to check login/passwd
         this.chatSystemDB = new Connect();        
     }
@@ -104,7 +101,12 @@ public class loginWindow extends javax.swing.JFrame {
         // Method to test login and passwd
         if ( chatSystemDB.isLogCorrect(log, passwd) ) {
             // If both are ok 
+            // Starting clientThread
+            this.clientThread = new ClientThread();
+            new Thread(this.clientThread).start();
+            
             this.clientThread.setLogin(log);
+            
             pseudoWindow pW = new pseudoWindow(clientThread);
             pW.setVisible(true);
             pW.pack();
