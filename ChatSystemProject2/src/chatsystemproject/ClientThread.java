@@ -25,7 +25,8 @@ public class ClientThread implements Runnable {
 
 
     public ClientThread(String pseudo, String login) {
-        //this.mainUser = new User(null, null, null);
+        this.pseudo = pseudo;
+        this.login = login;
 
         this.listenerThread = new ListenerThread(this);
         this.udpListener = new UDPListener(listenerThread, this);
