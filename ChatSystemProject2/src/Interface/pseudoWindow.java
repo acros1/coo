@@ -24,9 +24,11 @@ public class pseudoWindow extends javax.swing.JFrame {
     /**
      * Creates new form pseudoWindow
      */
+    private ClientThread clientThread = null;
+    private String login = null;
     
-    public ClientThread ClThread = null;
-    public pseudoWindow(ClientThread ClThread) {
+    public pseudoWindow(String login) {
+        this.login = login;
         initComponents();
     }
 
@@ -104,15 +106,18 @@ public class pseudoWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ValidButtonActionPerformed
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
-        this.ClThread = new ClientThread();
         System.out.println(pseudo.getText());
-        this.ClThread.setMainUserPseudo(pseudo.getText());
-        System.out.println(this.ClThread.getMainUserPseudo());
-        new Thread(this.ClThread).start();
-        applicationWindow aW = new applicationWindow(this.ClThread);
-        this.ClThread.setApplicationWindow(aW);
+        // Start clientThread with pseudo and login 
+        this.clientThread = new ClientThread(pseudo.getText(), this.login);
+        new Thread(this.clientThread).start();
+        
+        System.out.println(this.clientThread.getMainUserPseudo());
+        
+        // Start application window
+        applicationWindow aW = new applicationWindow(this.clientThread);
+        this.clientThread.setApplicationWindow(aW);
         System.out.println("aW added");
-        this.ClThread.broadcastPseudo();
+        this.clientThread.broadcastPseudo();
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);

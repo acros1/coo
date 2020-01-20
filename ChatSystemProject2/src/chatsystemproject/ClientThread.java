@@ -24,7 +24,7 @@ public class ClientThread implements Runnable {
     private applicationWindow aW = null;
 
 
-    public ClientThread() {
+    public ClientThread(String pseudo, String login) {
         //this.mainUser = new User(null, null, null);
 
         this.listenerThread = new ListenerThread(this);
@@ -43,7 +43,7 @@ public class ClientThread implements Runnable {
             this.dgramSocket = new DatagramSocket();
 
             // Broadcasting pseudo
-            //this.broadcastPseudo();//firstly we get the other users pseudo !
+            this.broadcastPseudo();//firstly we get the other users pseudo !
 
             // Asking user which action realise
         } catch (IOException e) {
