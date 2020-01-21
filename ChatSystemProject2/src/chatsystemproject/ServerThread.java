@@ -67,6 +67,13 @@ public class ServerThread implements Runnable {
 		pwrite.println(msg);
 		pwrite.flush();
 	} 
+        
+        public synchronized void exitMessage() throws IOException {
+                String msg = "Exit|"+this.clientThread.getMainUserPseudo();
+		pwrite.println(msg);
+		pwrite.flush();
+                this.sock.close();
+	}
 
 	public User getUser() {
 		return this.client;

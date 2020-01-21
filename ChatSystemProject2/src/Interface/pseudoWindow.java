@@ -31,6 +31,26 @@ public class pseudoWindow extends javax.swing.JFrame {
         this.login = login;
         initComponents();
     }
+    
+    private void creation_applicationWindow(){
+        System.out.println(pseudo.getText());
+        // Start clientThread with pseudo and login 
+        this.clientThread = new ClientThread(pseudo.getText(), this.login);
+        new Thread(this.clientThread).start();
+        
+        System.out.println(this.clientThread.getMainUserPseudo());
+        
+        // Start application window
+        applicationWindow aW = new applicationWindow(this.clientThread);
+        this.clientThread.setApplicationWindow(aW);
+        System.out.println("aW added");
+        this.clientThread.broadcastPseudo();
+        aW.setVisible(true);
+        aW.pack();
+        aW.setLocationRelativeTo(null);
+        aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +72,11 @@ public class pseudoWindow extends javax.swing.JFrame {
         pseudo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pseudoActionPerformed(evt);
+            }
+        });
+        pseudo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pseudoKeyPressed(evt);
             }
         });
 
@@ -106,6 +131,7 @@ public class pseudoWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_ValidButtonActionPerformed
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
+        creation_applicationWindow();
         System.out.println(pseudo.getText());
         // Start clientThread with pseudo and login 
         this.clientThread = new ClientThread(pseudo.getText(), this.login);
@@ -124,6 +150,12 @@ public class pseudoWindow extends javax.swing.JFrame {
         aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_ValidButtonMouseClicked
+
+    private void pseudoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pseudoKeyPressed
+        if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER){
+            creation_applicationWindow();
+        }
+    }//GEN-LAST:event_pseudoKeyPressed
 
     /**
      * @param args the command line arguments/

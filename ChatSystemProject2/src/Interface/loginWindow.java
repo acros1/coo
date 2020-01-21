@@ -28,6 +28,26 @@ public class loginWindow extends javax.swing.JFrame {
         // Instanciating connection to data base to check login/passwd
         this.chatSystemDB = new Connect();        
     }
+    
+    private void creation_pseudoWindow(){
+        String log = login.getText();
+        String passwd = String.valueOf(password.getPassword());
+        // Method to test login and passwd
+        if ( chatSystemDB.isLogCorrect(log, passwd) ) {
+            // If both are ok 
+            // Starting pseudo window
+            pseudoWindow pW = new pseudoWindow(log);
+            pW.setVisible(true);
+            pW.pack();
+            pW.setLocationRelativeTo(null);
+            pW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+        }
+        else {
+            Indication.setText("Wrong combination login/password please try again");
+            Indication.setForeground(java.awt.Color.red);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,10 +63,17 @@ public class loginWindow extends javax.swing.JFrame {
         login = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         connectedButton = new javax.swing.JButton();
+        Indication = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("login :");
+
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
 
         jLabel2.setText("password :");
 
@@ -62,19 +89,24 @@ public class loginWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(117, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(connectedButton)
                 .addGap(159, 159, 159))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(Indication, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,30 +121,23 @@ public class loginWindow extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(60, 60, 60)
                 .addComponent(connectedButton)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Indication, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void connectedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectedButtonMouseClicked
-        String log = login.getText();
-        String passwd = String.valueOf(password.getPassword());
-        // Method to test login and passwd
-        if ( chatSystemDB.isLogCorrect(log, passwd) ) {
-            // If both are ok 
-            // Starting pseudo window
-            pseudoWindow pW = new pseudoWindow(log);
-            pW.setVisible(true);
-            pW.pack();
-            pW.setLocationRelativeTo(null);
-            pW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
-        }
-        else {
-            // TODO if combination is wrong
-        }
+        creation_pseudoWindow();
     }//GEN-LAST:event_connectedButtonMouseClicked
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+       if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER){
+           creation_pseudoWindow();
+       }
+    }//GEN-LAST:event_passwordKeyPressed
 
     /**
      * @param args the command line arguments
@@ -150,6 +175,7 @@ public class loginWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Indication;
     private javax.swing.JButton connectedButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

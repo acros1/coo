@@ -117,11 +117,6 @@ public class SessionWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel1MouseClicked(evt);
-            }
-        });
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 255));
 
@@ -153,6 +148,11 @@ public class SessionWindow extends javax.swing.JFrame {
 
         exitButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         exitButton.setText("X");
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -232,28 +232,23 @@ public class SessionWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_SendButtonMouseClicked
 
-    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        
-        if(this.SendButton.isVisible()){//if the send button is still visible, the session is active so we need to send an exit message and close the socket
-            String exitMessage = "EXIT|"+this.clientThread.getMainUserPseudo();
-            st.writeMessage(exitMessage);
-            this.session.endSession(this.st);
-            
+    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
+        // TODO add your handling code here:
+        if(this.SendButton.isVisible()){
+
             try {
-                this.st.getSocket().close();
+                st.exitMessage();
             } catch (IOException ex) {
                 Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
+            this.session.endSession(this.st);
             this.dispose();
- 
         }
         else{
             this.session.endSession(this.st);
             this.dispose();
         }
-              // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jPanel1MouseClicked
+    }//GEN-LAST:event_exitButtonMouseClicked
 
     /**
      * @param args the command line arguments

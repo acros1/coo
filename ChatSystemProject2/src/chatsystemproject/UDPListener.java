@@ -125,8 +125,10 @@ public class UDPListener implements Runnable {
                             }
                         }
                     }
+                    // The list has probably been modified so we update it
+                    this.clientThread.getApplicationWindow().updateUsersList();
                 }
-                this.clientThread.getApplicationWindow().updateUsersList();
+                
             }
         } catch (IOException e) {
                 e.printStackTrace();

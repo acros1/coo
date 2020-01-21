@@ -65,6 +65,7 @@ public class applicationWindow extends javax.swing.JFrame {
         UserList.setModel(dlm);
         System.out.println("List Updated");
     }
+   
     
     public void endSession(Session session,ServerThread st){
         this.sessionStarted.remove(session);
