@@ -233,7 +233,7 @@ public class SessionWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_SendButtonMouseClicked
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        // TODO add your handling code here:
+        this.setVisible(false);
         if(this.SendButton.isVisible()){
 
             try {

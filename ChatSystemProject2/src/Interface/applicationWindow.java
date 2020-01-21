@@ -10,8 +10,6 @@ import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
 import chatsystemproject.Session;
 import chatsystemproject.User;
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
@@ -93,6 +91,7 @@ public class applicationWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         UserList = new javax.swing.JList<>();
         userPseudo = new javax.swing.JLabel();
+        exitButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -115,6 +114,14 @@ public class applicationWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(UserList);
 
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        exitButton.setText("X");
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,11 +139,15 @@ public class applicationWindow extends javax.swing.JFrame {
                         .addGap(49, 49, 49)
                         .addComponent(userPseudo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitButton))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addComponent(exitButton)
+                .addGap(4, 4, 4)
                 .addComponent(userPseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
@@ -187,6 +198,21 @@ public class applicationWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UserListMouseClicked
 
+    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
+        this.clientThread.deletePseudo();
+        Iterator<Session> itr = this.sessionStarted.iterator();
+        while(itr.hasNext()){
+            Session session = itr.next();
+            String exitMessage = "EXIT|"+this.clientThread.getMainUserPseudo();           
+            session.getSessionWindow().getServerThread().writeMessage(exitMessage);
+            this.sessionStarted.remove(session);
+            this.clientThread.getMainSystem().getServerStarted().remove(session.getSessionWindow().getServerThread());
+            
+                
+        }
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +251,7 @@ public class applicationWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> UserList;
+    private javax.swing.JLabel exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
