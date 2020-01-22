@@ -56,7 +56,8 @@ public class ClientThread implements Runnable {
 
     public void broadcastPseudo() {
             try {
-                // Need to send login, it's the only way to find history (because login is the same every connection) 
+                // Need to send login, it's the only way to find history (because login is the same every connection)
+                System.out.println("Broadcasting my pseudo");
                 String data = this.getMainUserPseudo() + "|" + this.login;
                 this.outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
                 this.dgramSocket.send(this.outPacket);
