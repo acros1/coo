@@ -8,6 +8,7 @@ package Interface;
 import javax.swing.JFrame;
 import chatsystemproject.ClientThread;
 import database.Connect;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -86,6 +87,9 @@ public class loginWindow extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 exitButtonMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButtonMouseEntered(evt);
+            }
         });
         headerPanel.add(exitButton);
         exitButton.setBounds(680, 0, 20, 29);
@@ -95,6 +99,9 @@ public class loginWindow extends javax.swing.JFrame {
         reduceButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 reduceButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reduceButtonMouseEntered(evt);
             }
         });
         headerPanel.add(reduceButton);
@@ -131,6 +138,9 @@ public class loginWindow extends javax.swing.JFrame {
         connectedButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 connectedButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                connectedButtonMouseEntered(evt);
             }
         });
 
@@ -209,6 +219,18 @@ public class loginWindow extends javax.swing.JFrame {
     private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
         this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_reduceButtonMouseClicked
+
+    private void reduceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseEntered
+        reduceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_reduceButtonMouseEntered
+
+    private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
+        exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_exitButtonMouseEntered
+
+    private void connectedButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectedButtonMouseEntered
+        connectedButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_connectedButtonMouseEntered
 
     /**
      * @param args the command line arguments

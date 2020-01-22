@@ -8,6 +8,7 @@ package Interface;
 import chatsystemproject.ClientThread;
 import chatsystemproject.User;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -83,6 +84,9 @@ public class pseudoWindow extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 exitButtonMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButtonMouseEntered(evt);
+            }
         });
         headerPanel.add(exitButton);
         exitButton.setBounds(680, 0, 20, 29);
@@ -92,6 +96,9 @@ public class pseudoWindow extends javax.swing.JFrame {
         reduceButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 reduceButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reduceButtonMouseEntered(evt);
             }
         });
         headerPanel.add(reduceButton);
@@ -110,6 +117,9 @@ public class pseudoWindow extends javax.swing.JFrame {
         ValidButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ValidButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ValidButtonMouseEntered(evt);
             }
         });
         ValidButton.addActionListener(new java.awt.event.ActionListener() {
@@ -243,6 +253,18 @@ public class pseudoWindow extends javax.swing.JFrame {
     private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
         this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_reduceButtonMouseClicked
+
+    private void ValidButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseEntered
+        ValidButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_ValidButtonMouseEntered
+
+    private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
+        exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_exitButtonMouseEntered
+
+    private void reduceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseEntered
+        reduceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_reduceButtonMouseEntered
 
     /**
      * @param args the command line arguments/
