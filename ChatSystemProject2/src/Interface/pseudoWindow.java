@@ -73,6 +73,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -162,6 +163,9 @@ public class pseudoWindow extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Be careful it will identify you on the network");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel5.setText("Alexandre Cros - Nedellec Maël © 2019-2020");
+
         javax.swing.GroupLayout ContentPanelLayout = new javax.swing.GroupLayout(ContentPanel);
         ContentPanel.setLayout(ContentPanelLayout);
         ContentPanelLayout.setHorizontalGroup(
@@ -170,12 +174,6 @@ public class pseudoWindow extends javax.swing.JFrame {
                 .addGap(0, 207, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(191, 191, 191))
-            .addGroup(ContentPanelLayout.createSequentialGroup()
-                .addGap(222, 222, 222)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContentPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,6 +183,15 @@ public class pseudoWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContentPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(250, 250, 250))))
+            .addGroup(ContentPanelLayout.createSequentialGroup()
+                .addGroup(ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ContentPanelLayout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ContentPanelLayout.setVerticalGroup(
             ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +206,8 @@ public class pseudoWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(ValidButton)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -334,6 +342,7 @@ public class pseudoWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField pseudo;
     private javax.swing.JLabel reduceButton;
     // End of variables declaration//GEN-END:variables
