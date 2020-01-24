@@ -102,7 +102,6 @@ public class applicationWindow extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         setSize(new java.awt.Dimension(350, 0));
-        getContentPane().setLayout(null);
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
         headerPanel.setLayout(null);
@@ -118,7 +117,7 @@ public class applicationWindow extends javax.swing.JFrame {
             }
         });
         headerPanel.add(reduceButton);
-        reduceButton.setBounds(290, 0, 20, 29);
+        reduceButton.setBounds(310, 0, 20, 29);
 
         exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         exitButton.setText("X");
@@ -136,9 +135,6 @@ public class applicationWindow extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg_app.jpg")); // NOI18N
         headerPanel.add(jLabel2);
         jLabel2.setBounds(0, 0, 350, 100);
-
-        getContentPane().add(headerPanel);
-        headerPanel.setBounds(0, 0, 350, 100);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,15 +158,27 @@ public class applicationWindow extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(100, 90, 136, 140);
         jPanel1.add(userPseudo);
-        userPseudo.setBounds(100, 10, 145, 23);
+        userPseudo.setBounds(100, 30, 145, 23);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("Alexandre Cros - Nedellec Maël © 2019-2020");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 270, 240, 13);
+        jLabel3.setBounds(0, 270, 240, 20);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 100, 350, 290);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
