@@ -117,6 +117,9 @@ public class loginWindow extends javax.swing.JFrame {
             }
         });
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel3MousePressed(evt);
             }
@@ -256,6 +259,10 @@ public class loginWindow extends javax.swing.JFrame {
         this.mouseX = evt.getX();
         this.mouseY = evt.getY();
     }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

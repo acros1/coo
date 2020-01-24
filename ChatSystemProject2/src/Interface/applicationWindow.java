@@ -10,6 +10,7 @@ import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
 import chatsystemproject.Session;
 import chatsystemproject.User;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
@@ -85,25 +86,69 @@ public class applicationWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        headerPanel = new javax.swing.JPanel();
+        reduceButton = new javax.swing.JLabel();
+        exitButton = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserList = new javax.swing.JList<>();
         userPseudo = new javax.swing.JLabel();
-        exitButton = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
+        setSize(new java.awt.Dimension(350, 0));
+        getContentPane().setLayout(null);
+
+        headerPanel.setBackground(new java.awt.Color(255, 255, 255));
+        headerPanel.setLayout(null);
+
+        reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        reduceButton.setText("-");
+        reduceButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reduceButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reduceButtonMouseEntered(evt);
+            }
+        });
+        headerPanel.add(reduceButton);
+        reduceButton.setBounds(290, 0, 20, 29);
+
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        exitButton.setText("X");
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButtonMouseEntered(evt);
+            }
+        });
+        headerPanel.add(exitButton);
+        exitButton.setBounds(330, 0, 20, 29);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg_app.jpg")); // NOI18N
+        headerPanel.add(jLabel2);
+        jLabel2.setBounds(0, 0, 350, 100);
+
+        getContentPane().add(headerPanel);
+        headerPanel.setBounds(0, 0, 350, 100);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 204));
         jLabel1.setText("Users connected");
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 255));
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(110, 60, 114, 17);
 
         UserList.setForeground(new java.awt.Color(0, 51, 204));
         UserList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -114,62 +159,18 @@ public class applicationWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(UserList);
 
-        exitButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        exitButton.setText("X");
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitButtonMouseClicked(evt);
-            }
-        });
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(100, 90, 136, 140);
+        jPanel1.add(userPseudo);
+        userPseudo.setBounds(100, 10, 145, 23);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(userPseudo)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exitButton))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(exitButton)
-                .addGap(4, 4, 4)
-                .addComponent(userPseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel3.setText("Alexandre Cros - Nedellec Maël © 2019-2020");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(0, 270, 240, 13);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 100, 350, 290);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -198,20 +199,21 @@ public class applicationWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UserListMouseClicked
 
+    private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_reduceButtonMouseClicked
+
+    private void reduceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseEntered
+        reduceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_reduceButtonMouseEntered
+
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        this.clientThread.deletePseudo();
-        Iterator<Session> itr = this.sessionStarted.iterator();
-        while(itr.hasNext()){
-            Session session = itr.next();
-            String exitMessage = "EXIT|"+this.clientThread.getMainUserPseudo();           
-            session.getSessionWindow().getServerThread().writeMessage(exitMessage);
-            this.sessionStarted.remove(session);
-            this.clientThread.getMainSystem().getServerStarted().remove(session.getSessionWindow().getServerThread());
-            
-                
-        }
         System.exit(0);
     }//GEN-LAST:event_exitButtonMouseClicked
+
+    private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
+        exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_exitButtonMouseEntered
 
     /**
      * @param args the command line arguments
@@ -252,10 +254,13 @@ public class applicationWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> UserList;
     private javax.swing.JLabel exitButton;
+    private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel reduceButton;
     private javax.swing.JLabel userPseudo;
     // End of variables declaration//GEN-END:variables
 }
