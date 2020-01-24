@@ -24,6 +24,8 @@ public class loginWindow extends javax.swing.JFrame {
      */
     private ClientThread clientThread = null;
     private Connect chatSystemDB = null;
+    private int mouseX;
+    private int mouseY;
     
     
     public loginWindow() {
@@ -75,6 +77,7 @@ public class loginWindow extends javax.swing.JFrame {
         connectedButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
 
@@ -108,6 +111,16 @@ public class loginWindow extends javax.swing.JFrame {
         reduceButton.setBounds(660, 0, 20, 29);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg.jpg")); // NOI18N
+        jLabel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel3MouseDragged(evt);
+            }
+        });
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
         headerPanel.add(jLabel3);
         jLabel3.setBounds(0, 0, 700, 210);
 
@@ -231,6 +244,18 @@ public class loginWindow extends javax.swing.JFrame {
     private void connectedButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_connectedButtonMouseEntered
         connectedButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_connectedButtonMouseEntered
+
+    private void jLabel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseDragged
+        int cordX = evt.getXOnScreen();
+        int cordY = evt.getYOnScreen();
+        
+        this.setLocation(cordX - mouseX,cordY - mouseY);
+    }//GEN-LAST:event_jLabel3MouseDragged
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        this.mouseX = evt.getX();
+        this.mouseY = evt.getY();
+    }//GEN-LAST:event_jLabel3MousePressed
 
     /**
      * @param args the command line arguments

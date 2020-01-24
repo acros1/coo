@@ -28,6 +28,8 @@ public class pseudoWindow extends javax.swing.JFrame {
     private ClientThread clientThread = null;
     private String login = null;
     
+    private int mouseX;
+    private int mouseY;
     public pseudoWindow(String login) {
         this.login = login;
         initComponents();
@@ -105,6 +107,16 @@ public class pseudoWindow extends javax.swing.JFrame {
         reduceButton.setBounds(660, 0, 20, 29);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg.jpg")); // NOI18N
+        jLabel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel3MouseDragged(evt);
+            }
+        });
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
         headerPanel.add(jLabel3);
         jLabel3.setBounds(0, 0, 700, 214);
 
@@ -265,6 +277,18 @@ public class pseudoWindow extends javax.swing.JFrame {
     private void reduceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseEntered
         reduceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_reduceButtonMouseEntered
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        this.mouseX = evt.getX();
+        this.mouseY = evt.getY();
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseDragged
+        int cordX = evt.getXOnScreen();
+        int cordY = evt.getYOnScreen();
+        
+        this.setLocation(cordX - mouseX,cordY - mouseY);
+    }//GEN-LAST:event_jLabel3MouseDragged
 
     /**
      * @param args the command line arguments/
