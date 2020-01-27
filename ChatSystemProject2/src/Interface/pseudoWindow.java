@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 /**
@@ -32,6 +33,7 @@ public class pseudoWindow extends javax.swing.JFrame {
     private int mouseY;
     public pseudoWindow(String login) {
         this.login = login;
+        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         initComponents();
     }
     

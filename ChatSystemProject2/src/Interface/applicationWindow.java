@@ -10,6 +10,7 @@ import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
 import chatsystemproject.Session;
 import chatsystemproject.User;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,6 +31,7 @@ public class applicationWindow extends javax.swing.JFrame {
     
 
     public applicationWindow(ClientThread clientThread) {
+        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         initComponents();
         this.clientThread = clientThread;
         userPseudo.setText(this.clientThread.getMainUserPseudo());

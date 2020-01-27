@@ -61,9 +61,10 @@ public class SessionWindow extends javax.swing.JFrame {
     }
     
     public void addMessage(String message){
-        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss\t").format(Calendar.getInstance().getTime());
-        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "  " + User.getText() + " : " + message);
-        // Adding the message to history in DB
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss ").format(Calendar.getInstance().getTime());
+        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + " "+ User.getText() + " : " + message);
+        ChatAr.setText(ChatAr.getText() + "\n" + timeStamp + " "+ "<b>" +User.getText() + "<\b> : " + message);
+                // Adding the message to history in DB
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
         chatSystemDB.addToHistory(idMainUser, idUser2, message, timeStamp);
@@ -109,8 +110,8 @@ public class SessionWindow extends javax.swing.JFrame {
         MessageArea = new javax.swing.JTextArea();
         SendButton = new javax.swing.JButton();
         User = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        TextArea = new javax.swing.JTextPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ChatAr = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,16 +122,23 @@ public class SessionWindow extends javax.swing.JFrame {
 
         ChatArea.setColumns(20);
         ChatArea.setRows(5);
+        ChatArea.setToolTipText("");
         ChatArea.setWrapStyleWord(true);
+        ChatArea.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane2.setViewportView(ChatArea);
 
         MessageArea.setColumns(20);
         MessageArea.setRows(5);
         MessageArea.setText("Write your message...");
         MessageArea.setAutoscrolls(false);
+        MessageArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MessageAreaMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(MessageArea);
 
-        SendButton.setBackground(new java.awt.Color(80, 201, 181));
+        SendButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         SendButton.setText("Send");
         SendButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -143,7 +151,7 @@ public class SessionWindow extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane5.setViewportView(TextArea);
+        jScrollPane1.setViewportView(ChatAr);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,41 +159,35 @@ public class SessionWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(483, 483, 483)
-                        .addComponent(User))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(149, 149, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addComponent(User, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(User)
+                .addContainerGap()
+                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SendButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(143, 143, 143))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(149, 149, 149))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,12 +214,18 @@ public class SessionWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
         //MESSAGE YOU'VE SEND IS DISPLAYED
-        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText());
-        TextArea.setText("<p>"+TextArea.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</p>");
+        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
         st.writeMessage(MessageArea.getText());
         
         
     }//GEN-LAST:event_SendButtonMouseClicked
+
+    private void MessageAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MessageAreaMouseClicked
+        if(MessageArea.getText().equals("Write your message...")){
+           MessageArea.setText(""); 
+        }
+        
+    }//GEN-LAST:event_MessageAreaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -255,15 +263,15 @@ public class SessionWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane ChatAr;
     private javax.swing.JTextArea ChatArea;
     private javax.swing.JTextArea MessageArea;
     private javax.swing.JButton SendButton;
-    private javax.swing.JTextPane TextArea;
     private javax.swing.JLabel User;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
