@@ -54,7 +54,7 @@ public class UDPListener implements Runnable {
                         System.out.println("Received an answer to pseudo broadcast");
                         String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
                         // dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo, dataSplit[4] = clientLogin
-                        System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\""+dataSplit[4]+"\"");
+                        System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\" 4 : \""+dataSplit[4]+"\"");
                         // if main user pseudo is not equal to dataSplit[1], pseudo has already been changed, then don't process message
                         if ( dataSplit[1].equals(clientThread.getMainUserPseudo()) ) {
 
@@ -107,7 +107,7 @@ public class UDPListener implements Runnable {
                         if ( dataSplit[0].equals(clientThread.getMainUserPseudo()) ) {
                             // Answering with false boolean
                             System.out.println("Pseudo is already mine, sending false");
-                            String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo() + clientThread.getLogin();
+                            String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                         }
@@ -115,7 +115,7 @@ public class UDPListener implements Runnable {
                         else {
                             // Answering with true boolean
                             System.out.println("Pseudo is different of mine, sending true");
-                            String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo() + clientThread.getLogin();
+                            String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                             // Add user to the list
