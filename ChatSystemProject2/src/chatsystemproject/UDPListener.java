@@ -119,7 +119,7 @@ public class UDPListener implements Runnable {
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                             // Add user to the list
-                            if ( listenerThread.isUserExist(data) == false ) {
+                            if ( listenerThread.isUserExist(dataSplit[0]) == false ) {
                                 System.out.println("Client is not in the list, adding him");
                                 listenerThread.addUser(dataSplit[0], dataSplit[1], clientAddr);
                             }
