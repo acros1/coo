@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -32,9 +33,12 @@ public class pseudoWindow extends javax.swing.JFrame {
     private int mouseX;
     private int mouseY;
     public pseudoWindow(String login) {
-        this.login = login;
-        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
+        
+        
         initComponents();
+        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
+        this.login = login;
+        this.headerImg.setIcon(new ImageIcon("images/headerimg.jpg"));
     }
     
     private void creation_applicationWindow(){
@@ -68,7 +72,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         headerPanel = new javax.swing.JPanel();
         exitButton = new javax.swing.JLabel();
         reduceButton = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        headerImg = new javax.swing.JLabel();
         ContentPanel = new javax.swing.JPanel();
         ValidButton = new javax.swing.JButton();
         pseudo = new javax.swing.JTextField();
@@ -109,19 +113,19 @@ public class pseudoWindow extends javax.swing.JFrame {
         headerPanel.add(reduceButton);
         reduceButton.setBounds(660, 0, 20, 29);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg.jpg")); // NOI18N
-        jLabel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        headerImg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg.jpg")); // NOI18N
+        headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jLabel3MouseDragged(evt);
+                headerImgMouseDragged(evt);
             }
         });
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        headerImg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
+                headerImgMousePressed(evt);
             }
         });
-        headerPanel.add(jLabel3);
-        jLabel3.setBounds(0, 0, 700, 214);
+        headerPanel.add(headerImg);
+        headerImg.setBounds(0, 0, 700, 214);
 
         ContentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -288,17 +292,17 @@ public class pseudoWindow extends javax.swing.JFrame {
         reduceButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_reduceButtonMouseEntered
 
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+    private void headerImgMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerImgMousePressed
         this.mouseX = evt.getX();
         this.mouseY = evt.getY();
-    }//GEN-LAST:event_jLabel3MousePressed
+    }//GEN-LAST:event_headerImgMousePressed
 
-    private void jLabel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseDragged
+    private void headerImgMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerImgMouseDragged
         int cordX = evt.getXOnScreen();
         int cordY = evt.getYOnScreen();
         
         this.setLocation(cordX - mouseX,cordY - mouseY);
-    }//GEN-LAST:event_jLabel3MouseDragged
+    }//GEN-LAST:event_headerImgMouseDragged
 
     /**
      * @param args the command line arguments/
@@ -339,10 +343,10 @@ public class pseudoWindow extends javax.swing.JFrame {
     private javax.swing.JPanel ContentPanel;
     private javax.swing.JButton ValidButton;
     private javax.swing.JLabel exitButton;
+    private javax.swing.JLabel headerImg;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField pseudo;

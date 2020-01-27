@@ -31,8 +31,10 @@ public class applicationWindow extends javax.swing.JFrame {
     
 
     public applicationWindow(ClientThread clientThread) {
-        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
+        
         initComponents();
+        this.headerImg.setIcon(new ImageIcon("images/headerimg_app.jpg"));
+        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         this.clientThread = clientThread;
         userPseudo.setText(this.clientThread.getMainUserPseudo());
         System.out.println("Application set");
@@ -91,7 +93,7 @@ public class applicationWindow extends javax.swing.JFrame {
         headerPanel = new javax.swing.JPanel();
         reduceButton = new javax.swing.JLabel();
         exitButton = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        headerImg = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -133,10 +135,8 @@ public class applicationWindow extends javax.swing.JFrame {
         });
         headerPanel.add(exitButton);
         exitButton.setBounds(330, 0, 20, 29);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg_app.jpg")); // NOI18N
-        headerPanel.add(jLabel2);
-        jLabel2.setBounds(0, 0, 350, 100);
+        headerPanel.add(headerImg);
+        headerImg.setBounds(0, 0, 350, 100);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -264,9 +264,9 @@ public class applicationWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> UserList;
     private javax.swing.JLabel exitButton;
+    private javax.swing.JLabel headerImg;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
