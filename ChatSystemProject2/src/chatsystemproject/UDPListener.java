@@ -107,7 +107,7 @@ public class UDPListener implements Runnable {
                         if ( dataSplit[0].equals(clientThread.getMainUserPseudo()) ) {
                             // Answering with false boolean
                             System.out.println("Pseudo is already mine, sending false");
-                            String response = "|" + data + "|" + "false" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
+                            String response = "|" + dataSplit[0] + "|" + "false" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                         }
@@ -115,7 +115,7 @@ public class UDPListener implements Runnable {
                         else {
                             // Answering with true boolean
                             System.out.println("Pseudo is different of mine, sending true");
-                            String response = "|" + data + "|" + "true" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
+                            String response = "|" + dataSplit[0] + "|" + "true" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                             // Add user to the list
