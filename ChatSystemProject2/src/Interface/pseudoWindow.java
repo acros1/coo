@@ -113,7 +113,6 @@ public class pseudoWindow extends javax.swing.JFrame {
         headerPanel.add(reduceButton);
         reduceButton.setBounds(660, 0, 20, 29);
 
-        headerImg.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maeln\\Documents\\GitHub\\coo\\ChatSystemProject2\\images\\headerimg.jpg")); // NOI18N
         headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 headerImgMouseDragged(evt);
@@ -125,7 +124,7 @@ public class pseudoWindow extends javax.swing.JFrame {
             }
         });
         headerPanel.add(headerImg);
-        headerImg.setBounds(0, 0, 700, 214);
+        headerImg.setBounds(0, 0, 700, 0);
 
         ContentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
