@@ -63,7 +63,7 @@ public class SessionWindow extends javax.swing.JFrame {
     public void addMessage(String message){
         String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss ").format(Calendar.getInstance().getTime());
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + " "+ User.getText() + " : " + message);
-        ChatAr.setText(ChatAr.getText() + "\n" + timeStamp + " "+ "<b>" +User.getText() + "<\b> : " + message);
+        ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + " "+ "<b>" +User.getText() + "</b> : " + message+"</html>");
                 // Adding the message to history in DB
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
@@ -215,6 +215,7 @@ public class SessionWindow extends javax.swing.JFrame {
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
         //MESSAGE YOU'VE SEND IS DISPLAYED
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
+        ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
         st.writeMessage(MessageArea.getText());
         
         
