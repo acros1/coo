@@ -124,7 +124,7 @@ public class pseudoWindow extends javax.swing.JFrame {
             }
         });
         headerPanel.add(headerImg);
-        headerImg.setBounds(0, 0, 700, 0);
+        headerImg.setBounds(0, 0, 700, 210);
 
         ContentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
