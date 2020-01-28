@@ -66,7 +66,7 @@ public class ListenerThread implements Runnable {
                             }
                     }
                     Socket sock = new Socket(client.getAddr(), 3000);
-                    ServerThread st = new ServerThread(client, sock,WindowSession,this.clientThread);
+                    ServerThread st = new ServerThread(client, sock, WindowSession, this.clientThread);
                     Thread server = new Thread(st);
                     server.start();
                     startedServer.add(st);
@@ -98,7 +98,16 @@ public class ListenerThread implements Runnable {
                     }
             }
             return false;
-    } 
+    }
+    
+    public User getUserByPseudo(String pseudo) {
+            for (User u : clientList) {
+                    if (u.getPseudo().equals(pseudo)) {
+                            return u;
+                    }
+            }
+            return null;
+    }
 
     public ArrayList<User> getClientList() {
             return clientList;

@@ -177,5 +177,5 @@ public class ClientThread implements Runnable {
     public String getLogin() {
         return this.login;
     }
-    
+        
 } 

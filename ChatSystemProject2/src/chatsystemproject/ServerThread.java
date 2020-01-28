@@ -11,6 +11,8 @@ public class ServerThread implements Runnable {
 	private PrintWriter pwrite = null;
         private SessionWindow WindowSession = null;
         private ClientThread clientThread = null;
+        
+        private boolean connection = true;
 
 	public ServerThread(User client, Socket socket) {
 		this.client = client;
@@ -35,7 +37,7 @@ public class ServerThread implements Runnable {
 		    BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
 		    String receiveMessage;              
-		    while(true) {
+		    while(connection) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
                                     if(receiveMessage.substring(0, 4).equals("EXIT|")){
                                         WindowSession.addMessage(client.getPseudo() + " disconnected... Session ended");
@@ -57,7 +59,7 @@ public class ServerThread implements Runnable {
                                     }
                                                  
 				}
-		    }  
+		    }
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}             
@@ -88,5 +90,9 @@ public class ServerThread implements Runnable {
             WindowSession.addMessage(client.getPseudo() + "Connected..");
             this.WindowSession.getSendButton().setVisible(true);
             this.run();
+        }
+        
+        public void deconnexion() {
+            this.connection = false;
         }
 } 
