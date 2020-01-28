@@ -8,7 +8,7 @@ package Interface;
 import chatsystemproject.ServerThread;
 import chatsystemproject.User;
 import chatsystemproject.ClientThread;
-import chatsystemproject.Session;
+//import chatsystemproject.Session;
 import chatsystemproject.ListenerThread;
 import database.Connect;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class SessionWindow extends javax.swing.JFrame {
     private ServerThread st = null;
     private Scanner scan = new Scanner(System.in);
     private User user2;
-    private Session session;
+    //private Session session;
     
     private Connect chatSystemDB = new Connect();
     
@@ -42,13 +42,13 @@ public class SessionWindow extends javax.swing.JFrame {
         initComponents();
     }
     
-    public SessionWindow(User u, ClientThread clientThread, Session session) {
+    public SessionWindow(User u, ClientThread clientThread/*Session session*/) {
         //Start the session with the person you want to chat with (user)
         //
         // Session session = new Session(You,user);
         System.out.println("On commence tout");
         initComponents();
-        this.session = session;
+        //this.session = session;
         this.user2 = u;
         String user = u.getPseudo();
         this.clientThread = clientThread;
@@ -85,10 +85,10 @@ public class SessionWindow extends javax.swing.JFrame {
     public javax.swing.JButton getSendButton(){
         return this.SendButton;
     }
-    
+    /*
     public Session getSession(){
         return this.session;
-    }
+    }*/
     
     public ServerThread getServerThread(){
         return this.st;
@@ -258,7 +258,7 @@ public class SessionWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SessionWindow(null,null,null).setVisible(true);
+                //new SessionWindow(null,null,null).setVisible(true);
             }
         });
     }

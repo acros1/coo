@@ -17,7 +17,7 @@ import java.util.*;
 import java.text.*;
 import java.io.*;
 import javax.swing.JFrame;
-
+/*
 public class Session {
     
     private User mainUser = null;
@@ -56,4 +56,4 @@ public class Session {
     }
     
     
-}
+}*/

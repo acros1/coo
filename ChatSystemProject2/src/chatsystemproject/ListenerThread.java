@@ -34,7 +34,7 @@ public class ListenerThread implements Runnable {
             while(true) {
                 Socket sock = sersock.accept();
                 clientAddr = sock.getInetAddress();
-                ArrayList<Session> sessionStarted = this.clientThread.getApplicationWindow().getSessionStarted();
+                //ArrayList<Session> sessionStarted = this.clientThread.getApplicationWindow().getSessionStarted();
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {

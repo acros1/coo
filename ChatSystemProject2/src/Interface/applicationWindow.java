@@ -8,7 +8,7 @@ package Interface;
 
 import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
-import chatsystemproject.Session;
+//import chatsystemproject.Session;
 import chatsystemproject.User;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -26,7 +26,7 @@ public class applicationWindow extends javax.swing.JFrame {
      * Creates new form applicationWindow
      */
     DefaultListModel dlm = new DefaultListModel();
-    private ArrayList<Session> sessionStarted = new ArrayList<Session>();
+    //private ArrayList<Session> sessionStarted = new ArrayList<Session>();
     ClientThread clientThread = null;
     
 
@@ -70,14 +70,14 @@ public class applicationWindow extends javax.swing.JFrame {
     }
    
     
-    public void endSession(Session session,ServerThread st){
+    /*public void endSession(Session session,ServerThread st){
         this.sessionStarted.remove(session);
         this.clientThread.getMainSystem().getServerStarted().remove(st);
     }
     
     public ArrayList<Session> getSessionStarted(){
         return this.sessionStarted;
-    }
+    }*/
     
     
 
@@ -196,13 +196,14 @@ public class applicationWindow extends javax.swing.JFrame {
             ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
             Iterator<User> itr = users.iterator();
             while(itr.hasNext()) {
-                User user= itr.next();
+                User user = itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    Session session = new Session(user, this.clientThread);
-                    session.getSessionWindow().getHistory();
-                    session.getSessionWindow().setVisible(true);
-                    this.sessionStarted.add(session);
+                    SessionWindow session = new SessionWindow(user, this.clientThread);
+                    //Session session = new Session(user, this.clientThread);
+                    session.getHistory();
+                    session.setVisible(true);
+                    this.add(session);
                 }
                 
             }
