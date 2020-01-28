@@ -22,7 +22,7 @@ public class ServerThread implements Runnable {
         public ServerThread(User client, Socket socket, ClientThread clientThread) {
 		this.client = client;
 		this.sock = socket;
-                this.WindowSession = new SessionWindow(this.client, this.clientThread, new Session(client, this.clientThread));
+                this.WindowSession = new SessionWindow(this.client, this.clientThread);
                 this.clientThread = clientThread;
 	}
 
