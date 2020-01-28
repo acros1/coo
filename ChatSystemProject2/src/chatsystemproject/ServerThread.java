@@ -9,7 +9,7 @@ public class ServerThread implements Runnable {
 	private User client = null;
 	private Socket sock = null; // client socket
 	private PrintWriter pwrite = null;
-        private SessionWindow WindowSession = null;
+        private SessionWindow sessionWindow = null;
         private ClientThread clientThread = null;
         
         private boolean connection = true;
@@ -22,7 +22,7 @@ public class ServerThread implements Runnable {
         public ServerThread(User client, Socket socket, ClientThread clientThread) {
 		this.client = client;
 		this.sock = socket;
-                this.WindowSession = new SessionWindow(this.client, this.clientThread);
+                //this.sessionWindow = this.clientThread.getApplicationWindow();
                 this.clientThread = clientThread;
 	}
 
@@ -40,20 +40,20 @@ public class ServerThread implements Runnable {
 		    while(connection) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
                                     if(receiveMessage.substring(0, 4).equals("EXIT|")){
-                                        WindowSession.addMessage(client.getPseudo() + " disconnected... Session ended");
-                                        this.WindowSession.getSendButton().setVisible(false);
+                                        sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
+                                        this.sessionWindow.getSendButton().setVisible(false);
                                        
                                     }
                                     else{
-                                        if(this.WindowSession.isVisible()){
-                                            WindowSession.addMessage(receiveMessage);
-                                            WindowSession.setVisible(true);
+                                        if(this.sessionWindow.isVisible()){
+                                            sessionWindow.addMessage(receiveMessage);
+                                            sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);  
                                         }
                                         else{
-                                            WindowSession.setVisible(true);
-                                            WindowSession.addMessage(receiveMessage);
-                                            WindowSession.setVisible(true);
+                                            sessionWindow.setVisible(true);
+                                            sessionWindow.addMessage(receiveMessage);
+                                            sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
                                         }
                                     }
@@ -87,13 +87,17 @@ public class ServerThread implements Runnable {
         
         public void setSocket(Socket sock){
             this.sock = sock;
-            WindowSession.addMessage(client.getPseudo() + "Connected..");
-            this.WindowSession.getSendButton().setVisible(true);
+            sessionWindow.addMessage(client.getPseudo() + "Connected..");
+            this.sessionWindow.getSendButton().setVisible(true);
             this.run();
         }
         
         public void deconnexion() {
             this.connection = false;
+        }
+        
+        public void setsessionWindow(SessionWindow sessionWindow) {
+            this.sessionWindow = sessionWindow;
         }
        
 } 

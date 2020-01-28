@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,8 @@ public class SessionWindow extends javax.swing.JFrame {
         User.setText(user);
         ListenerThread listenerThread = clientThread.getMainSystem(); 
         this.st = listenerThread.getServer(u);
+        this.st.setsessionWindow(this);
+        
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");
 
