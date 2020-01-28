@@ -38,14 +38,14 @@ public class ListenerThread implements Runnable {
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
-                            for(int i = 0 ; i < sessionStarted.size() ; i++){
+                            /*for(int i = 0 ; i < sessionStarted.size() ; i++){
                                 if(sessionStarted.get(i).getUser().equals(u.getPseudo())){
                                     sessionStarted.get(i).getSessionWindow().getServerThread().setSocket(sock);
                                     break;
                                 }
 
-                            }
-                            ServerThread serverThread = new ServerThread(u, sock, new Session(u, this.clientThread).getSessionWindow(),this.clientThread);
+                            }*/
+                            ServerThread serverThread = new ServerThread(u, sock, this.clientThread);
                             Thread server = new Thread(serverThread);
                             server.start();
                             startedServer.add(serverThread);
@@ -58,7 +58,7 @@ public class ListenerThread implements Runnable {
         }             
     }
 
-    public ServerThread getServer(User client, SessionWindow WindowSession) {
+    public ServerThread getServer(User client) {
             try {
                     for(ServerThread st : startedServer) {
                             if(st.getUser().equals(client)) {
@@ -66,7 +66,7 @@ public class ListenerThread implements Runnable {
                             }
                     }
                     Socket sock = new Socket(client.getAddr(), 3000);
-                    ServerThread st = new ServerThread(client, sock, WindowSession, this.clientThread);
+                    ServerThread st = new ServerThread(client, sock, this.clientThread);
                     Thread server = new Thread(st);
                     server.start();
                     startedServer.add(st);

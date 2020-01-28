@@ -105,7 +105,7 @@ public class ClientThread implements Runnable {
                                     user = this.scan.nextLine();
                                     for(User u : listenerThread.getClientList()) {
                                             if(u.getPseudo().equals(user)) {
-                                                    ServerThread st = listenerThread.getServer(u,null);
+                                                    ServerThread st = listenerThread.getServer(u);
                                                     System.out.println("Type your message :");
                                                     user = this.scan.nextLine(); // ask for msg to send
                                                     st.writeMessage(user);

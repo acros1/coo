@@ -42,7 +42,7 @@ public class SessionWindow extends javax.swing.JFrame {
         initComponents();
     }
     
-    public SessionWindow(User u,ClientThread clientThread,Session session) {
+    public SessionWindow(User u, ClientThread clientThread, Session session) {
         //Start the session with the person you want to chat with (user)
         //
         // Session session = new Session(You,user);
@@ -54,7 +54,7 @@ public class SessionWindow extends javax.swing.JFrame {
         this.clientThread = clientThread;
         User.setText(user);
         ListenerThread listenerThread = clientThread.getMainSystem(); 
-        this.st = listenerThread.getServer(u,this);
+        this.st = listenerThread.getServer(u);
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");
 

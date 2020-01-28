@@ -19,10 +19,10 @@ public class ServerThread implements Runnable {
 		this.sock = socket;
 	}	
         
-        public ServerThread(User client, Socket socket, SessionWindow WindowSession, ClientThread clientThread) {
+        public ServerThread(User client, Socket socket, ClientThread clientThread) {
 		this.client = client;
 		this.sock = socket;
-                this.WindowSession = WindowSession;
+                this.WindowSession = new SessionWindow();
                 this.clientThread = clientThread;
 	}
 
@@ -95,4 +95,5 @@ public class ServerThread implements Runnable {
         public void deconnexion() {
             this.connection = false;
         }
+       
 } 
