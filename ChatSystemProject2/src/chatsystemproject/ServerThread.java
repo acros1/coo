@@ -39,7 +39,7 @@ public class ServerThread implements Runnable {
 		    String receiveMessage;              
 		    while(connection) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
-                                    if(receiveMessage.substring(0, 4).equals("EXIT|")){
+                                    if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){
                                         sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
                                         this.sessionWindow.getSendButton().setVisible(false);
                                        
@@ -51,7 +51,6 @@ public class ServerThread implements Runnable {
                                         }
                                         else{
                                             this.sessionWindow = new SessionWindow(this.client,this.clientThread);
-                                            this.wait(500);
                                             sessionWindow.addMessage(receiveMessage);
                                             sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
