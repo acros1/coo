@@ -45,13 +45,12 @@ public class ServerThread implements Runnable {
                                        
                                     }
                                     else{
-                                        if(this.sessionWindow.isVisible()){
+                                        if(this.sessionWindow != null){
                                             sessionWindow.addMessage(receiveMessage);
-                                            sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);  
                                         }
                                         else{
-                                            sessionWindow.setVisible(true);
+                                            this.sessionWindow = new SessionWindow(this.client,this.clientThread);
                                             sessionWindow.addMessage(receiveMessage);
                                             sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);

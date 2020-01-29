@@ -56,7 +56,6 @@ public class SessionWindow extends javax.swing.JFrame {
         User.setText(user);
         ListenerThread listenerThread = clientThread.getMainSystem(); 
         this.st = listenerThread.getServer(u);
-        this.st.setsessionWindow(this);
         
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");
