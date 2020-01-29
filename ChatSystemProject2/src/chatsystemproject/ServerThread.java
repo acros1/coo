@@ -51,6 +51,7 @@ public class ServerThread implements Runnable {
                                         }
                                         else{
                                             this.sessionWindow = new SessionWindow(this.client,this.clientThread);
+                                            this.wait(500);
                                             sessionWindow.addMessage(receiveMessage);
                                             sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
