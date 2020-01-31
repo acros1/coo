@@ -7,6 +7,7 @@ package Interface;
 
 import chatsystemproject.ClientThread;
 import chatsystemproject.User;
+import database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -30,14 +31,15 @@ public class pseudoWindow extends javax.swing.JFrame {
     private ClientThread clientThread = null;
     private String login = null;
     
+    private Connect chatSystemDB = null;
+    
     private int mouseX;
     private int mouseY;
-    public pseudoWindow(String login) {
-        
-        
+    public pseudoWindow(String login, Connect chatSystemDB) {
         initComponents();
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         this.login = login;
+        this.chatSystemDB = chatSystemDB;
         this.headerImg.setIcon(new ImageIcon("images/headerimg.jpg"));
     }
     
@@ -50,7 +52,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(this.clientThread.getMainUserPseudo());
         
         // Start application window
-        applicationWindow aW = new applicationWindow(this.clientThread);
+        applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
         this.clientThread.setApplicationWindow(aW);
         System.out.println("aW added");
         aW.setVisible(true);
@@ -254,7 +256,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(this.clientThread.getMainUserPseudo());
         
         // Start application window
-        applicationWindow aW = new applicationWindow(this.clientThread);
+        applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
         this.clientThread.setApplicationWindow(aW);
         System.out.println("aW added");
         this.clientThread.broadcastPseudo();
@@ -333,7 +335,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new pseudoWindow(null).setVisible(true);
+                //new pseudoWindow(null, this.chatSystemDB).setVisible(true);
             }
         });
     }

@@ -10,6 +10,7 @@ import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
 //import chatsystemproject.Session;
 import chatsystemproject.User;
+import database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
@@ -29,8 +30,10 @@ public class applicationWindow extends javax.swing.JFrame {
     //private ArrayList<Session> sessionStarted = new ArrayList<Session>();
     ClientThread clientThread = null;
     
+    private Connect chatSystemDB = null;
+    
 
-    public applicationWindow(ClientThread clientThread) {
+    public applicationWindow(ClientThread clientThread, Connect chatSystemDB) {
         
         initComponents();
         this.headerImg.setIcon(new ImageIcon("images/headerimg_app.jpg"));
@@ -53,15 +56,13 @@ public class applicationWindow extends javax.swing.JFrame {
         dlm.clear();
         
         ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
-        
-        
-        
+         
         Iterator<User> itr = users.iterator();
         
         while(itr.hasNext()) {
-         String element = itr.next().getPseudo();
-         System.out.println("pseudo : " + element);
-         dlm.addElement(new ImgsNText(element,new ImageIcon("images/man-user.png")));
+            String element = itr.next().getPseudo();
+            System.out.println("pseudo : " + element);
+            dlm.addElement(new ImgsNText(element,new ImageIcon("images/man-user.png")));
         }  
         
         UserList.setCellRenderer(new Renderer());
@@ -199,7 +200,7 @@ public class applicationWindow extends javax.swing.JFrame {
                 User user = itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    SessionWindow session = new SessionWindow(user, this.clientThread);
+                    SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
                     session.getHistory();
                     session.setVisible(true);
                 }
@@ -208,6 +209,10 @@ public class applicationWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UserListMouseClicked
 
+    public Connect getDB() {
+        return this.chatSystemDB;
+    }
+    
     private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
         this.setState(JFrame.ICONIFIED);
     }//GEN-LAST:event_reduceButtonMouseClicked
@@ -255,7 +260,7 @@ public class applicationWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new applicationWindow(null).setVisible(true);
+                //new applicationWindow(null).setVisible(true);
             }
         });
     }

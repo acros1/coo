@@ -2,6 +2,7 @@
 package chatsystemproject;
 
 import Interface.applicationWindow;
+import database.Connect;
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
@@ -27,9 +28,9 @@ public class ClientThread implements Runnable {
     public ClientThread(String pseudo, String login) {
         this.pseudo = pseudo;
         this.login = login;
-
+        
         this.listenerThread = new ListenerThread(this);
-        this.udpListener = new UDPListener(listenerThread, this);
+        this.udpListener = new UDPListener(listenerThread, this);               
     }
 
     public void run() {
@@ -176,6 +177,10 @@ public class ClientThread implements Runnable {
     
     public String getLogin() {
         return this.login;
+    }
+    
+    public Connect getDB() {
+        return this.aW.getDB();
     }
         
 } 

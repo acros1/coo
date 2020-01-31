@@ -47,7 +47,7 @@ public class loginWindow extends javax.swing.JFrame {
         if ( chatSystemDB.isLogCorrect(log, passwd) ) {
             // If both are ok 
             // Starting pseudo window
-            pseudoWindow pW = new pseudoWindow(log);
+            pseudoWindow pW = new pseudoWindow(log, this.chatSystemDB);
             pW.setVisible(true);
             pW.pack();
             pW.setLocationRelativeTo(null);
