@@ -33,7 +33,6 @@ public class SessionWindow extends javax.swing.JFrame {
      */
     private ClientThread clientThread = null;
     private ServerThread st = null;
-    private Scanner scan = new Scanner(System.in);
     private User user2;
     
     private Connect chatSystemDB = null;
@@ -44,7 +43,6 @@ public class SessionWindow extends javax.swing.JFrame {
     
     public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB) {
 
-        System.out.println("On commence tout");
         initComponents();
         this.user2 = u;
         String user = u.getPseudo();
@@ -60,7 +58,6 @@ public class SessionWindow extends javax.swing.JFrame {
     }
     public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB,ServerThread serverThread) {
 
-        System.out.println("On commence tout");
         initComponents();
         this.user2 = u;
         String user = u.getPseudo();
@@ -235,6 +232,7 @@ public class SessionWindow extends javax.swing.JFrame {
         //MESSAGE YOU'VE SEND IS DISPLAYED
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
         ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
+        //Calling the method in the server to send the message
         st.writeMessage(MessageArea.getText());
         
         

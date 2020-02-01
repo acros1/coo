@@ -37,6 +37,7 @@ public class ServerThread implements Runnable {
                     this.sessionWindow = session;
                 }
                 else if(session == null){
+                    System.out.println("ServerThread + Session created");
                     this.client = client;
                     this.sock = socket;
                     this.clientThread = clientThread;
@@ -98,6 +99,7 @@ public class ServerThread implements Runnable {
 		pwrite.println(msg);
                 System.out.println("envoie du message : "+ msg);
 		pwrite.flush();
+                System.out.println("message envoyé en théorie");
 	} 
         
         public synchronized void exitMessage() throws IOException {
