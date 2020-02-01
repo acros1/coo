@@ -38,7 +38,7 @@ public class ListenerThread implements Runnable {
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
                             //Creating ServerThread
-                            ServerThread serverThread = new ServerThread(u, sock,null);
+                            ServerThread serverThread = new ServerThread(u, sock,this.clientThread,null);
                             Thread server = new Thread(serverThread);
                             server.start();
                             startedServer.add(serverThread);
