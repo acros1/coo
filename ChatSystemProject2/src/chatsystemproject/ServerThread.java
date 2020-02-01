@@ -22,9 +22,19 @@ public class ServerThread implements Runnable {
         public ServerThread(User client, Socket socket, ClientThread clientThread) {
 		this.client = client;
 		this.sock = socket;
-                //this.sessionWindow = this.clientThread.getApplicationWindow();
                 this.clientThread = clientThread;
 	}
+        
+        public ServerThread(User client, Socket socket, ClientThread clientThread, SessionWindow sessionWindow) {
+		this.client = client;
+		this.sock = socket;
+                this.clientThread = clientThread;
+                this.sessionWindow = sessionWindow;
+                sessionWindow.setVisible(true);
+                sessionWindow.setLocationRelativeTo(null);
+	}
+        
+        
 
 	public void run() {
 		try {
@@ -40,17 +50,17 @@ public class ServerThread implements Runnable {
 		    while(connection) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
                                     if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){
-                                        sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
+                                        this.sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
                                         this.sessionWindow.getSendButton().setVisible(false);
                                        
                                     }
                                     else{
-                                        if(this.sessionWindow != null){
+                                        if(this.sessionWindow.isVisible()){
                                             sessionWindow.addMessage(receiveMessage);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);  
                                         }
                                         else{
-                                            this.sessionWindow = new SessionWindow(this.client, this.clientThread, this.clientThread.getDB());
+                                            this.sessionWindow.setVisible(true);
                                             sessionWindow.addMessage(receiveMessage);
                                             sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
@@ -73,7 +83,8 @@ public class ServerThread implements Runnable {
                 String msg = "Exit|"+this.clientThread.getMainUserPseudo();
 		pwrite.println(msg);
 		pwrite.flush();
-                this.sock.close();
+                //this.sock.close(); //really useful ?
+                
 	}
 
 	public User getUser() {

@@ -45,7 +45,7 @@ public class ListenerThread implements Runnable {
                                 }
 
                             }*/
-                            ServerThread serverThread = new ServerThread(u, sock, this.clientThread);
+                            ServerThread serverThread = new ServerThread(u, sock, this.clientThread,new SessionWindow(u, this.clientThread, this.clientThread.getDB()));
                             Thread server = new Thread(serverThread);
                             server.start();
                             startedServer.add(serverThread);
