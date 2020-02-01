@@ -58,7 +58,8 @@ public class SessionWindow extends javax.swing.JFrame {
         this.st.setsessionWindow(this);
         
         this.chatSystemDB = chatSystemDB;
-        
+        this.getHistory();
+        this.setVisible(true);
         ChatArea.setText("Connexion established .. Session started...");
         System.out.println("Type your message :");
 
