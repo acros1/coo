@@ -25,6 +25,14 @@ public class ServerThread implements Runnable {
                 this.clientThread = clientThread;
 	}
         
+        public ServerThread(User client, Socket socket, ClientThread clientThread, SessionWindow sessionWindow) {
+		this.client = client;
+		this.sock = socket;
+                this.clientThread = clientThread;
+                this.sessionWindow = sessionWindow;
+                
+                sessionWindow.setLocationRelativeTo(null);
+	}
         
         
 
@@ -54,7 +62,6 @@ public class ServerThread implements Runnable {
                                         else{
                                             this.sessionWindow.setVisible(true);
                                             sessionWindow.addMessage(receiveMessage);
-                                            sessionWindow.setVisible(true);
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
                                         }
                                     }
