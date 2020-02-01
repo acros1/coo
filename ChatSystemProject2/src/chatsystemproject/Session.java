@@ -40,6 +40,20 @@ public class Session {
         
     }
     
+    public Session(User user2, ClientThread clientThread,ServerThread st){
+        this.mainUser = new User(clientThread.getMainUserPseudo(), clientThread.getLogin(), null);
+        this.user2 = user2;
+        this.clientThread = clientThread;
+        this.sW = new SessionWindow(user2, this.clientThread,this.clientThread.getDB());
+        this.ServerThread = st;      
+        this.ServerThread.setSession(this);
+        this.sW.setServerThread(ServerThread);
+        this.sW.setLocationRelativeTo(null);
+        this.sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.sW.setVisible(true);
+        
+    }
+    
     
    
     public void setVisibleSessionWindow(){
@@ -62,6 +76,10 @@ public class Session {
 
     public User getUser2() {
         return user2;
+    }
+    
+    public void setServerThread(ServerThread st){
+        this.ServerThread = st;
     }
 
     public ServerThread getServerThread() {

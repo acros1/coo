@@ -70,9 +70,10 @@ public class ListenerThread implements Runnable {
                     }
                     if(session == null){
                         System.out.println("Session doesn't exists, creation of one");
-                        Session sess = new Session(client,this.clientThread);
+                        Session sess = new Session(client,this.clientThread,null);
                         Socket sock = new Socket(client.getAddr(), 3000);
                         ServerThread st = new ServerThread(client, sock, this.clientThread,sess);
+                        sess.setServerThread(st);
                         Thread server = new Thread(st);
                         server.start();
                         startedServer.add(st);
