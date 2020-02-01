@@ -16,11 +16,13 @@ public class ServerThread implements Runnable {
         private boolean connection = true;
 
 	public ServerThread(User client, Socket socket) {
+            System.out.println("ServerThread created 1er constru");
 		this.client = client;
 		this.sock = socket;
 	}	
         
         public ServerThread(User client, Socket socket, ClientThread clientThread) {
+            System.out.println("ServerThread created 2e constru");
 		this.client = client;
 		this.sock = socket;
                 this.clientThread = clientThread;
