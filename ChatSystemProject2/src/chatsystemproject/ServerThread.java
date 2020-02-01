@@ -53,7 +53,9 @@ public class ServerThread implements Runnable {
 
 		    String receiveMessage;              
 		    while(connection) {
+                        
 				if((receiveMessage = receiveRead.readLine()) != null) {
+                                    System.out.println("Message reçu : " + receiveMessage);
                                     if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){
                                         this.sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
                                         this.sessionWindow.getSendButton().setVisible(false);
