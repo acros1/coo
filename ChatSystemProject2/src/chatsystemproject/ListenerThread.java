@@ -45,6 +45,7 @@ public class ListenerThread implements Runnable {
                                     break;
                                 }
                             }
+                            System.out.println("getServer");
                             getServer(u,null);
                             /*ServerThread serverThread = new ServerThread(u, sock, this.clientThread,new SessionWindow(u,this.clientThread,this.clientThread.getDB()));
                             Thread server = new Thread(serverThread);
@@ -67,6 +68,7 @@ public class ListenerThread implements Runnable {
                             }
                     }
                     if(session == null){
+                        System.out.println("Session doesn't exists, creation of one");
                         Session sess = new Session(client,this.clientThread);
                         Socket sock = new Socket(client.getAddr(), 3000);
                         ServerThread st = new ServerThread(client, sock, this.clientThread,sess);
@@ -76,6 +78,7 @@ public class ListenerThread implements Runnable {
                         return st;
                     }
                     else{
+                        System.out.println("Session exists, creation of of server only");
                         Socket sock = new Socket(client.getAddr(), 3000);
                         ServerThread st = new ServerThread(client, sock, this.clientThread,session);
                         Thread server = new Thread(st);
