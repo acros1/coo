@@ -33,6 +33,7 @@ public class Session {
         this.sW = new SessionWindow(user2, this.clientThread,this.clientThread.getDB());
         this.ServerThread = this.clientThread.getMainSystem().getServer(user2,this);       
         this.ServerThread.setSession(this);
+        this.sW.setServerThread(ServerThread);
         this.sW.setLocationRelativeTo(null);
         this.sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.sW.setVisible(true);
@@ -79,6 +80,7 @@ public class Session {
         
         this.ServerThread = st;
         st.setSession(this);
+        this.sW.setServerThread(st);
     }
 
     public ServerThread getServerThread() {
