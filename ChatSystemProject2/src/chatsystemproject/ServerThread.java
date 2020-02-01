@@ -35,6 +35,7 @@ public class ServerThread implements Runnable {
                 this.clientThread = clientThread;
                 this.session = session;
                 this.sessionWindow = session.getSessionWindow();
+                session.setServerThread(this);
 
 	}
         

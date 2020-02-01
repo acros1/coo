@@ -73,7 +73,6 @@ public class ListenerThread implements Runnable {
                         Session sess = new Session(client,this.clientThread,null);
                         Socket sock = new Socket(client.getAddr(), 3000);
                         ServerThread st = new ServerThread(client, sock, this.clientThread,sess);
-                        sess.setServerThread(st);
                         Thread server = new Thread(st);
                         server.start();
                         startedServer.add(st);

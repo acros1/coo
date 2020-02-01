@@ -75,7 +75,8 @@ public class Session {
     }
     
     public void setServerThread(ServerThread st){
-        System.out.println("setting st and session");
+        System.out.println("setting st :"+ st +" and session");
+        
         this.ServerThread = st;
         st.setSession(this);
     }
