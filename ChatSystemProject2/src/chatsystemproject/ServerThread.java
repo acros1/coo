@@ -11,7 +11,6 @@ public class ServerThread implements Runnable {
 	private PrintWriter pwrite = null;
         private SessionWindow sessionWindow = null;
         private ClientThread clientThread = null;
-        private Session session = null;
         
         private boolean connection = true;
 
@@ -28,16 +27,22 @@ public class ServerThread implements Runnable {
                 this.clientThread = clientThread;
 	}
         
-        public ServerThread(User client, Socket socket, ClientThread clientThread, Session session) {
-                System.out.println("ServerThread created");
-		this.client = client;
-		this.sock = socket;
-                this.clientThread = clientThread;
-                this.session = session;
-                this.sessionWindow = session.getSessionWindow();
-                session.setServerThread(this);
-
-	}
+        public ServerThread(User client, Socket socket, ClientThread clientThread, SessionWindow session) {
+                
+                if(session != null){
+                   System.out.println("ServerThread created");
+                    this.client = client;
+                    this.sock = socket;
+                    this.clientThread = clientThread; 
+                    this.sessionWindow = session;
+                }
+                else if(session == null){
+                    this.client = client;
+                    this.sock = socket;
+                    this.clientThread = clientThread;
+                    this.sessionWindow = new SessionWindow(client,this.clientThread,this.clientThread.getDB());
+                }
+        }
         
         
 
@@ -123,7 +128,5 @@ public class ServerThread implements Runnable {
             this.sessionWindow = sessionWindow;
         }
        
-        public void setSession(Session session){
-            this.session = session;
-        }
+
 } 

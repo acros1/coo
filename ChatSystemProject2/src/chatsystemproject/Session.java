@@ -19,7 +19,7 @@ import java.io.*;
 import javax.swing.JFrame;
 
 public class Session {
-    
+  /*  
     private User mainUser = null;
     private User user2 = null;
     private ClientThread clientThread = null;
@@ -89,6 +89,6 @@ public class Session {
     
  
 
-    
+  */  
     
 }

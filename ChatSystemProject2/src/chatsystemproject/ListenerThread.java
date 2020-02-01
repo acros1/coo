@@ -34,23 +34,11 @@ public class ListenerThread implements Runnable {
             while(true) {
                 Socket sock = sersock.accept();
                 clientAddr = sock.getInetAddress();
-                ArrayList<Session> sessionStarted = this.clientThread.getApplicationWindow().getSessionStarted();
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
-                            for(Session session : sessionStarted){
-                                if(session.getUser2().equals(u.getPseudo())){
-                                    System.out.println("affichage sessionWindow");
-                                    session.setVisibleSessionWindow();
-                                    break;
-                                }
-                            }
                             System.out.println("getServer");
                             getServer(u,null);
-                            /*ServerThread serverThread = new ServerThread(u, sock, this.clientThread,new SessionWindow(u,this.clientThread,this.clientThread.getDB()));
-                            Thread server = new Thread(serverThread);
-                            server.start();
-                            startedServer.add(serverThread);*/
                             break;
                         }
                     }
@@ -60,7 +48,7 @@ public class ListenerThread implements Runnable {
         }             
     }
 
-    public ServerThread getServer(User client, Session session) {
+    public ServerThread getServer(User client,SessionWindow session) {
             try {
                     for(ServerThread st : startedServer) {
                             if(st.getUser().equals(client)) {
@@ -68,25 +56,26 @@ public class ListenerThread implements Runnable {
                                     return st;
                             }
                     }
-                    if(session == null){
-                        System.out.println("Session doesn't exists, creation of one");
-                        Session sess = new Session(client,this.clientThread,null);
+                    if(session != null){
                         Socket sock = new Socket(client.getAddr(), 3000);
-                        ServerThread st = new ServerThread(client, sock, this.clientThread,sess);
+                        ServerThread st = new ServerThread(client, sock, this.clientThread,session);
+                        Thread server = new Thread(st);
+                        server.start();
+                        startedServer.add(st); 
+                        return st;
+                    }
+                    else{
+                        Socket sock = new Socket(client.getAddr(), 3000);
+                        ServerThread st = new ServerThread(client, sock, this.clientThread,null);
                         Thread server = new Thread(st);
                         server.start();
                         startedServer.add(st);
                         return st;
                     }
-                    else{
-                        System.out.println("Session exists, creation of of server only");
-                        Socket sock = new Socket(client.getAddr(), 3000);
-                        ServerThread st = new ServerThread(client, sock, this.clientThread,session);
-                        Thread server = new Thread(st);
-                        server.start();
-                        startedServer.add(st);
-                        return st;  
-                    }
+                    
+                    
+
+                   
                     
             } catch (Exception e) {
                     e.printStackTrace();

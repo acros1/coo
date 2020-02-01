@@ -200,9 +200,10 @@ public class applicationWindow extends javax.swing.JFrame {
                 User user = itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    Session session = new Session(user,this.clientThread);
-                    this.sessionStarted.add(session);
-                    //SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
+
+                    SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
+                    session.setVisible(true);
+                    session.setLocationRelativeTo(null);
                 }
                 
             }
