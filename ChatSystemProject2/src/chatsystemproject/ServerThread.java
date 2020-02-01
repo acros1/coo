@@ -39,10 +39,10 @@ public class ServerThread implements Runnable {
 
 	public void run() {
 		try {
-                    if(this.sessionWindow == null){
+                    /*if(this.sessionWindow == null){
                       this.sessionWindow = new SessionWindow(client,this.clientThread,this.clientThread.getDB()); 
                       sessionWindow.setLocationRelativeTo(null);
-                    }
+                    }*/
 		    // sending to client (pwrite object)
 		    OutputStream ostream = sock.getOutputStream(); 
 		    pwrite = new PrintWriter(ostream, true);
