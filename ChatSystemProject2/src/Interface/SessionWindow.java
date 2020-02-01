@@ -234,8 +234,7 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
         //Calling the method in the server to send the message
         st.writeMessage(MessageArea.getText());
-        
-        
+     
     }//GEN-LAST:event_SendButtonMouseClicked
 
     private void MessageAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MessageAreaMouseClicked

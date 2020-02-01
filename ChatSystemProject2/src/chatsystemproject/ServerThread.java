@@ -56,8 +56,9 @@ public class ServerThread implements Runnable {
 		    // sending to client (pwrite object)
                     System.out.println("Running st");
 		    OutputStream ostream = sock.getOutputStream(); 
-		    pwrite = new PrintWriter(ostream, true);
-
+		    this.pwrite = new PrintWriter(ostream, true);
+                    pwrite.println("test");
+                    pwrite.flush();
 		    // receiving from server ( receiveRead  object)
 		    InputStream istream = sock.getInputStream();
 		    BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
