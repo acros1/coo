@@ -25,14 +25,6 @@ public class ServerThread implements Runnable {
                 this.clientThread = clientThread;
 	}
         
-        public ServerThread(User client, Socket socket, ClientThread clientThread, SessionWindow sessionWindow) {
-		this.client = client;
-		this.sock = socket;
-                this.clientThread = clientThread;
-                this.sessionWindow = sessionWindow;
-                sessionWindow.setVisible(true);
-                sessionWindow.setLocationRelativeTo(null);
-	}
         
         
 

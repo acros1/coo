@@ -56,12 +56,10 @@ public class SessionWindow extends javax.swing.JFrame {
         ListenerThread listenerThread = clientThread.getMainSystem(); 
         this.st = listenerThread.getServer(u);
         this.st.setsessionWindow(this);
-        
         this.chatSystemDB = chatSystemDB;
+        System.out.println("Type your message :");
         this.getHistory();
         this.setVisible(true);
-        ChatArea.setText("Connexion established .. Session started...");
-        System.out.println("Type your message :");
 
     }
     
@@ -85,6 +83,7 @@ public class SessionWindow extends javax.swing.JFrame {
             String datetime = history.get(iHistory).get(3);
             ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + User.getText() + " : " + message);
         }
+        ChatArea.setText("Connexion established .. Session started...");
     }
     
     public javax.swing.JButton getSendButton(){
