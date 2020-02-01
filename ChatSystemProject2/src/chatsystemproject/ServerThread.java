@@ -78,7 +78,8 @@ public class ServerThread implements Runnable {
 		    }
 		} catch (Exception e) {
 		    e.printStackTrace();
-		}             
+		} 
+                System.out.println("fin du run");
 	}
 
 	public synchronized void writeMessage(String msg) {
