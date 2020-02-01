@@ -242,17 +242,20 @@ public class SessionWindow extends javax.swing.JFrame {
 
     private void SendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendButtonMouseClicked
         // TODO add your handling code here:
-        String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
-        //MESSAGE YOU'VE SEND IS DISPLAYED
-        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
-        ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
-        //Calling the method in the server to send the message
-        st.writeMessage(MessageArea.getText());
-        //adding to the database
-        int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
-        int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
-        chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
-        MessageArea.setText("");
+        if(MessageArea.getText()!= ""){
+           String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
+            //MESSAGE YOU'VE SEND IS DISPLAYED
+            ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
+            ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
+            //Calling the method in the server to send the message
+            st.writeMessage(MessageArea.getText());
+            //adding to the database
+            int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
+            int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+            chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
+            MessageArea.setText(""); 
+        }
+        
      
     }//GEN-LAST:event_SendButtonMouseClicked
 
