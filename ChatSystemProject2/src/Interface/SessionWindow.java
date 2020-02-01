@@ -77,8 +77,6 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + " "+ User.getText() + " : " + message);
         ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + " "+ "<b>" +User.getText() + "</b> : " + message+"</html>");
                 // Adding the message to history in DB
-                System.out.println(clientThread);
-                System.out.println(chatSystemDB);
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
         chatSystemDB.addToHistory(idMainUser, idUser2, message, timeStamp);
@@ -250,6 +248,11 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
         //Calling the method in the server to send the message
         st.writeMessage(MessageArea.getText());
+        //adding to the database
+        int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
+        int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+        chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
+        MessageArea.setText("");
      
     }//GEN-LAST:event_SendButtonMouseClicked
 
