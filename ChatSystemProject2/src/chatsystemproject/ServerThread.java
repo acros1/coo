@@ -40,7 +40,7 @@ public class ServerThread implements Runnable {
                     this.client = client;
                     this.sock = socket;
                     this.clientThread = clientThread;
-                    this.sessionWindow = new SessionWindow(client,this.clientThread,this.clientThread.getDB());
+                    this.sessionWindow = new SessionWindow(client,this.clientThread,this.clientThread.getDB(),this);
                 }
         }
         

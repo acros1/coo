@@ -50,9 +50,23 @@ public class SessionWindow extends javax.swing.JFrame {
         String user = u.getPseudo();
         this.clientThread = clientThread;
         User.setText(user);
-        ListenerThread listenerThread = clientThread.getMainSystem(); 
-        this.st = listenerThread.getServer(u,this);
+        this.st = this.clientThread.getMainSystem().getServer(u,this);
         this.st.setsessionWindow(this);
+        this.chatSystemDB = chatSystemDB;
+        System.out.println("Type your message :");
+        //this.getHistory();
+
+
+    }
+    public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB,ServerThread serverThread) {
+
+        System.out.println("On commence tout");
+        initComponents();
+        this.user2 = u;
+        String user = u.getPseudo();
+        this.clientThread = clientThread;
+        User.setText(user);
+        this.st = serverThread;
         this.chatSystemDB = chatSystemDB;
         System.out.println("Type your message :");
         //this.getHistory();
