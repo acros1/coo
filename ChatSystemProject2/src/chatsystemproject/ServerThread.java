@@ -42,6 +42,7 @@ public class ServerThread implements Runnable {
                     this.sock = socket;
                     this.clientThread = clientThread;
                     this.sessionWindow = new SessionWindow(client,this.clientThread,this.clientThread.getDB(),this);
+                    
                 }
         }
         
@@ -68,7 +69,6 @@ public class ServerThread implements Runnable {
                     System.out.println("socket port ? : "+this.sock.getLocalPort());
                     System.out.println("socket addr local ? : "+this.sock.getLocalAddress());
                     System.out.println("addr dest ? : "+this.client.getAddr());
-                    this.sessionWindow.setVisible(true);
                     System.out.println(connection);
 		    while(connection) {
                         System.out.println("test");
