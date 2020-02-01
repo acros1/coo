@@ -38,13 +38,7 @@ public class ListenerThread implements Runnable {
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
-                            /*for(int i = 0 ; i < sessionStarted.size() ; i++){
-                                if(sessionStarted.get(i).getUser().equals(u.getPseudo())){
-                                    sessionStarted.get(i).getSessionWindow().getServerThread().setSocket(sock);
-                                    break;
-                                }
 
-                            }*/
                             ServerThread serverThread = new ServerThread(u, sock, this.clientThread,new SessionWindow(u,this.clientThread,this.clientThread.getDB()));
                             Thread server = new Thread(serverThread);
                             server.start();
