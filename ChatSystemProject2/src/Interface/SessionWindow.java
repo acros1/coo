@@ -95,7 +95,7 @@ public class SessionWindow extends javax.swing.JFrame {
             String datetime = history.get(iHistory).get(3);
             ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + User.getText() + " : " + message);
         }
-        ChatArea.setText("Connexion established .. Session started...");
+        ChatArea.setText(ChatArea.getText() + "\nConnexion established .. Session started...");
     }
     
     public javax.swing.JButton getSendButton(){
