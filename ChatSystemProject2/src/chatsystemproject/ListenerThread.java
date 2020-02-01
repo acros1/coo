@@ -67,14 +67,22 @@ public class ListenerThread implements Runnable {
                     }
                     if(session == null){
                         Session sess = new Session(client,this.clientThread);
+                        Socket sock = new Socket(client.getAddr(), 3000);
+                        ServerThread st = new ServerThread(client, sock, this.clientThread,sess);
+                        Thread server = new Thread(st);
+                        server.start();
+                        startedServer.add(st);
+                        return st;
+                    }
+                    else{
+                        Socket sock = new Socket(client.getAddr(), 3000);
+                        ServerThread st = new ServerThread(client, sock, this.clientThread,session);
+                        Thread server = new Thread(st);
+                        server.start();
+                        startedServer.add(st);
+                        return st;  
                     }
                     
-                    Socket sock = new Socket(client.getAddr(), 3000);
-                    ServerThread st = new ServerThread(client, sock, this.clientThread,session);
-                    Thread server = new Thread(st);
-                    server.start();
-                    startedServer.add(st);
-                    return st;
             } catch (Exception e) {
                     e.printStackTrace();
             }
