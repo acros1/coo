@@ -64,6 +64,7 @@ public class ListenerThread implements Runnable {
             try {
                     for(ServerThread st : startedServer) {
                             if(st.getUser().equals(client)) {
+                                    System.out.println("le serveur existe je le renvoie");
                                     return st;
                             }
                     }
