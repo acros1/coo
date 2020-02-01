@@ -35,6 +35,7 @@ public class Session {
         System.out.println("Session créée");
         
         this.ServerThread.setSession(this);
+        this.sW.setServerThread(ServerThread);
         this.sW.setLocationRelativeTo(null);
         this.sW.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.sW.setVisible(true);

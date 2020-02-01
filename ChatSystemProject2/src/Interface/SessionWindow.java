@@ -97,6 +97,10 @@ public class SessionWindow extends javax.swing.JFrame {
     public ServerThread getServerThread(){
         return this.st;
     }
+    
+    public void setServerThread(ServerThread st){
+        this.st = st;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
