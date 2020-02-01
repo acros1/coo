@@ -64,6 +64,11 @@ public class ServerThread implements Runnable {
 
 		    String receiveMessage;  
                     System.out.println("Waiting message....");
+                    System.out.println("socket connecté ? : "+this.sock.isConnected());
+                    System.out.println("socket addr ? : "+this.sock.getInetAddress());
+                    System.out.println("socket port ? : "+this.sock.getLocalPort());
+                    System.out.println("socket addr local ? : "+this.sock.getLocalAddress());
+                    System.out.println("addr dest ? : "+this.client.getAddr());
                     this.sessionWindow.setVisible(true);
                     System.out.println(connection);
 		    while(connection) {
