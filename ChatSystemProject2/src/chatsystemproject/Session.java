@@ -29,8 +29,8 @@ public class Session {
     public Session(User user2, ClientThread clientThread){
         this.mainUser = new User(clientThread.getMainUserPseudo(), clientThread.getLogin(), null);
         this.user2 = user2;
-        this.sW = new SessionWindow(user2, this.clientThread,this.clientThread.getDB());
         this.clientThread = clientThread;
+        this.sW = new SessionWindow(user2, this.clientThread,this.clientThread.getDB());
         this.ServerThread = this.clientThread.getMainSystem().getServer(user2,this);
         System.out.println("Session créée");
         
