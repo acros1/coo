@@ -58,8 +58,8 @@ public class SessionWindow extends javax.swing.JFrame {
         this.st.setsessionWindow(this);
         this.chatSystemDB = chatSystemDB;
         System.out.println("Type your message :");
-        this.getHistory();
-        this.setVisible(true);
+        //this.getHistory();
+
 
     }
     
