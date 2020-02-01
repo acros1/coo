@@ -48,6 +48,7 @@ public class ServerThread implements Runnable {
                       sessionWindow.setLocationRelativeTo(null);
                     }*/
 		    // sending to client (pwrite object)
+                    System.out.println("Running st");
 		    OutputStream ostream = sock.getOutputStream(); 
 		    pwrite = new PrintWriter(ostream, true);
 
@@ -55,7 +56,8 @@ public class ServerThread implements Runnable {
 		    InputStream istream = sock.getInputStream();
 		    BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
-		    String receiveMessage;              
+		    String receiveMessage;  
+                    System.out.println("Waiting message....");
 		    while(connection) {
 				if((receiveMessage = receiveRead.readLine()) != null) {
                                     System.out.println("Message reçu : " + receiveMessage);
