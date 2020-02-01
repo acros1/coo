@@ -8,7 +8,7 @@ package Interface;
 
 import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
-//import chatsystemproject.Session;
+import chatsystemproject.Session;
 import chatsystemproject.User;
 import database.Connect;
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class applicationWindow extends javax.swing.JFrame {
      * Creates new form applicationWindow
      */
     DefaultListModel dlm = new DefaultListModel();
-    //private ArrayList<Session> sessionStarted = new ArrayList<Session>();
+    private ArrayList<Session> sessionStarted = new ArrayList<Session>();
     ClientThread clientThread = null;
     
     private Connect chatSystemDB = null;
@@ -74,11 +74,11 @@ public class applicationWindow extends javax.swing.JFrame {
     /*public void endSession(Session session,ServerThread st){
         this.sessionStarted.remove(session);
         this.clientThread.getMainSystem().getServerStarted().remove(st);
-    }
+    }*/
     
     public ArrayList<Session> getSessionStarted(){
         return this.sessionStarted;
-    }*/
+    }
     
     
 
@@ -200,9 +200,9 @@ public class applicationWindow extends javax.swing.JFrame {
                 User user = itr.next();
                 if(user.getPseudo().equals(user_selected)){
                     System.out.println("on start session");
-                    SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
-                    session.setLocationRelativeTo(null);
-                    session.setVisible(true);
+                    Session session = new Session(user,this.clientThread);
+                    this.sessionStarted.add(session);
+                    //SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
                 }
                 
             }

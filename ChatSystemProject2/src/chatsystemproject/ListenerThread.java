@@ -34,11 +34,17 @@ public class ListenerThread implements Runnable {
             while(true) {
                 Socket sock = sersock.accept();
                 clientAddr = sock.getInetAddress();
-                //ArrayList<Session> sessionStarted = this.clientThread.getApplicationWindow().getSessionStarted();
+                ArrayList<Session> sessionStarted = this.clientThread.getApplicationWindow().getSessionStarted();
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
-                            getServer(u);
+                            for(Session session : sessionStarted){
+                                if(session.getUser2().equals(u.getPseudo())){
+                                    session.setVisibleSessionWindow();
+                                    break;
+                                }
+                            }
+                            getServer(u,null);
                             /*ServerThread serverThread = new ServerThread(u, sock, this.clientThread,new SessionWindow(u,this.clientThread,this.clientThread.getDB()));
                             Thread server = new Thread(serverThread);
                             server.start();
@@ -52,15 +58,19 @@ public class ListenerThread implements Runnable {
         }             
     }
 
-    public ServerThread getServer(User client) {
+    public ServerThread getServer(User client, Session session) {
             try {
                     for(ServerThread st : startedServer) {
                             if(st.getUser().equals(client)) {
                                     return st;
                             }
                     }
+                    if(session == null){
+                        Session sess = new Session(client,this.clientThread);
+                    }
+                    
                     Socket sock = new Socket(client.getAddr(), 3000);
-                    ServerThread st = new ServerThread(client, sock, this.clientThread);
+                    ServerThread st = new ServerThread(client, sock, this.clientThread,session);
                     Thread server = new Thread(st);
                     server.start();
                     startedServer.add(st);
