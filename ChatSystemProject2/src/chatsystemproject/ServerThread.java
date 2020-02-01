@@ -84,6 +84,7 @@ public class ServerThread implements Runnable {
 
 	public synchronized void writeMessage(String msg) {
 		pwrite.println(msg);
+                System.out.println("envoie du message : "+ msg);
 		pwrite.flush();
 	} 
         
