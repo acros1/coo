@@ -37,8 +37,11 @@ public class ListenerThread implements Runnable {
 
                     for (User u  : clientList) {
                         if (u.getAddr().equals(clientAddr)) {
-                            System.out.println("getServer");
-                            getServer(u,null);
+                            //Creating ServerThread
+                            ServerThread serverThread = new ServerThread(u, sock,null);
+                            Thread server = new Thread(serverThread);
+                            server.start();
+                            startedServer.add(serverThread);
                             break;
                         }
                     }
@@ -56,22 +59,15 @@ public class ListenerThread implements Runnable {
                                     return st;
                             }
                     }
-                    if(session != null){
-                        Socket sock = new Socket(client.getAddr(), 3000);
-                        ServerThread st = new ServerThread(client, sock, this.clientThread,session);
-                        Thread server = new Thread(st);
-                        server.start();
-                        startedServer.add(st); 
-                        return st;
-                    }
-                    else{
-                        Socket sock = new Socket(client.getAddr(), 3000);
-                        ServerThread st = new ServerThread(client, sock, this.clientThread,null);
-                        Thread server = new Thread(st);
-                        server.start();
-                        startedServer.add(st);
-                        return st;
-                    }
+
+                    Socket sock = new Socket(client.getAddr(), 3000);
+                    ServerThread st = new ServerThread(client, sock, this.clientThread,session);
+                    Thread server = new Thread(st);
+                    server.start();
+                    startedServer.add(st); 
+                    return st;
+                    
+
                     
                     
 
