@@ -41,6 +41,7 @@ public class applicationWindow extends javax.swing.JFrame {
         this.clientThread = clientThread;
         userPseudo.setText(this.clientThread.getMainUserPseudo());
         System.out.println("Application set");
+        this.chatSystemDB = chatSystemDB;
        
         
                
