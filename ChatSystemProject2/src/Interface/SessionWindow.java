@@ -86,9 +86,11 @@ public class SessionWindow extends javax.swing.JFrame {
     public void getHistory() {
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+        System.out.println("idMain : " + idMainUser + "idUser : "+idUser2);
         ArrayList<ArrayList<String>> history = chatSystemDB.getHistory(idMainUser, idUser2);
         
         for (int iHistory = 0 ; iHistory < history.size() ; iHistory++) {
+            System.out.println("getting history");
             String message = history.get(iHistory).get(2);
             String datetime = history.get(iHistory).get(3);
             ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + User.getText() + " : " + message);
