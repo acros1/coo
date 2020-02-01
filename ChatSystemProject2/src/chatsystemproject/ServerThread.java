@@ -55,6 +55,7 @@ public class ServerThread implements Runnable {
 		    String receiveMessage;              
 		    while(connection) {
                         System.out.println("test");
+                        System.out.println(receiveRead.readLine());
 				if((receiveMessage = receiveRead.readLine()) != null) {
                                     System.out.println("Message reçu : " + receiveMessage);
                                     if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){

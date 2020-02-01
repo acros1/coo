@@ -40,6 +40,7 @@ public class ListenerThread implements Runnable {
                         if (u.getAddr().equals(clientAddr)) {
                             for(Session session : sessionStarted){
                                 if(session.getUser2().equals(u.getPseudo())){
+                                    System.out.println("affichage sessionWindow");
                                     session.setVisibleSessionWindow();
                                     break;
                                 }

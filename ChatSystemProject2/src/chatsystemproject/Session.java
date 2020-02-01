@@ -31,9 +31,7 @@ public class Session {
         this.user2 = user2;
         this.clientThread = clientThread;
         this.sW = new SessionWindow(user2, this.clientThread,this.clientThread.getDB());
-        this.ServerThread = this.clientThread.getMainSystem().getServer(user2,this);
-        System.out.println("Session créée");
-        
+        this.ServerThread = this.clientThread.getMainSystem().getServer(user2,this);       
         this.ServerThread.setSession(this);
         this.sW.setServerThread(ServerThread);
         this.sW.setLocationRelativeTo(null);
