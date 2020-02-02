@@ -137,6 +137,8 @@ public class applicationWindow extends javax.swing.JFrame {
         });
         headerPanel.add(exitButton);
         exitButton.setBounds(330, 0, 20, 29);
+
+        headerImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/headerimg_app.jpg"))); // NOI18N
         headerPanel.add(headerImg);
         headerImg.setBounds(0, 0, 350, 100);
 

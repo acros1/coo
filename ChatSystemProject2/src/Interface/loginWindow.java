@@ -11,6 +11,8 @@ import database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -30,10 +32,10 @@ public class loginWindow extends javax.swing.JFrame {
     private int mouseY;
     
     
-    public loginWindow() {
+    public loginWindow(){
         
         initComponents();
-        this.headerImg.setIcon(new ImageIcon("images/headerimg.jpg"));
+
         this.setLocationRelativeTo(null);
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         // Instanciating connection to data base to check login/passwd
@@ -116,6 +118,7 @@ public class loginWindow extends javax.swing.JFrame {
         headerPanel.add(reduceButton);
         reduceButton.setBounds(660, 0, 20, 29);
 
+        headerImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/headerimg.jpg"))); // NOI18N
         headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 headerImgMouseDragged(evt);

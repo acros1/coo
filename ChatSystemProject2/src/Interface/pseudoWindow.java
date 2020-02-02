@@ -40,7 +40,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         this.login = login;
         this.chatSystemDB = chatSystemDB;
-        this.headerImg.setIcon(new ImageIcon("images/headerimg.jpg"));
+        //this.headerImg.setIcon(new ImageIcon("images/headerimg.jpg"));
     }
     
     private void creation_applicationWindow(){
@@ -115,6 +115,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         headerPanel.add(reduceButton);
         reduceButton.setBounds(660, 0, 20, 29);
 
+        headerImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/headerimg.jpg"))); // NOI18N
         headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 headerImgMouseDragged(evt);
