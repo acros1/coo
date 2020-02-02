@@ -36,7 +36,7 @@ public class applicationWindow extends javax.swing.JFrame {
     public applicationWindow(ClientThread clientThread, Connect chatSystemDB) {
         
         initComponents();
-        this.headerImg.setIcon(new ImageIcon("images/headerimg_app.jpg"));
+        
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         this.clientThread = clientThread;
         userPseudo.setText(this.clientThread.getMainUserPseudo());
