@@ -252,14 +252,14 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(pseudo.getText());
         // Start clientThread with pseudo and login 
         this.clientThread = new ClientThread(pseudo.getText(), this.login);
-        new Thread(this.clientThread).start();
-        
-        System.out.println(this.clientThread.getMainUserPseudo());
-        
-        // Start application window
         applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
         this.clientThread.setApplicationWindow(aW);
         System.out.println("aW added");
+        System.out.println(this.clientThread.getMainUserPseudo());
+        
+        // Start application window
+
+        new Thread(this.clientThread).start();
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);
