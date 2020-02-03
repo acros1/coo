@@ -260,12 +260,12 @@ public class pseudoWindow extends javax.swing.JFrame {
         applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
         this.clientThread.setApplicationWindow(aW);
         System.out.println("aW added");
-        this.clientThread.broadcastPseudo();
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);
         aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
+        this.clientThread.broadcastPseudo();
     }//GEN-LAST:event_ValidButtonMouseClicked
 
     private void pseudoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pseudoKeyPressed
