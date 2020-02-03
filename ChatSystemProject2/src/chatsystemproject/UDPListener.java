@@ -98,6 +98,7 @@ public class UDPListener implements Runnable {
                                         System.out.println("Client is not in the list, adding him");
                                         listenerThread.addUser(dataSplit[3], dataSplit[4], clientAddr);
                                         // The list has probably been modified so we update it
+                                        System.out.println(this.clientThread.getApplicationWindow());
                                         this.clientThread.getApplicationWindow().updateUsersList();
                                 }
                             }

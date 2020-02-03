@@ -47,13 +47,15 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(pseudo.getText());
         // Start clientThread with pseudo and login 
         this.clientThread = new ClientThread(pseudo.getText(), this.login);
+        applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
+        this.clientThread.setApplicationWindow(aW);
         new Thread(this.clientThread).start();
         
         System.out.println(this.clientThread.getMainUserPseudo());
         
         // Start application window
-        applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
-        this.clientThread.setApplicationWindow(aW);
+        
+        
         System.out.println("aW added");
         aW.setVisible(true);
         aW.pack();
@@ -258,14 +260,15 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(this.clientThread.getMainUserPseudo());
         
         // Start application window
-
+        
+        
+        
         new Thread(this.clientThread).start();
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);
         aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-        this.clientThread.broadcastPseudo();
     }//GEN-LAST:event_ValidButtonMouseClicked
 
     private void pseudoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pseudoKeyPressed
