@@ -82,7 +82,8 @@ public class UDPListener implements Runnable {
                                 if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
                                         System.out.println("Client is not in the list, adding him");
                                         listenerThread.addUser(dataSplit[3], dataSplit[4], clientAddr);
-                                        //this.clientThread.getApplicationWindow().updateUsersList();
+                                        // The list has probably been modified so we update it
+                                        this.clientThread.getApplicationWindow().updateUsersList();
                                 }
 
                             }
@@ -96,7 +97,8 @@ public class UDPListener implements Runnable {
                                 if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
                                         System.out.println("Client is not in the list, adding him");
                                         listenerThread.addUser(dataSplit[3], dataSplit[4], clientAddr);
-                                        //this.clientThread.getApplicationWindow().updateUsersList();
+                                        // The list has probably been modified so we update it
+                                        this.clientThread.getApplicationWindow().updateUsersList();
                                 }
                             }
 
@@ -126,11 +128,11 @@ public class UDPListener implements Runnable {
                             if ( listenerThread.isUserExist(dataSplit[0]) == false ) {
                                 System.out.println("Client is not in the list, adding him");
                                 listenerThread.addUser(dataSplit[0], dataSplit[1], clientAddr);
+                                // The list has probably been modified so we update it
+                                this.clientThread.getApplicationWindow().updateUsersList();
                             }
                         }
                     }
-                    // The list has probably been modified so we update it
-                    this.clientThread.getApplicationWindow().updateUsersList();
                 }
                 
             }
