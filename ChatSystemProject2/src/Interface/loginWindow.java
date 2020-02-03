@@ -7,7 +7,7 @@ package Interface;
 
 import javax.swing.JFrame;
 import chatsystemproject.ClientThread;
-import database.Connect;
+import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;

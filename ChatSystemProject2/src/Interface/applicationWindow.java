@@ -10,7 +10,7 @@ import chatsystemproject.ClientThread;
 import chatsystemproject.ServerThread;
 import chatsystemproject.Session;
 import chatsystemproject.User;
-import database.Connect;
+import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;

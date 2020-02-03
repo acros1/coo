@@ -2,7 +2,7 @@
 package chatsystemproject;
 
 import Interface.applicationWindow;
-import database.Connect;
+import Database.Connect;
 import java.io.IOException;
 import java.net.*;
 import java.util.*;

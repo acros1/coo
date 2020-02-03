@@ -10,7 +10,7 @@ import chatsystemproject.User;
 import chatsystemproject.ClientThread;
 //import chatsystemproject.Session;
 import chatsystemproject.ListenerThread;
-import database.Connect;
+import Database.Connect;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
