@@ -13,13 +13,16 @@ import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
+import java.lang.Object.*;
 
 /**
  *
@@ -125,6 +128,16 @@ public class SessionWindow extends javax.swing.JFrame {
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
         chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
         MessageArea.setText("Write your message...");
+    }
+    
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0){
+           return fileName.substring(fileName.lastIndexOf(".")+1); 
+        }
+        else {
+            return "";
+        }
     }
     
     // -------- SETTER AND GETTER -------------
@@ -325,8 +338,30 @@ public class SessionWindow extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         File f= chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        System.out.println("File choosen : " + filename);
+        String extension = getFileExtension(f);
+        if(extension.equals("pdf")){
+            try {
+                this.st.sendPdfFile(f);
+            } catch (IOException ex) {
+                Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(extension.equals("png")){
+            try {
+                this.st.sendPngFile(f);
+            } catch (IOException ex) {
+                Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(extension.equals("jpg")){
+            try {
+                this.st.sendJpgFile(f);
+            } catch (IOException ex) {
+                Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
     }//GEN-LAST:event_SendFilesButtonMouseClicked
 
     /**

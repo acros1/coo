@@ -9,9 +9,11 @@ public class ServerThread implements Runnable {
 	private User client = null;
 	private Socket sock = null; // client socket
 	private PrintWriter pwrite = null;
+        private OutputStream outputstream = null;
         private SessionWindow sessionWindow = null;
         private ClientThread clientThread = null;
-        
+
+        public final static int FILE_SIZE = 6022386;
         private boolean connection = true;
 
 	public ServerThread(User client, Socket socket) {
@@ -45,8 +47,6 @@ public class ServerThread implements Runnable {
                     
                 }
         }
-        
-        
 
 	public void run() {
 		try {
@@ -56,11 +56,13 @@ public class ServerThread implements Runnable {
                     }*/
 		    // sending to client (pwrite object)
                     System.out.println("Running st");
-		    OutputStream ostream = sock.getOutputStream(); 
-		    this.pwrite = new PrintWriter(ostream, true);
+		    this.outputstream = sock.getOutputStream(); 
+                    byte[] buffer = new byte[FILE_SIZE];
+		    //this.pwrite = new PrintWriter(ostream, true);
 		    // receiving from server ( receiveRead  object)
 		    InputStream istream = sock.getInputStream();
-		    BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
+                    
+		    //BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
 		    String receiveMessage;  
                     System.out.println("Waiting message....");
@@ -71,9 +73,10 @@ public class ServerThread implements Runnable {
                     System.out.println("addr dest ? : "+this.client.getAddr());
                     System.out.println(connection);
 		    while(connection) {
-                        System.out.println("test");
-				if((receiveMessage = receiveRead.readLine()) != null) {
-                                    System.out.println("Message reçu : " + receiveMessage);
+                        int ret = istream.read(buffer,0,FILE_SIZE);
+                        if(new String(buffer,0,2).equals("S:")){
+                            receiveMessage = new String(buffer,2,ret -2);
+                            System.out.println("Message reçu : " + receiveMessage);
                                     if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){
                                         this.sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
                                         this.sessionWindow.getSendButton().setVisible(false);
@@ -91,8 +94,18 @@ public class ServerThread implements Runnable {
                                             System.out.println(client.getPseudo() + " > " + receiveMessage);
                                         }
                                     }
-                                                 
-				}
+                            
+                        }
+                        else if(new String(buffer,0,2).equals("P:")){
+                            
+                        }
+                        else if(new String(buffer,0,2).equals("I:")){
+                            
+                        }
+                        else if(new String(buffer,0,2).equals("J:")){
+                            
+                        }
+				
 		    }
 		} catch (Exception e) {
 		    e.printStackTrace();
@@ -100,11 +113,12 @@ public class ServerThread implements Runnable {
                 System.out.println("fin du run");
 	}
 
-	public synchronized void writeMessage(String msg) {
-		pwrite.println(msg);
-                System.out.println("envoie du message : "+ msg);
-		pwrite.flush();
-                System.out.println("message envoyé en théorie");
+	public synchronized void writeMessage(String msg) throws IOException {
+            String message = "S:" + msg;
+            outputstream.write(message.getBytes());
+            System.out.println("envoie du message : "+ message);
+            pwrite.flush();
+            System.out.println("message envoyé en théorie");
 	} 
         
         public synchronized void exitMessage() throws IOException {
@@ -114,6 +128,38 @@ public class ServerThread implements Runnable {
                 //this.sock.close(); //really useful ?
                 
 	}
+        
+        public synchronized void sendPdfFile(File myFile) throws IOException{
+            byte [] mybytearray  = new byte [(int)myFile.length()];
+            FileInputStream fis = new FileInputStream(myFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bis.read(mybytearray,0,mybytearray.length);
+            OutputStream os = sock.getOutputStream();
+            os.write(mybytearray,0,mybytearray.length);
+            os.flush();
+            System.out.println("Done.");
+        }
+        public synchronized void sendPngFile(File myFile) throws IOException{
+            byte [] mybytearray  = new byte [(int)myFile.length()];
+            FileInputStream fis = new FileInputStream(myFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bis.read(mybytearray,0,mybytearray.length);
+            OutputStream os = sock.getOutputStream();
+
+            os.write(mybytearray,0,mybytearray.length);
+            os.flush();
+            System.out.println("Done.");
+        }
+        public synchronized void sendJpgFile(File myFile) throws IOException{
+            byte [] mybytearray  = new byte [(int)myFile.length()];
+            FileInputStream fis = new FileInputStream(myFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bis.read(mybytearray,0,mybytearray.length);
+            OutputStream os = sock.getOutputStream();
+            os.write(mybytearray,0,mybytearray.length);
+            os.flush();
+            System.out.println("Done.");
+        }
 
 	public User getUser() {
 		return this.client;
