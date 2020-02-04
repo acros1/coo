@@ -102,6 +102,7 @@ public class applicationWindow extends javax.swing.JFrame {
         UserList = new javax.swing.JList<>();
         userPseudo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        ChangePseudoButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -171,6 +172,20 @@ public class applicationWindow extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(0, 270, 240, 20);
 
+        ChangePseudoButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ChangePseudoButton.setForeground(new java.awt.Color(51, 102, 255));
+        ChangePseudoButton.setText("Change Pseudo");
+        ChangePseudoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ChangePseudoButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ChangePseudoButtonMouseEntered(evt);
+            }
+        });
+        jPanel1.add(ChangePseudoButton);
+        ChangePseudoButton.setBounds(250, 270, 100, 14);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,6 +246,15 @@ public class applicationWindow extends javax.swing.JFrame {
         exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_exitButtonMouseEntered
 
+    private void ChangePseudoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseClicked
+        String newPseudo = JOptionPane.showInputDialog("Please enter your new pseudo");
+        clientThread.changePseudo(newPseudo);
+    }//GEN-LAST:event_ChangePseudoButtonMouseClicked
+
+    private void ChangePseudoButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseEntered
+        ChangePseudoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_ChangePseudoButtonMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -268,6 +292,7 @@ public class applicationWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ChangePseudoButton;
     private javax.swing.JList<String> UserList;
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel headerImg;
