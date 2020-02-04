@@ -19,7 +19,6 @@ public class ClientThread implements Runnable {
     private DatagramPacket outPacket = null;
     private DatagramSocket dgramSocket = null;
 
-    private Scanner scan = new Scanner(System.in);
     private String input = null;
 
     private applicationWindow aW = null;
@@ -54,7 +53,6 @@ public class ClientThread implements Runnable {
     }
 
 
-
     public void broadcastPseudo() {
             try {
                 // Need to send login, it's the only way to find history (because login is the same every connection)
@@ -75,49 +73,6 @@ public class ClientThread implements Runnable {
             } catch ( IOException e ) {
                     e.printStackTrace();
             }
-    }
-
-    public void command() {
-            String user = null;
-
-            while ( true ) {
-                    System.out.println("Command (list or send) :");
-                    this.input = this.scan.nextLine();
-
-                    // Display users list
-                    if(this.input.equals("list")) {
-                            for(User u : listenerThread.getClientList()) {
-                                    System.out.println(u.getPseudo());
-                            }
-                    }
-
-                    else if(this.input.equals("send")) {
-                            // Printing users list
-                            if (listenerThread.getClientList().size() == 0) {
-                                    System.out.println("<No user connected>");
-                            }
-                            else {
-                                    // Asking for user to send msg
-                                    System.out.print("Which user : ");
-                                    for(User u : listenerThread.getClientList()) {
-                                            System.out.print(u.getPseudo() + " | ");
-                                    }
-                                    System.out.println();
-                                    user = this.scan.nextLine();
-                                    for(User u : listenerThread.getClientList()) {
-                                            if(u.getPseudo().equals(user)) {
-                                                    ServerThread st = listenerThread.getServer(u,null);
-                                                    System.out.println("Type your message :");
-                                                    user = this.scan.nextLine(); // ask for msg to send
-                                                    st.writeMessage(user);
-                                            }
-                                            else {
-                                                    System.out.println("User not find");
-                                            }
-                                    }
-                            }
-                    }
-            }	
     }
 
     public String getMainUserPseudo() {
@@ -163,13 +118,6 @@ public class ClientThread implements Runnable {
                     this.aW.updatePseudo();
                     // Broadcasting pseudo
                     this.broadcastPseudo();
-                    // Broadcast message to delete old pseudo in other users list
-                    
-                    // Asking user which action realise
-                    //this.command();
-            //} catch (Exception e) {
-            //	e.printStackTrace();
-            //}
     }
     
     public void setLogin(String login) {

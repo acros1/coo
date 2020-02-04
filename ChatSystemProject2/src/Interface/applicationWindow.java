@@ -7,12 +7,11 @@ package Interface;
 
 
 import chatsystemproject.ClientThread;
-import chatsystemproject.ServerThread;
-import chatsystemproject.Session;
 import chatsystemproject.User;
 import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
@@ -72,16 +71,16 @@ public class applicationWindow extends javax.swing.JFrame {
         System.out.println("List Updated");
     }
    
+    // -------- SETTER AND GETTER -------------
     
-    /*public void endSession(Session session,ServerThread st){
-        this.sessionStarted.remove(session);
-        this.clientThread.getMainSystem().getServerStarted().remove(st);
-    }*/
     
     public ArrayList<SessionWindow> getSessionStarted(){
         return this.sessionStarted;
     }
     
+    public Connect getDB() {
+        return this.chatSystemDB;
+    }
     
 
     /**
@@ -104,6 +103,7 @@ public class applicationWindow extends javax.swing.JFrame {
         userPseudo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ChangePseudoButton = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -191,12 +191,24 @@ public class applicationWindow extends javax.swing.JFrame {
         jPanel1.add(ChangePseudoButton);
         ChangePseudoButton.setBounds(250, 270, 100, 14);
 
+        jLabel2.setText("send files");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+        });
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(240, 240, 60, 14);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,10 +260,9 @@ public class applicationWindow extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_UserListMouseClicked
-
-    public Connect getDB() {
-        return this.chatSystemDB;
-    }
+    
+    // -------- Mouse and Key events -------------
+    
     
     private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
         this.setState(JFrame.ICONIFIED);
@@ -282,6 +293,18 @@ public class applicationWindow extends javax.swing.JFrame {
     private void ChangePseudoButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseEntered
         ChangePseudoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_ChangePseudoButtonMouseEntered
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f= chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        System.out.println("File choosen : " + filename);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseEntered
 
     /**
      * @param args the command line arguments
@@ -326,6 +349,7 @@ public class applicationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel headerImg;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

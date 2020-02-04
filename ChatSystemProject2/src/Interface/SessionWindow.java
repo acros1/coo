@@ -9,19 +9,17 @@ import chatsystemproject.ServerThread;
 import chatsystemproject.User;
 import chatsystemproject.ClientThread;
 //import chatsystemproject.Session;
-import chatsystemproject.ListenerThread;
 import Database.Connect;
+import java.awt.Color;
 import java.awt.Cursor;
-import java.io.IOException;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
+
 
 /**
  *
@@ -42,8 +40,15 @@ public class SessionWindow extends javax.swing.JFrame {
         initComponents();
     }
     
+    /* 
+    there are two constructors, because there are two case when an instance SessionWindow must be created :
+        1- When the user initialize a session by double clicking on a user in the application window
+        2- When the user receive a message from another user
+    In the first case the session window has to create the server while on the second the server is created when the first message is received in "Listener thread"
+    */
     public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB) {
-
+        this.ChatArea.setEditable(false);
+        getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         initComponents();
         this.user2 = u;
         String user = u.getPseudo();
@@ -108,27 +113,6 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatArea.setText(ChatArea.getText() + "\nConnexion established .. Session started...");
     }
     
-    public javax.swing.JButton getSendButton(){
-        return this.SendButton;
-    }
-    /*
-    public Session getSession(){
-        return this.session;
-    }*/
-    
-    public ServerThread getServerThread(){
-        return this.st;
-    }
-    
-    public void setServerThread(ServerThread st){
-        this.st = st;
-    }
-    
-    public String getUser(){
-        return this.user2.getPseudo();
-    }
-    
-    
     public void sendMessage(){
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
         //MESSAGE YOU'VE SEND IS DISPLAYED
@@ -142,6 +126,24 @@ public class SessionWindow extends javax.swing.JFrame {
         chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
         MessageArea.setText("Write your message...");
     }
+    
+    // -------- SETTER AND GETTER -------------
+    public javax.swing.JButton getSendButton(){
+        return this.SendButton;
+    }
+    
+    public ServerThread getServerThread(){
+        return this.st;
+    }
+    
+    public void setServerThread(ServerThread st){
+        this.st = st;
+    }
+    
+    public String getUser(){
+        return this.user2.getPseudo();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,23 +154,26 @@ public class SessionWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         ChatArea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         MessageArea = new javax.swing.JTextArea();
         SendButton = new javax.swing.JButton();
         User = new javax.swing.JLabel();
-        exitButton = new javax.swing.JLabel();
+        SendFilesButton = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         reduceButton = new javax.swing.JLabel();
+        exitButton = new javax.swing.JLabel();
+        BorderImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(698, 323));
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 255));
+        jPanel1.setLayout(null);
 
         ChatArea.setColumns(20);
         ChatArea.setRows(5);
@@ -176,6 +181,9 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatArea.setWrapStyleWord(true);
         ChatArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(ChatArea);
+
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(40, 50, 517, 190);
 
         MessageArea.setColumns(20);
         MessageArea.setRows(5);
@@ -193,6 +201,9 @@ public class SessionWindow extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(MessageArea);
 
+        jPanel1.add(jScrollPane3);
+        jScrollPane3.setBounds(40, 250, 432, 51);
+
         SendButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         SendButton.setText("Send");
         SendButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,17 +216,27 @@ public class SessionWindow extends javax.swing.JFrame {
                 SendButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(SendButton);
+        SendButton.setBounds(480, 250, 77, 51);
+        jPanel1.add(User);
+        User.setBounds(0, 20, 340, 20);
 
-        exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        exitButton.setText("X");
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        SendFilesButton.setText("send files");
+        SendFilesButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitButtonMouseClicked(evt);
+                SendFilesButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitButtonMouseEntered(evt);
+                SendFilesButtonMouseEntered(evt);
             }
         });
+        jPanel1.add(SendFilesButton);
+        SendFilesButton.setBounds(580, 270, 60, 14);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 40, 700, 350);
+
+        jPanel2.setLayout(null);
 
         reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         reduceButton.setText("-");
@@ -227,64 +248,34 @@ public class SessionWindow extends javax.swing.JFrame {
                 reduceButtonMouseEntered(evt);
             }
         });
+        jPanel2.add(reduceButton);
+        reduceButton.setBounds(650, 0, 10, 29);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(User, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(reduceButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(exitButton)
-                .addGap(14, 14, 14))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(reduceButton)
-                    .addComponent(exitButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(SendButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-                .addGap(149, 149, 149))
-        );
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        exitButton.setText("X");
+        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitButtonMouseEntered(evt);
+            }
+        });
+        jPanel2.add(exitButton);
+        exitButton.setBounds(670, 0, 16, 29);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        BorderImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Borderimg.jpg"))); // NOI18N
+        jPanel2.add(BorderImg);
+        BorderImg.setBounds(0, 0, 698, 37);
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 0, 700, 37);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // -------- Mouse and Key events -------------
+    
     private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SendButtonActionPerformed
@@ -294,15 +285,12 @@ public class SessionWindow extends javax.swing.JFrame {
         if(!MessageArea.getText().equals("")){
             sendMessage();
         }
-        
-     
     }//GEN-LAST:event_SendButtonMouseClicked
 
     private void MessageAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MessageAreaMouseClicked
         if(MessageArea.getText().equals("Write your message...")){
            MessageArea.setText(""); 
         }
-        
     }//GEN-LAST:event_MessageAreaMouseClicked
 
     private void reduceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reduceButtonMouseClicked
@@ -328,6 +316,18 @@ public class SessionWindow extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_MessageAreaKeyPressed
+
+    private void SendFilesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendFilesButtonMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SendFilesButtonMouseEntered
+
+    private void SendFilesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendFilesButtonMouseClicked
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f= chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        System.out.println("File choosen : " + filename);
+    }//GEN-LAST:event_SendFilesButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -365,15 +365,17 @@ public class SessionWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BorderImg;
     private javax.swing.JTextArea ChatArea;
     private javax.swing.JTextArea MessageArea;
     private javax.swing.JButton SendButton;
+    private javax.swing.JLabel SendFilesButton;
     private javax.swing.JLabel User;
     private javax.swing.JLabel exitButton;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel reduceButton;
     // End of variables declaration//GEN-END:variables
 }
