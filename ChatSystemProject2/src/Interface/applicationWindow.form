@@ -169,9 +169,14 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="userPseudo">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="100" y="30" width="145" height="23"/>
+              <AbsoluteConstraints x="0" y="30" width="350" height="23"/>
             </Constraint>
           </Constraints>
         </Component>

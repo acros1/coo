@@ -159,8 +159,7 @@ public class ClientThread implements Runnable {
                     } catch ( IOException e ) {
                             e.printStackTrace();
                     }
-                    
-                    this.setMainUserPseudo(pseudo);
+                    this.setMainUserPseudo(newPseudo);
                     this.aW.updatePseudo();
                     // Broadcasting pseudo
                     this.broadcastPseudo();

@@ -50,6 +50,7 @@ public class applicationWindow extends javax.swing.JFrame {
     //add to the list
     
     public void updatePseudo(){
+        System.out.println("update pseudo :"+this.clientThread.getMainUserPseudo());
         userPseudo.setText(this.clientThread.getMainUserPseudo());
     }
     public void updateUsersList(){
@@ -164,8 +165,12 @@ public class applicationWindow extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(100, 90, 136, 140);
+
+        userPseudo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userPseudo.setFocusable(false);
+        userPseudo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(userPseudo);
-        userPseudo.setBounds(100, 30, 145, 23);
+        userPseudo.setBounds(0, 30, 350, 23);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel3.setText("Alexandre Cros - Nedellec Maël © 2019-2020");
@@ -248,6 +253,7 @@ public class applicationWindow extends javax.swing.JFrame {
 
     private void ChangePseudoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseClicked
         String newPseudo = JOptionPane.showInputDialog("Please enter your new pseudo");
+        System.out.println("pseudo rentré : "+newPseudo);
         clientThread.changePseudo(newPseudo);
     }//GEN-LAST:event_ChangePseudoButtonMouseClicked
 
