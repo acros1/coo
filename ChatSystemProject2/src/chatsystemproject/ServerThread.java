@@ -1,6 +1,7 @@
 package chatsystemproject;
 
 import Interface.*;
+import com.sun.tools.javac.util.ArrayUtils;
 import java.io.*;
 import java.net.*;
 
@@ -130,33 +131,55 @@ public class ServerThread implements Runnable {
 	}
         
         public synchronized void sendPdfFile(File myFile) throws IOException{
+            String ent = "P:";
+            byte [] head = ent.getBytes();
             byte [] mybytearray  = new byte [(int)myFile.length()];
             FileInputStream fis = new FileInputStream(myFile);
             BufferedInputStream bis = new BufferedInputStream(fis);
             bis.read(mybytearray,0,mybytearray.length);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+            outputStream.write( head );
+            outputStream.write( mybytearray );
+            byte message[] = outputStream.toByteArray( );
             OutputStream os = sock.getOutputStream();
-            os.write(mybytearray,0,mybytearray.length);
+            os.write(message,0,message.length);
             os.flush();
             System.out.println("Done.");
         }
         public synchronized void sendPngFile(File myFile) throws IOException{
-            byte [] mybytearray  = new byte [(int)myFile.length()];
+            String ent = "I:";
+            byte [] head = ent.getBytes();
+            byte [] mybytearray  = new byte [(int)myFile.length()+2];
+
             FileInputStream fis = new FileInputStream(myFile);
             BufferedInputStream bis = new BufferedInputStream(fis);
             bis.read(mybytearray,0,mybytearray.length);
             OutputStream os = sock.getOutputStream();
-
-            os.write(mybytearray,0,mybytearray.length);
+            
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+            outputStream.write( head );
+            outputStream.write( mybytearray );
+            byte message[] = outputStream.toByteArray( );
+            
+            os.write(message,0,message.length);
             os.flush();
             System.out.println("Done.");
         }
         public synchronized void sendJpgFile(File myFile) throws IOException{
-            byte [] mybytearray  = new byte [(int)myFile.length()];
+            String ent = "J:";
+            byte [] head = ent.getBytes();
+            byte [] mybytearray  = new byte [(int)myFile.length()+2];
             FileInputStream fis = new FileInputStream(myFile);
             BufferedInputStream bis = new BufferedInputStream(fis);
             bis.read(mybytearray,0,mybytearray.length);
             OutputStream os = sock.getOutputStream();
-            os.write(mybytearray,0,mybytearray.length);
+            
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+            outputStream.write( head );
+            outputStream.write( mybytearray );
+            byte message[] = outputStream.toByteArray( );
+            
+            os.write(message,0,message.length);
             os.flush();
             System.out.println("Done.");
         }
