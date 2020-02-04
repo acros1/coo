@@ -77,6 +77,7 @@ public class ServerThread implements Runnable {
                                     if(receiveMessage.length() == 5 && receiveMessage.equals("EXIT|")){
                                         this.sessionWindow.addMessage(client.getPseudo() + " disconnected... Session ended");
                                         this.sessionWindow.getSendButton().setVisible(false);
+                                        this.deconnexion();
                                        
                                     }
                                     else{
@@ -131,6 +132,11 @@ public class ServerThread implements Runnable {
         
         public void deconnexion() {
             this.connection = false;
+        }
+        public void sendDeconnexion() throws IOException{
+            
+            this.writeMessage("EXIT|");
+            this.sock.close();
         }
         
         public void setsessionWindow(SessionWindow sessionWindow) {

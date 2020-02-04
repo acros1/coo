@@ -27,7 +27,7 @@ public class applicationWindow extends javax.swing.JFrame {
      * Creates new form applicationWindow
      */
     DefaultListModel dlm = new DefaultListModel();
-    private ArrayList<Session> sessionStarted = new ArrayList<Session>();
+    private ArrayList<SessionWindow> sessionStarted = new ArrayList<SessionWindow>();
     ClientThread clientThread = null;
     
     private Connect chatSystemDB = null;
@@ -78,7 +78,7 @@ public class applicationWindow extends javax.swing.JFrame {
         this.clientThread.getMainSystem().getServerStarted().remove(st);
     }*/
     
-    public ArrayList<Session> getSessionStarted(){
+    public ArrayList<SessionWindow> getSessionStarted(){
         return this.sessionStarted;
     }
     
@@ -222,11 +222,22 @@ public class applicationWindow extends javax.swing.JFrame {
             while(itr.hasNext()) {
                 User user = itr.next();
                 if(user.getPseudo().equals(user_selected)){
+                    for(SessionWindow sess : this.sessionStarted){
+                        if(sess.getUser().equals(user_selected)){
+                            if(!sess.isVisible()){
+                                sess.setVisible(true);
+                                break;
+                            }
+                            else{
+                                break;
+                            }
+                        }
+                    }
                     SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
+                    this.sessionStarted.add(session);
                     session.setVisible(true);
                     session.setLocationRelativeTo(null);
                 }
-                
             }
         }
     }//GEN-LAST:event_UserListMouseClicked
@@ -244,6 +255,10 @@ public class applicationWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_reduceButtonMouseEntered
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
+        this.clientThread.deletePseudo();
+        for(SessionWindow session : this.sessionStarted){
+            session.getServerThread().deconnexion();
+        }
         System.exit(0);
     }//GEN-LAST:event_exitButtonMouseClicked
 

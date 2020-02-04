@@ -11,6 +11,7 @@ import chatsystemproject.ClientThread;
 //import chatsystemproject.Session;
 import chatsystemproject.ListenerThread;
 import Database.Connect;
+import java.awt.Cursor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,7 +76,6 @@ public class SessionWindow extends javax.swing.JFrame {
     public void addMessage(String message){
         String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss ").format(Calendar.getInstance().getTime());
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + " "+ User.getText() + " : " + message);
-        ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + " "+ "<b>" +User.getText() + "</b> : " + message+"</html>");
                 // Adding the message to history in DB
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
@@ -123,6 +123,25 @@ public class SessionWindow extends javax.swing.JFrame {
     public void setServerThread(ServerThread st){
         this.st = st;
     }
+    
+    public String getUser(){
+        return this.user2.getPseudo();
+    }
+    
+    
+    public void sendMessage(){
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
+        //MESSAGE YOU'VE SEND IS DISPLAYED
+        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
+
+        //Calling the method in the server to send the message
+        st.writeMessage(MessageArea.getText());
+        //adding to the database
+        int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
+        int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
+        chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
+        MessageArea.setText("Write your message...");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,6 +163,7 @@ public class SessionWindow extends javax.swing.JFrame {
         reduceButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,6 +184,11 @@ public class SessionWindow extends javax.swing.JFrame {
         MessageArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 MessageAreaMouseClicked(evt);
+            }
+        });
+        MessageArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                MessageAreaKeyPressed(evt);
             }
         });
         jScrollPane3.setViewportView(MessageArea);
@@ -266,18 +291,8 @@ public class SessionWindow extends javax.swing.JFrame {
 
     private void SendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendButtonMouseClicked
         // TODO add your handling code here:
-        if(MessageArea.getText()!= ""){
-           String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
-            //MESSAGE YOU'VE SEND IS DISPLAYED
-            ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
-            ChatAr.setText("<html>"+ChatAr.getText() + "\n" + timeStamp + "<b>You</b> : "+ MessageArea.getText()+"</html>");
-            //Calling the method in the server to send the message
-            st.writeMessage(MessageArea.getText());
-            //adding to the database
-            int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
-            int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
-            chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
-            MessageArea.setText(""); 
+        if(!MessageArea.getText().equals("")){
+            sendMessage();
         }
         
      
@@ -299,12 +314,20 @@ public class SessionWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_reduceButtonMouseEntered
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        System.exit(0);
+        this.setVisible(false);
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
         exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_exitButtonMouseEntered
+
+    private void MessageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MessageAreaKeyPressed
+        if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER){
+            if(!MessageArea.getText().equals("")){
+            sendMessage();
+            }
+        }
+    }//GEN-LAST:event_MessageAreaKeyPressed
 
     /**
      * @param args the command line arguments
