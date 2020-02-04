@@ -213,32 +213,39 @@ public class applicationWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
-            String user_selected = ((ImgsNText)list.getSelectedValue()).getName();
-            //String user = dlm.getElementAt(index).get
-            System.out.println("user : "+user_selected);
-            //Start session here and open the session frame
             ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
-            Iterator<User> itr = users.iterator();
-            while(itr.hasNext()) {
-                User user = itr.next();
-                if(user.getPseudo().equals(user_selected)){
-                    for(SessionWindow sess : this.sessionStarted){
-                        if(sess.getUser().equals(user_selected)){
-                            if(!sess.isVisible()){
-                                sess.setVisible(true);
-                                break;
-                            }
-                            else{
-                                break;
+            if(users.isEmpty()){
+                
+            }
+            else{
+                String user_selected = ((ImgsNText)list.getSelectedValue()).getName();
+                //String user = dlm.getElementAt(index).get
+                System.out.println("user : "+user_selected);
+                //Start session here and open the session frame
+
+                Iterator<User> itr = users.iterator();
+                while(itr.hasNext()) {
+                    User user = itr.next();
+                    if(user.getPseudo().equals(user_selected)){
+                        for(SessionWindow sess : this.sessionStarted){
+                            if(sess.getUser().equals(user_selected)){
+                                if(!sess.isVisible()){
+                                    sess.setVisible(true);
+                                    break;
+                                }
+                                else{
+                                    break;
+                                }
                             }
                         }
+                        SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
+                        this.sessionStarted.add(session);
+                        session.setVisible(true);
+                        session.setLocationRelativeTo(null);
                     }
-                    SessionWindow session = new SessionWindow(user, this.clientThread, this.chatSystemDB);
-                    this.sessionStarted.add(session);
-                    session.setVisible(true);
-                    session.setLocationRelativeTo(null);
                 }
             }
+            
         }
     }//GEN-LAST:event_UserListMouseClicked
 
