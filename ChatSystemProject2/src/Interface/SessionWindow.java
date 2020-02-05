@@ -185,7 +185,6 @@ public class SessionWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(698, 323));
-        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -249,9 +248,6 @@ public class SessionWindow extends javax.swing.JFrame {
         jPanel1.add(SendFilesButton);
         SendFilesButton.setBounds(580, 270, 60, 15);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 40, 700, 350);
-
         jPanel2.setLayout(null);
 
         reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -294,8 +290,20 @@ public class SessionWindow extends javax.swing.JFrame {
         jPanel2.add(BorderImg);
         BorderImg.setBounds(0, 0, 698, 37);
 
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 0, 700, 37);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

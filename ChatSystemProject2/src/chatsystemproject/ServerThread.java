@@ -1,8 +1,11 @@
 package chatsystemproject;
 
 import Interface.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
+import javax.imageio.ImageIO;
 
 public class ServerThread implements Runnable {
 
@@ -97,13 +100,21 @@ public class ServerThread implements Runnable {
                             
                         }
                         else if(new String(buffer,0,2).equals("P:")){
-                            
+                            byte [] PdfBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
                         }
                         else if(new String(buffer,0,2).equals("I:")){
-                            
+                            byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
+                            BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBuffer));
+
+  
+                             ImageIO.write(image, "jpg", new File("download/Imagepng.png"));
                         }
                         else if(new String(buffer,0,2).equals("J:")){
+                            byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);    
+                            BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBuffer));
                             
+                            ImageIO.write(image, "jpg", new File("download/Imagejpg.jpg"));
+
                         }
 				
 		    }

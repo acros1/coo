@@ -32,7 +32,7 @@ public class applicationWindow extends javax.swing.JFrame {
     private int mouseY;
     
     private Connect chatSystemDB = null;
-    
+                                private static String pathToAdd = "/ChatSystemProject2/chatSystem.db";
 
     public applicationWindow(ClientThread clientThread, Connect chatSystemDB) {
         
