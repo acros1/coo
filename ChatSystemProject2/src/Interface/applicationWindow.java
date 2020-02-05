@@ -28,6 +28,8 @@ public class applicationWindow extends javax.swing.JFrame {
     DefaultListModel dlm = new DefaultListModel();
     private ArrayList<SessionWindow> sessionStarted = new ArrayList<SessionWindow>();
     ClientThread clientThread = null;
+    private int mouseX;
+    private int mouseY;
     
     private Connect chatSystemDB = null;
     
@@ -141,6 +143,16 @@ public class applicationWindow extends javax.swing.JFrame {
         exitButton.setBounds(330, 0, 20, 29);
 
         headerImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/headerimg_app.jpg"))); // NOI18N
+        headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerImgMouseDragged(evt);
+            }
+        });
+        headerImg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerImgMousePressed(evt);
+            }
+        });
         headerPanel.add(headerImg);
         headerImg.setBounds(0, 0, 350, 100);
 
@@ -152,7 +164,7 @@ public class applicationWindow extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 204));
         jLabel1.setText("Users connected");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(110, 60, 114, 17);
+        jLabel1.setBounds(110, 60, 135, 17);
 
         UserList.setForeground(new java.awt.Color(0, 51, 204));
         UserList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -201,7 +213,7 @@ public class applicationWindow extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(240, 240, 60, 14);
+        jLabel2.setBounds(240, 240, 60, 15);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -305,6 +317,18 @@ public class applicationWindow extends javax.swing.JFrame {
     private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel2MouseEntered
+// TODO add your handling code here:
+    private void headerImgMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerImgMousePressed
+        this.mouseX = evt.getX();
+        this.mouseY = evt.getY();
+    }//GEN-LAST:event_headerImgMousePressed
+
+    private void headerImgMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerImgMouseDragged
+        int cordX = evt.getXOnScreen();
+        int cordY = evt.getYOnScreen();
+        
+        this.setLocation(cordX - mouseX,cordY - mouseY);
+    }//GEN-LAST:event_headerImgMouseDragged
 
     /**
      * @param args the command line arguments

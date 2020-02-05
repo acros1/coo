@@ -36,7 +36,8 @@ public class SessionWindow extends javax.swing.JFrame {
     private ClientThread clientThread = null;
     private ServerThread st = null;
     private User user2;
-    
+    private int mouseX;
+    private int mouseY;
     private Connect chatSystemDB = null;
     
     public SessionWindow() {
@@ -50,9 +51,10 @@ public class SessionWindow extends javax.swing.JFrame {
     In the first case the session window has to create the server while on the second the server is created when the first message is received in "Listener thread"
     */
     public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB) {
-        this.ChatArea.setEditable(false);
+        
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         initComponents();
+        this.ChatArea.setEditable(false);
         this.user2 = u;
         String user = u.getPseudo();
         this.clientThread = clientThread;
@@ -68,6 +70,7 @@ public class SessionWindow extends javax.swing.JFrame {
     public SessionWindow(User u, ClientThread clientThread, Connect chatSystemDB,ServerThread serverThread) {
 
         initComponents();
+        this.ChatArea.setEditable(false);
         this.user2 = u;
         String user = u.getPseudo();
         this.clientThread = clientThread;
@@ -278,6 +281,16 @@ public class SessionWindow extends javax.swing.JFrame {
         exitButton.setBounds(670, 0, 19, 29);
 
         BorderImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Borderimg.jpg"))); // NOI18N
+        BorderImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                BorderImgMouseDragged(evt);
+            }
+        });
+        BorderImg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BorderImgMousePressed(evt);
+            }
+        });
         jPanel2.add(BorderImg);
         BorderImg.setBounds(0, 0, 698, 37);
 
@@ -371,6 +384,18 @@ public class SessionWindow extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_SendFilesButtonMouseClicked
+
+    private void BorderImgMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorderImgMouseDragged
+        int cordX = evt.getXOnScreen();
+        int cordY = evt.getYOnScreen();
+        
+        this.setLocation(cordX - mouseX,cordY - mouseY);
+    }//GEN-LAST:event_BorderImgMouseDragged
+
+    private void BorderImgMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorderImgMousePressed
+        this.mouseX = evt.getX();
+        this.mouseY = evt.getY();
+    }//GEN-LAST:event_BorderImgMousePressed
 
     /**
      * @param args the command line arguments
