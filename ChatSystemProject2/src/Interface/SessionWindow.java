@@ -133,7 +133,7 @@ public class SessionWindow extends javax.swing.JFrame {
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
         chatSystemDB.addToHistory(idMainUser, idUser2, MessageArea.getText(), timeStamp);
-        MessageArea.setText("Write your message...");
+        MessageArea.setText("");
     }
     
     private static String getFileExtension(File file) {
