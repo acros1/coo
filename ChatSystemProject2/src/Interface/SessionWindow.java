@@ -77,7 +77,6 @@ public class SessionWindow extends javax.swing.JFrame {
         User.setText(user);
         this.st = serverThread;
         this.chatSystemDB = chatSystemDB;
-        System.out.println("Type your message :");
         this.getHistory();
         this.setLocationRelativeTo(null);
 
@@ -104,7 +103,6 @@ public class SessionWindow extends javax.swing.JFrame {
         ArrayList<ArrayList<String>> history = chatSystemDB.getHistory(idMainUser, idUser2);
 
         for (int iHistory = 0 ; iHistory < history.size() ; iHistory++) {
-            System.out.println("getting history");
             int idsrc = Integer.parseInt(history.get(iHistory).get(0));
             String message = history.get(iHistory).get(2);
             String datetime = history.get(iHistory).get(3);
