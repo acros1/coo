@@ -35,14 +35,12 @@ public class UDPListener implements Runnable {
                 // Datagram reception
                 dgramSocket.receive(inPacket);
                 String data = new String(inPacket.getData(), 0, inPacket.getLength());
-                System.out.println("New broadcast received, data : " + data);
                 InetAddress clientAddr = inPacket.getAddress();
                 // If received broadcast is coming from localhost, don't process it
                 if ( isItOwnIP(clientAddr) == false ) {
 
                     // If first char is "#" pseudo has to be deleted from the list (disconection or pseudo already used)
                     if ( Character.toString( data.charAt(0) ).compareTo("#") == 0 ) {
-                        System.out.println("Received a pseudo to delete");
                         String pseudoToDelete = data.substring(1);
                         // Ending server thread associated to user
                         
@@ -53,7 +51,6 @@ public class UDPListener implements Runnable {
                     // If first char is "|", then message is an answer of pseudo broadcast
                     // Answer is format like "|mainUserPseudo|boolean|clientPseudo"
                     else if ( Character.toString( data.charAt(0) ).compareTo("|") == 0 ) {
-                        System.out.println("Received an answer to pseudo broadcast");
                         String[] dataSplit = data.split("\\|"); // String array, each element is text between "|"
                         // dataSplit[0] is empty, dataSplit[1] = mainUserPseudo, dataSplit[2] = boolean, dataSplit[3] = clientPseudo, dataSplit[4] = clientLogin
                         System.out.println("0 : \""+dataSplit[0]+"\" 1 : \""+dataSplit[1]+"\" 2 : \""+dataSplit[2]+"\" 3 : \""+dataSplit[3]+"\" 4 : \""+dataSplit[4]+"\"");
@@ -65,8 +62,6 @@ public class UDPListener implements Runnable {
 
                                 /*clientThread.changePseudoState(false);
                                 System.out.println("isPseudoOk = " + clientThread.getIsPseudoOk());*/
-                                System.out.println("Pseudo is already used by another client");
-                                System.out.println("Sending alert to others users, they have to delete my pseudo from their list");
                                 String response = "#" + clientThread.getMainUserPseudo();
                                 DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                                 dgramSocket.send(outPacket);
@@ -78,7 +73,6 @@ public class UDPListener implements Runnable {
 
                                 // if clientUser is not in the list yet, add him
                                 if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
-                                        System.out.println("Client is not in the list, adding him");
                                         listenerThread.addUser(dataSplit[3], dataSplit[4], clientAddr);
                                         // The list has probably been modified so we update it
                                         this.clientThread.getApplicationWindow().updateUsersList();
@@ -93,7 +87,6 @@ public class UDPListener implements Runnable {
                                 // if clientUser is not in the list yet, add him
                                 this.pseudoGood = true;
                                 if ( listenerThread.isUserExist(dataSplit[3]) == false ) {
-                                        System.out.println("Client is not in the list, adding him");
                                         listenerThread.addUser(dataSplit[3], dataSplit[4], clientAddr);
                                         // The list has probably been modified so we update it
                                         System.out.println(this.clientThread.getApplicationWindow());
@@ -111,7 +104,7 @@ public class UDPListener implements Runnable {
                         // if pseudo is the same as main user pseudo
                         if ( dataSplit[0].equals(clientThread.getMainUserPseudo()) ) {
                             // Answering with false boolean
-                            System.out.println("Pseudo is already mine, sending false");
+                            // Pseudo is already mine, sending false
                             String response = "|" + dataSplit[0] + "|" + "false" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
@@ -119,13 +112,12 @@ public class UDPListener implements Runnable {
                         // else pseudo is not the same
                         else {
                             // Answering with true boolean
-                            System.out.println("Pseudo is different of mine, sending true");
+                            // Pseudo is different of mine, sending true
                             String response = "|" + dataSplit[0] + "|" + "true" + "|" + clientThread.getMainUserPseudo() + "|" + clientThread.getLogin();
                             DatagramPacket outPacket = new DatagramPacket(response.getBytes(), response.length(), clientAddr, 4000);
                             dgramSocket.send(outPacket);
                             // Add user to the list
                             if ( listenerThread.isUserExist(dataSplit[0]) == false ) {
-                                System.out.println("Client is not in the list, adding him");
                                 listenerThread.addUser(dataSplit[0], dataSplit[1], clientAddr);
                                 // The list has probably been modified so we update it
                                 this.clientThread.getApplicationWindow().updateUsersList();

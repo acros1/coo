@@ -32,7 +32,6 @@ public class applicationWindow extends javax.swing.JFrame {
     private int mouseY;
     
     private Connect chatSystemDB = null;
-                                private static String pathToAdd = "/ChatSystemProject2/chatSystem.db";
 
     public applicationWindow(ClientThread clientThread, Connect chatSystemDB) {
         
@@ -41,7 +40,6 @@ public class applicationWindow extends javax.swing.JFrame {
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1,1,1, Color.BLACK));
         this.clientThread = clientThread;
         userPseudo.setText(this.clientThread.getMainUserPseudo());
-        System.out.println("Application set");
         this.chatSystemDB = chatSystemDB;
        
         
@@ -51,11 +49,9 @@ public class applicationWindow extends javax.swing.JFrame {
     //add to the list
     
     public void updatePseudo(){
-        System.out.println("update pseudo :"+this.clientThread.getMainUserPseudo());
         userPseudo.setText(this.clientThread.getMainUserPseudo());
     }
     public void updateUsersList(){
-        System.out.println("UPDATE LIST");
         dlm.clear();
         
         ArrayList<User> users = this.clientThread.getMainSystem().getClientList();
@@ -64,13 +60,11 @@ public class applicationWindow extends javax.swing.JFrame {
         
         while(itr.hasNext()) {
             String element = itr.next().getPseudo();
-            System.out.println("pseudo : " + element);
             dlm.addElement(new ImgsNText(element,new ImageIcon("images/man-user.png")));
         }  
         
         UserList.setCellRenderer(new Renderer());
         UserList.setModel(dlm);
-        System.out.println("List Updated");
     }
    
     // -------- SETTER AND GETTER -------------
@@ -285,7 +279,6 @@ public class applicationWindow extends javax.swing.JFrame {
 
     private void ChangePseudoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseClicked
         String newPseudo = JOptionPane.showInputDialog("Please enter your new pseudo");
-        System.out.println("pseudo rentré : "+newPseudo);
         clientThread.changePseudo(newPseudo);
     }//GEN-LAST:event_ChangePseudoButtonMouseClicked
 

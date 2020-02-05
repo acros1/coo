@@ -5,7 +5,6 @@ import Interface.applicationWindow;
 import Database.Connect;
 import java.io.IOException;
 import java.net.*;
-import java.util.*;
 
 public class ClientThread implements Runnable {
     
@@ -56,7 +55,6 @@ public class ClientThread implements Runnable {
     public void broadcastPseudo() {
             try {
                 // Need to send login, it's the only way to find history (because login is the same every connection)
-                System.out.println("Broadcasting my pseudo");
                 String data = this.getMainUserPseudo() + "|" + this.login;
                 this.outPacket = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName("255.255.255.255"), 4000);
                 this.dgramSocket.send(this.outPacket);
@@ -101,7 +99,6 @@ public class ClientThread implements Runnable {
     }
 
     public applicationWindow getApplicationWindow(){
-        System.out.println("je retourne l'aW");
         return this.aW;
     }
 

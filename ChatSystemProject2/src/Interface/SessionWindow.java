@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import java.lang.Object.*;
+
 
 /**
  *
@@ -90,7 +90,12 @@ public class SessionWindow extends javax.swing.JFrame {
                 // Adding the message to history in DB
         int idMainUser = chatSystemDB.getUserIdByLogin(clientThread.getLogin());
         int idUser2 = chatSystemDB.getUserIdByLogin(user2.getLogin());
-        chatSystemDB.addToHistory(idMainUser, idUser2, message, timeStamp);
+        chatSystemDB.addToHistory(idUser2, idMainUser, message, timeStamp);
+    }
+    
+    public void addSystemMessage(String message){
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss ").format(Calendar.getInstance().getTime());
+        ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + " System Message : "+ message);
     }
     
     public void getHistory() {
@@ -107,7 +112,7 @@ public class SessionWindow extends javax.swing.JFrame {
             String user = null;
             if(idsrc == idMainUser){
                 user = this.clientThread.getMainUserPseudo();
-                ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + user + " : " + message);
+                ChatArea.setText(ChatArea.getText() + "\n" + datetime + "  " + "You" + " : " + message);
             }
             else{
                 user = User.getText();

@@ -6,17 +6,10 @@
 package Interface;
 
 import chatsystemproject.ClientThread;
-import chatsystemproject.User;
 import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -54,9 +47,6 @@ public class pseudoWindow extends javax.swing.JFrame {
         System.out.println(this.clientThread.getMainUserPseudo());
         
         // Start application window
-        
-        
-        System.out.println("aW added");
         aW.setVisible(true);
         aW.pack();
         aW.setLocationRelativeTo(null);
@@ -260,24 +250,6 @@ public class pseudoWindow extends javax.swing.JFrame {
 
     private void ValidButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidButtonMouseClicked
         creation_applicationWindow();
-        System.out.println(pseudo.getText());
-        // Start clientThread with pseudo and login 
-        this.clientThread = new ClientThread(pseudo.getText(), this.login);
-        applicationWindow aW = new applicationWindow(this.clientThread, this.chatSystemDB);
-        this.clientThread.setApplicationWindow(aW);
-        System.out.println("aW added");
-        System.out.println(this.clientThread.getMainUserPseudo());
-        
-        // Start application window
-        
-        
-        
-        new Thread(this.clientThread).start();
-        aW.setVisible(true);
-        aW.pack();
-        aW.setLocationRelativeTo(null);
-        aW.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
     }//GEN-LAST:event_ValidButtonMouseClicked
 
     private void pseudoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pseudoKeyPressed

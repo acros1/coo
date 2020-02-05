@@ -10,12 +10,7 @@ import chatsystemproject.ClientThread;
 import Database.Connect;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 /**
  *

@@ -19,15 +19,9 @@ public class ServerThread implements Runnable {
 
         public final static int FILE_SIZE = 6022386;
         private boolean connection = true;
-
-	public ServerThread(User client, Socket socket) {
-            System.out.println("ServerThread created 1er constru");
-		this.client = client;
-		this.sock = socket;
-	}	
+	
         
         public ServerThread(User client, Socket socket, ClientThread clientThread) {
-            System.out.println("ServerThread created 2e constru");
 		this.client = client;
 		this.sock = socket;
                 this.clientThread = clientThread;
@@ -36,14 +30,12 @@ public class ServerThread implements Runnable {
         public ServerThread(User client, Socket socket, ClientThread clientThread, SessionWindow session) {
                 
                 if(session != null){
-                   System.out.println("ServerThread created");
                     this.client = client;
                     this.sock = socket;
                     this.clientThread = clientThread; 
                     this.sessionWindow = session;
                 }
                 else if(session == null){
-                    System.out.println("ServerThread + Session created");
                     this.client = client;
                     this.sock = socket;
                     this.clientThread = clientThread;
@@ -59,7 +51,6 @@ public class ServerThread implements Runnable {
                       sessionWindow.setLocationRelativeTo(null);
                     }*/
 		    // sending to client (pwrite object)
-                    System.out.println("Running st");
 		    this.outputstream = sock.getOutputStream(); 
                     byte[] buffer = new byte[FILE_SIZE];
 		    //this.pwrite = new PrintWriter(ostream, true);
@@ -69,12 +60,6 @@ public class ServerThread implements Runnable {
 		    //BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
 
 		    String receiveMessage;  
-                    System.out.println("Waiting message....");
-                    System.out.println("socket connecté ? : "+this.sock.isConnected());
-                    System.out.println("socket addr ? : "+this.sock.getInetAddress());
-                    System.out.println("socket port ? : "+this.sock.getLocalPort());
-                    System.out.println("socket addr local ? : "+this.sock.getLocalAddress());
-                    System.out.println("addr dest ? : "+this.client.getAddr());
                     System.out.println(connection);
 		    while(connection) {
                         int ret = istream.read(buffer,0,FILE_SIZE);
@@ -104,7 +89,7 @@ public class ServerThread implements Runnable {
                             byte [] PdfBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
                             try (FileOutputStream fos = new FileOutputStream("Download/FileDownloaded.pdf")) {
                             fos.write(PdfBuffer);   
-                            this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a pdf.\nPlease find it in the Download folder of this project.");
+                            this.sessionWindow.addSystemMessage("\n"+client.getPseudo()+" sent you a pdf.\nPlease find it in the Download folder of this project.");
                             }
                             
                         }
@@ -114,16 +99,14 @@ public class ServerThread implements Runnable {
 
   
                              ImageIO.write(image, "png", new File("Download/Imagepng.png"));
-                             System.out.println("png received");
-                             this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a png.\nPlease find it in the Download folder of this project.");
+                             this.sessionWindow.addSystemMessage("\n"+client.getPseudo()+" sent you a png.\nPlease find it in the Download folder of this project.");
                         }
                         else if(new String(buffer,0,2).equals("J:")){
                             byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);    
                             BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBuffer));
                             
                             ImageIO.write(image, "jpg", new File("Download/Imagejpg.jpg"));
-                            System.out.println("jpg received");
-                            this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a Jpg.\nPlease find it in the Download folder of this project.");
+                            this.sessionWindow.addSystemMessage("\n"+client.getPseudo()+" sent you a jpg.\nPlease find it in the Download folder of this project.");
 
                         }
 				
@@ -137,8 +120,6 @@ public class ServerThread implements Runnable {
 	public synchronized void writeMessage(String msg) throws IOException {
             String message = "S:" + msg;
             outputstream.write(message.getBytes());
-            System.out.println("envoie du message : "+ message);
-            System.out.println("message envoyé en théorie");
 	} 
         
         public synchronized void exitMessage() throws IOException {
@@ -162,8 +143,7 @@ public class ServerThread implements Runnable {
             byte message[] = outputStream.toByteArray( );
             OutputStream os = sock.getOutputStream();
             os.write(message,0,message.length);
-            os.flush();
-            System.out.println("Done.");
+            this.sessionWindow.addSystemMessage("Pdf sent");
         }
         public synchronized void sendPngFile(File myFile) throws IOException{
             String ent = "I:";
@@ -182,7 +162,7 @@ public class ServerThread implements Runnable {
             
             os.write(message,0,message.length);
             os.flush();
-            System.out.println("Done.");
+            this.sessionWindow.addSystemMessage("Png sent");
         }
         public synchronized void sendJpgFile(File myFile) throws IOException{
             String ent = "J:";
@@ -200,7 +180,7 @@ public class ServerThread implements Runnable {
             
             os.write(message,0,message.length);
             os.flush();
-            System.out.println("Done.");
+            this.sessionWindow.addSystemMessage("Jpg sent");
         }
 
 	public User getUser() {
@@ -224,8 +204,6 @@ public class ServerThread implements Runnable {
         public void sendDeconnexion() throws IOException{
             String message = "S:EXIT|";
             outputstream.write(message.getBytes());
-            System.out.println("envoie du message : "+ message);
-            System.out.println("message envoyé en théorie");
             this.sock.close();
         }
         
