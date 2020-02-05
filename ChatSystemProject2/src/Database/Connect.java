@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class Connect {
     private static String RelativePath = "..\\..\\chatSystem.db";
-    private static String pathToAdd = "\\ChatSystemProject2\\chatSystem.db";
+    private static String pathToAdd = "\\Documents\\ChatSystemProject2\\chatSystem.db";
     
     private String DBPath = null;
     private Connection connection = null;

@@ -107,13 +107,15 @@ public class ServerThread implements Runnable {
                             BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBuffer));
 
   
-                             ImageIO.write(image, "jpg", new File("download/Imagepng.png"));
+                             ImageIO.write(image, "png", new File("Download/Imagepng.png"));
+                             System.out.println("png received");
                         }
                         else if(new String(buffer,0,2).equals("J:")){
                             byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);    
                             BufferedImage image = ImageIO.read(new ByteArrayInputStream(imgBuffer));
                             
-                            ImageIO.write(image, "jpg", new File("download/Imagejpg.jpg"));
+                            ImageIO.write(image, "jpg", new File("Download/Imagejpg.jpg"));
+                            System.out.println("jpg received");
 
                         }
 				
