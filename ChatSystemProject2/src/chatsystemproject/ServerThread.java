@@ -117,7 +117,6 @@ public class ServerThread implements Runnable {
             String message = "S:" + msg;
             outputstream.write(message.getBytes());
             System.out.println("envoie du message : "+ message);
-            pwrite.flush();
             System.out.println("message envoyé en théorie");
 	} 
         

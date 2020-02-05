@@ -81,6 +81,7 @@ public class ListenerThread implements Runnable {
 
     public void addUser(String pseudo, String login, InetAddress addr) {
             clientList.add(new User(pseudo, login, addr));
+            this.clientThread.getApplicationWindow().updateUsersList();
     }
 
     public void deleteUser(String pseudo) {
@@ -89,7 +90,7 @@ public class ListenerThread implements Runnable {
                             clientList.remove(i);
                     }
             }
-            this.clientThread.getApplicationWindow();
+            this.clientThread.getApplicationWindow().updateUsersList();
 
     }
 

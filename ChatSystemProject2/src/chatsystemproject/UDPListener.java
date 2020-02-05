@@ -49,7 +49,7 @@ public class UDPListener implements Runnable {
                         listenerThread.getServer(clientToDelete,null).deconnexion();
                         // Delete pseudo from the users list
                         listenerThread.deleteUser(pseudoToDelete);
-                        //this.clientThread.getApplicationWindow().updateUsersList();
+                        this.clientThread.getApplicationWindow().updateUsersList();
                     }
 
                     // If first char is "|", then message is an answer of pseudo broadcast
