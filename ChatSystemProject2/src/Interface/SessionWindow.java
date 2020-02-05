@@ -271,8 +271,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        jPanel2.setLayout(null);
-
         exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         exitButton.setText("X");
         exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -283,8 +281,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 exitButtonMouseEntered(evt);
             }
         });
-        jPanel2.add(exitButton);
-        exitButton.setBounds(670, 0, 16, 29);
 
         reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         reduceButton.setText("-");
@@ -296,8 +292,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 reduceButtonMouseEntered(evt);
             }
         });
-        jPanel2.add(reduceButton);
-        reduceButton.setBounds(650, 0, 10, 29);
 
         BorderImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Borderimg.jpg"))); // NOI18N
         BorderImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -310,20 +304,40 @@ public class SessionWindow extends javax.swing.JFrame {
                 BorderImgMousePressed(evt);
             }
         });
-        jPanel2.add(BorderImg);
-        BorderImg.setBounds(0, -3, 700, 40);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(670, 670, 670)
+                .addComponent(exitButton))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(650, 650, 650)
+                .addComponent(reduceButton))
+            .addComponent(BorderImg, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BorderImg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(exitButton)
+                    .addComponent(reduceButton)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

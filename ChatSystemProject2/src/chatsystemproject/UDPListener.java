@@ -45,8 +45,7 @@ public class UDPListener implements Runnable {
                         System.out.println("Received a pseudo to delete");
                         String pseudoToDelete = data.substring(1);
                         // Ending server thread associated to user
-                        User clientToDelete = listenerThread.getUserByPseudo(pseudoToDelete);
-                        listenerThread.getServer(clientToDelete,null).deconnexion();
+                        
                         // Delete pseudo from the users list
                         listenerThread.deleteUser(pseudoToDelete);
                     }
