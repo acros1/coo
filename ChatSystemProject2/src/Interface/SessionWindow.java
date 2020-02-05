@@ -188,7 +188,6 @@ public class SessionWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(null);
 
         ChatArea.setColumns(20);
         ChatArea.setRows(5);
@@ -196,9 +195,6 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatArea.setWrapStyleWord(true);
         ChatArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(ChatArea);
-
-        jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(40, 50, 517, 190);
 
         MessageArea.setColumns(20);
         MessageArea.setRows(5);
@@ -216,9 +212,6 @@ public class SessionWindow extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(MessageArea);
 
-        jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(40, 250, 432, 51);
-
         SendButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         SendButton.setText("Send");
         SendButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -231,10 +224,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 SendButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(SendButton);
-        SendButton.setBounds(480, 250, 77, 51);
-        jPanel1.add(User);
-        User.setBounds(0, 20, 340, 20);
 
         SendFilesButton.setText("send files");
         SendFilesButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -245,10 +234,42 @@ public class SessionWindow extends javax.swing.JFrame {
                 SendFilesButtonMouseEntered(evt);
             }
         });
-        jPanel1.add(SendFilesButton);
-        SendFilesButton.setBounds(580, 270, 60, 15);
 
-        jPanel2.setLayout(null);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
+                                .addComponent(SendFilesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(SendFilesButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         reduceButton.setText("-");
@@ -260,8 +281,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 reduceButtonMouseEntered(evt);
             }
         });
-        jPanel2.add(reduceButton);
-        reduceButton.setBounds(650, 0, 10, 29);
 
         exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         exitButton.setText("X");
@@ -273,8 +292,6 @@ public class SessionWindow extends javax.swing.JFrame {
                 exitButtonMouseEntered(evt);
             }
         });
-        jPanel2.add(exitButton);
-        exitButton.setBounds(670, 0, 19, 29);
 
         BorderImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Borderimg.jpg"))); // NOI18N
         BorderImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -287,22 +304,42 @@ public class SessionWindow extends javax.swing.JFrame {
                 BorderImgMousePressed(evt);
             }
         });
-        jPanel2.add(BorderImg);
-        BorderImg.setBounds(0, 0, 698, 37);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(650, 650, 650)
+                .addComponent(reduceButton)
+                .addGap(10, 10, 10)
+                .addComponent(exitButton))
+            .addComponent(BorderImg)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(reduceButton)
+            .addComponent(exitButton)
+            .addComponent(BorderImg)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
