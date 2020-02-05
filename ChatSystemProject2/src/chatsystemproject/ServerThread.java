@@ -102,7 +102,7 @@ public class ServerThread implements Runnable {
                         }
                         else if(new String(buffer,0,2).equals("P:")){
                             byte [] PdfBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
-                            try (FileOutputStream fos = new FileOutputStream("pathname")) {
+                            try (FileOutputStream fos = new FileOutputStream("Download/FileDownloaded.pdf")) {
                             fos.write(PdfBuffer);   
                             }
                             
