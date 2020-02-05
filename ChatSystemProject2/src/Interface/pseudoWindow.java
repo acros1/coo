@@ -89,7 +89,6 @@ public class pseudoWindow extends javax.swing.JFrame {
         setUndecorated(true);
 
         headerPanel.setBackground(new java.awt.Color(255, 255, 255));
-        headerPanel.setLayout(null);
 
         exitButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         exitButton.setText("X");
@@ -101,8 +100,6 @@ public class pseudoWindow extends javax.swing.JFrame {
                 exitButtonMouseEntered(evt);
             }
         });
-        headerPanel.add(exitButton);
-        exitButton.setBounds(680, 0, 20, 29);
 
         reduceButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         reduceButton.setText("-");
@@ -114,8 +111,6 @@ public class pseudoWindow extends javax.swing.JFrame {
                 reduceButtonMouseEntered(evt);
             }
         });
-        headerPanel.add(reduceButton);
-        reduceButton.setBounds(660, 0, 20, 29);
 
         headerImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/headerimg.jpg"))); // NOI18N
         headerImg.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -128,8 +123,25 @@ public class pseudoWindow extends javax.swing.JFrame {
                 headerImgMousePressed(evt);
             }
         });
-        headerPanel.add(headerImg);
-        headerImg.setBounds(0, 0, 700, 210);
+
+        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+        headerPanel.setLayout(headerPanelLayout);
+        headerPanelLayout.setHorizontalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addGap(680, 680, 680)
+                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addGap(660, 660, 660)
+                .addComponent(reduceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(headerImg)
+        );
+        headerPanelLayout.setVerticalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(exitButton)
+            .addComponent(reduceButton)
+            .addComponent(headerImg, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         ContentPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -181,7 +193,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         ContentPanelLayout.setHorizontalGroup(
             ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContentPanelLayout.createSequentialGroup()
-                .addGap(0, 158, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(191, 191, 191))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContentPanelLayout.createSequentialGroup()
@@ -230,7 +242,7 @@ public class pseudoWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(ContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
