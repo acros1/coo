@@ -116,7 +116,7 @@ public class SessionWindow extends javax.swing.JFrame {
         ChatArea.setText(ChatArea.getText() + "\nConnexion established .. Session started...");
     }
     
-    public void sendMessage(){
+    public void sendMessage() throws IOException{
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy  HH:mm:ss ").format(Calendar.getInstance().getTime());        
         //MESSAGE YOU'VE SEND IS DISPLAYED
         ChatArea.setText(ChatArea.getText() + "\n" + timeStamp + "You : "+ MessageArea.getText());
@@ -244,7 +244,7 @@ public class SessionWindow extends javax.swing.JFrame {
             }
         });
         jPanel1.add(SendFilesButton);
-        SendFilesButton.setBounds(580, 270, 60, 14);
+        SendFilesButton.setBounds(580, 270, 60, 15);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 40, 700, 350);
@@ -275,7 +275,7 @@ public class SessionWindow extends javax.swing.JFrame {
             }
         });
         jPanel2.add(exitButton);
-        exitButton.setBounds(670, 0, 16, 29);
+        exitButton.setBounds(670, 0, 19, 29);
 
         BorderImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Borderimg.jpg"))); // NOI18N
         jPanel2.add(BorderImg);
@@ -296,7 +296,11 @@ public class SessionWindow extends javax.swing.JFrame {
     private void SendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SendButtonMouseClicked
         // TODO add your handling code here:
         if(!MessageArea.getText().equals("")){
-            sendMessage();
+            try {
+                sendMessage();
+            } catch (IOException ex) {
+                Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_SendButtonMouseClicked
 
@@ -325,7 +329,11 @@ public class SessionWindow extends javax.swing.JFrame {
     private void MessageAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MessageAreaKeyPressed
         if(evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER){
             if(!MessageArea.getText().equals("")){
-            sendMessage();
+                try {
+                    sendMessage();
+                } catch (IOException ex) {
+                    Logger.getLogger(SessionWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_MessageAreaKeyPressed
