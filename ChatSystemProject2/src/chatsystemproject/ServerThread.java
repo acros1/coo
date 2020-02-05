@@ -3,6 +3,7 @@ package chatsystemproject;
 import Interface.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.Object.*;
 import java.net.*;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
@@ -101,6 +102,10 @@ public class ServerThread implements Runnable {
                         }
                         else if(new String(buffer,0,2).equals("P:")){
                             byte [] PdfBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
+                            try (FileOutputStream fos = new FileOutputStream("pathname")) {
+                            fos.write(PdfBuffer);   
+                            }
+                            
                         }
                         else if(new String(buffer,0,2).equals("I:")){
                             byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
