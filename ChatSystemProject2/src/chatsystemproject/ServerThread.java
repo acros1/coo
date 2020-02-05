@@ -104,6 +104,7 @@ public class ServerThread implements Runnable {
                             byte [] PdfBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);
                             try (FileOutputStream fos = new FileOutputStream("Download/FileDownloaded.pdf")) {
                             fos.write(PdfBuffer);   
+                            this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a pdf.\nPlease find it in the Download folder of this project.");
                             }
                             
                         }
@@ -114,6 +115,7 @@ public class ServerThread implements Runnable {
   
                              ImageIO.write(image, "png", new File("Download/Imagepng.png"));
                              System.out.println("png received");
+                             this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a png.\nPlease find it in the Download folder of this project.");
                         }
                         else if(new String(buffer,0,2).equals("J:")){
                             byte [] imgBuffer = Arrays.copyOfRange(buffer, 2, buffer.length);    
@@ -121,6 +123,7 @@ public class ServerThread implements Runnable {
                             
                             ImageIO.write(image, "jpg", new File("Download/Imagejpg.jpg"));
                             System.out.println("jpg received");
+                            this.sessionWindow.addMessage("System : "+ client.getPseudo()+"sent you a Jpg.\nPlease find it in the Download folder of this project.");
 
                         }
 				
@@ -219,8 +222,10 @@ public class ServerThread implements Runnable {
             this.connection = false;
         }
         public void sendDeconnexion() throws IOException{
-            
-            this.writeMessage("EXIT|");
+            String message = "S:EXIT|";
+            outputstream.write(message.getBytes());
+            System.out.println("envoie du message : "+ message);
+            System.out.println("message envoyé en théorie");
             this.sock.close();
         }
         

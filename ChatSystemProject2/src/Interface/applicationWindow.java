@@ -105,7 +105,6 @@ public class applicationWindow extends javax.swing.JFrame {
         userPseudo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ChangePseudoButton = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -164,7 +163,7 @@ public class applicationWindow extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 204));
         jLabel1.setText("Users connected");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(110, 60, 135, 17);
+        jLabel1.setBounds(110, 60, 114, 17);
 
         UserList.setForeground(new java.awt.Color(0, 51, 204));
         UserList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -202,18 +201,6 @@ public class applicationWindow extends javax.swing.JFrame {
         });
         jPanel1.add(ChangePseudoButton);
         ChangePseudoButton.setBounds(250, 270, 100, 14);
-
-        jLabel2.setText("send files");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
-            }
-        });
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(240, 240, 60, 15);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -305,18 +292,6 @@ public class applicationWindow extends javax.swing.JFrame {
     private void ChangePseudoButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChangePseudoButtonMouseEntered
         ChangePseudoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_ChangePseudoButtonMouseEntered
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File f= chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        System.out.println("File choosen : " + filename);
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel2MouseEntered
 // TODO add your handling code here:
     private void headerImgMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerImgMousePressed
         this.mouseX = evt.getX();
@@ -373,7 +348,6 @@ public class applicationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel headerImg;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
